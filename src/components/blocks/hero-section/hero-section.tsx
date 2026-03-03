@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 
-export type MenuData = {
+export type HeroSlide = {
   id: number
   img: string
   imgAlt: string
@@ -12,7 +12,7 @@ export type MenuData = {
 }
 
 interface HeroSectionProps {
-  menudata: MenuData[]
+  heroSlides: HeroSlide[]
   className?: string
 }
 
@@ -31,23 +31,23 @@ const averageDynamicWordLength = Math.round(
   kineticWords.reduce((total, word) => total + Array.from(word).length, 0) / kineticWords.length
 )
 
-const HeroSection = ({ menudata, className }: HeroSectionProps) => {
+const HeroSection = ({ heroSlides, className }: HeroSectionProps) => {
   const [activeImageIndex, setActiveImageIndex] = useState(0)
   const [activeTextIndex, setActiveTextIndex] = useState(0)
 
   useEffect(() => {
-    if (menudata.length <= 1) {
+    if (heroSlides.length <= 1) {
       return
     }
 
     const imageIntervalId = window.setInterval(() => {
-      setActiveImageIndex(previousIndex => (previousIndex + 1) % menudata.length)
+      setActiveImageIndex(previousIndex => (previousIndex + 1) % heroSlides.length)
     }, 8000)
 
     return () => {
       window.clearInterval(imageIntervalId)
     }
-  }, [menudata.length])
+  }, [heroSlides.length])
 
   useEffect(() => {
     const textIntervalId = window.setInterval(() => {
@@ -59,7 +59,7 @@ const HeroSection = ({ menudata, className }: HeroSectionProps) => {
     }
   }, [])
 
-  const activeImage = menudata.length > 0 ? menudata[activeImageIndex % menudata.length] : null
+  const activeImage = heroSlides.length > 0 ? heroSlides[activeImageIndex % heroSlides.length] : null
   const dynamicWord = kineticWords[activeTextIndex % kineticWords.length]
 
   return (

@@ -1,4 +1,4 @@
-export const popularDishes = [
+export const featuredWeddings = [
   {
     slug: 'adri-david',
     image: '/wedding/adri-david/adri-david-profile.jpg',

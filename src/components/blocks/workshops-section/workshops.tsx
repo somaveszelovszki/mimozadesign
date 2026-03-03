@@ -3,7 +3,7 @@ import { ArrowRightIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardTitle, CardDescription, CardHeader, CardFooter } from '@/components/ui/card'
 
-type NewItem = {
+type Workshop = {
   img: string
   alt: string
   title: string
@@ -15,11 +15,10 @@ type NewItem = {
   }[]
 }[]
 
-const NewItems = ({ newItems }: { newItems: NewItem }) => {
+const Workshops = ({ workshops }: { workshops: Workshop }) => {
   return (
-    <section id='new-items' className='py-8 sm:py-16 lg:py-24'>
+    <section id='workshops' className='py-8 sm:py-16 lg:py-24'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
-        {/* Header */}
         <div className='mx-auto mb-12 flex max-w-2xl flex-col items-center justify-center space-y-4 text-center sm:mb-16 lg:mb-24'>
           <h2 className='font-serif text-2xl font-semibold md:text-3xl lg:text-4xl'>Workshopjaink</h2>
           <p className='text-muted-foreground text-xl'>
@@ -32,28 +31,28 @@ const NewItems = ({ newItems }: { newItems: NewItem }) => {
         </div>
 
         <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3'>
-          {newItems.map((item, index) => (
+          {workshops.map((workshop, index) => (
             <Card
               className='hover:border-primary group overflow-hidden pt-0 shadow-none transition-colors duration-300 max-lg:last:col-span-full'
               key={index}
             >
               <CardContent className='px-0'>
                 <img
-                  src={item.img}
-                  alt={item.alt}
+                  src={workshop.img}
+                  alt={workshop.alt}
                   className='aspect-video h-60 w-full object-cover transition-transform duration-300 group-hover:scale-105'
                   loading='lazy'
                 />
               </CardContent>
               <CardHeader className='mb-2 gap-3'>
                 <CardTitle className='text-xl'>
-                  <a href='#'>{item.title}</a>
+                  <a href='#'>{workshop.title}</a>
                 </CardTitle>
-                <CardDescription className='text-base'>{item.description}</CardDescription>
+                <CardDescription className='text-base'>{workshop.description}</CardDescription>
               </CardHeader>
               <CardFooter>
                 <div className='flex flex-wrap gap-3'>
-                  {item.links.map(link => (
+                  {workshop.links.map(link => (
                     <Button
                       key={link.label}
                       className='group rounded-full text-sm has-[>svg]:px-6'
@@ -77,4 +76,4 @@ const NewItems = ({ newItems }: { newItems: NewItem }) => {
   )
 }
 
-export default NewItems
+export default Workshops

@@ -28,7 +28,7 @@ export const GalleryImage = [
     }
   },
   {
-    src: '/wedding/adri-david/adri-david-4.jpg',
+    src: '/wedding/anna-bence/anna-bence-4.jpg',
     alt: 'Szárazvirág kompozíció',
     className: 'col-span-2 max-h-60',
     offerText: {

@@ -44,10 +44,10 @@ export const weddingPortfolios: WeddingPortfolio[] = [
       'Szárazvirágból készült teljes dekoráció, amely a végtelenségig megőrzi az esküvő napjának gyönyörű emlékét.',
     coverImage: '/wedding/adri-david/adri-david-profile.jpg',
     images: [
-      '/wedding/adri-david/adri-david-1.jpg',
-      '/wedding/adri-david/adri-david-2.jpg',
-      '/wedding/adri-david/adri-david-3.jpg',
-      '/wedding/adri-david/adri-david-4.jpg'
+      '/wedding/anna-bence/anna-bence-1.jpg',
+      '/wedding/anna-bence/anna-bence-2.jpg',
+      '/wedding/anna-bence/anna-bence-3.jpg',
+      '/wedding/anna-bence/anna-bence-4.jpg'
     ]
   },
   {
@@ -55,6 +55,12 @@ export const weddingPortfolios: WeddingPortfolio[] = [
     name: 'Anna & Bence',
     caption: 'Méhlegelő ihletésű csokor, novemberi kivitelben.',
     coverImage: '/wedding/anna-bence/anna-bence-profile.jpg',
-    images: ['/wedding/anna-bence/anna-bence-profile.jpg']
+    images: [
+      '/wedding/anna-bence/anna-bence-profile.jpg',
+      '/wedding/anna-bence/anna-bence-1.jpg',
+      '/wedding/anna-bence/anna-bence-2.jpg',
+      '/wedding/anna-bence/anna-bence-3.jpg',
+      '/wedding/anna-bence/anna-bence-4.jpg'
+    ]
   }
 ]

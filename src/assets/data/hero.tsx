@@ -1,4 +1,4 @@
-export const menudata = [
+export const heroSlides = [
   {
     id: 1,
     img: '/wedding/dori-david/dori-david-1.jpg',
@@ -15,7 +15,7 @@ export const menudata = [
   },
   {
     id: 3,
-    img: '/wedding/adri-david/adri-david-2.jpg',
+    img: '/wedding/anna-bence/anna-bence-2.jpg',
     imgAlt: 'Szárazvirágos főasztal dekor',
     userComment: 'Minden apró elem összeállt egy letisztult, mégis személyes hangulattá.',
     userAvatar: '/wedding/dori-david/dori-david-profile.jpg'

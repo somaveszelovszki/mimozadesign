@@ -1,0 +1,221 @@
+---
+import BlankLayout from '@/layouts/BlankLayout.astro'
+import type { WorkshopPortfolio } from '@/assets/data/workshops'
+import { workshopPortfolios } from '@/assets/data/workshops'
+
+export function getStaticPaths() {
+  return workshopPortfolios.map(portfolio => ({
+    params: { workshop: portfolio.slug },
+    props: { portfolio }
+  }))
+}
+
+interface Props {
+  portfolio: WorkshopPortfolio
+}
+
+const { portfolio } = Astro.props as Props
+
+const pageTitle = `${portfolio.title} | Workshop portfólió | Mimóza Memories`
+const pageDescription = `${portfolio.title} workshop összefoglaló. ${portfolio.caption}`
+const pageImage = portfolio.coverImage
+---
+
+<BlankLayout title={pageTitle} description={pageDescription} image={pageImage}>
+  <section class='bg-background text-foreground mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-18'>
+    <a
+      href='/workshops#past-workshops'
+      class='text-primary hover:text-primary/80 focus-visible:ring-ring inline-flex items-center gap-2 text-sm font-medium underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
+    >
+      Vissza a workshopokhoz
+    </a>
+
+    <header class='mt-6 space-y-3 sm:mt-8'>
+      <h1 class='font-serif text-3xl font-semibold sm:text-4xl lg:text-5xl'>{portfolio.title}</h1>
+      <p class='text-muted-foreground max-w-3xl text-lg'>{portfolio.caption}</p>
+      <p class='text-muted-foreground text-sm'>
+        {portfolio.date} - {portfolio.location}
+      </p>
+    </header>
+
+    <div class='mt-6 flex flex-wrap gap-3 sm:mt-8'>
+      <a
+        href={portfolio.facebookEventUrl}
+        target='_blank'
+        rel='noreferrer'
+        class='bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-4 py-2 text-sm font-medium'
+      >
+        Facebook esemény
+      </a>
+      <a
+        href={portfolio.registrationUrl}
+        target='_blank'
+        rel='noreferrer'
+        class='border-border bg-background hover:bg-muted rounded-full border px-4 py-2 text-sm font-medium'
+      >
+        Jelentkezés Google Forms
+      </a>
+    </div>
+  </section>
+
+  <section class='mx-auto max-w-6xl px-4 pb-10 sm:px-6 sm:pb-14 lg:px-8 lg:pb-18'>
+    <div id='workshop-gallery' class='columns-1 gap-4 sm:columns-2 lg:columns-3' data-images={JSON.stringify(portfolio.images)}>
+      {portfolio.images.map((image, index) => (
+        <figure class='mb-4 break-inside-avoid overflow-hidden rounded-lg border'>
+          <button
+            type='button'
+            data-gallery-index={index}
+            aria-label={`${index + 1}. kép megnyitása`}
+            class='focus-visible:ring-ring block w-full cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
+          >
+            <img src={image} alt={`${portfolio.title} galéria kép ${index + 1}`} class='h-auto w-full object-cover' loading='lazy' />
+          </button>
+        </figure>
+      ))}
+    </div>
+  </section>
+
+  <div
+    id='gallery-lightbox'
+    class='bg-background/95 fixed inset-0 z-50 hidden items-center justify-center p-4 backdrop-blur-sm sm:p-8'
+    aria-hidden='true'
+  >
+    <button
+      type='button'
+      id='gallery-close'
+      class='bg-background/70 text-foreground hover:bg-background absolute top-4 right-4 z-10 rounded-full border px-3 py-1.5 text-sm'
+      aria-label='Galéria bezárása'
+    >
+      Bezárás
+    </button>
+
+    <button
+      type='button'
+      id='gallery-prev'
+      class='bg-background/70 text-foreground hover:bg-background absolute left-4 top-1/2 z-10 -translate-y-1/2 rounded-full border px-3 py-2 text-2xl leading-none'
+      aria-label='Előző kép'
+    >
+      ‹
+    </button>
+
+    <img id='gallery-image' src='' alt='' class='max-h-[90vh] max-w-full rounded-lg object-contain' />
+
+    <button
+      type='button'
+      id='gallery-next'
+      class='bg-background/70 text-foreground hover:bg-background absolute right-4 top-1/2 z-10 -translate-y-1/2 rounded-full border px-3 py-2 text-2xl leading-none'
+      aria-label='Következő kép'
+    >
+      ›
+    </button>
+  </div>
+
+  <script is:inline>
+    ;(() => {
+      const cleanupKey = '__mimozaWorkshopGalleryCleanup'
+
+      const initWorkshopGallery = () => {
+        if (typeof window[cleanupKey] === 'function') {
+          window[cleanupKey]()
+        }
+
+        const gallery = document.querySelector('#workshop-gallery')
+        const lightbox = document.querySelector('#gallery-lightbox')
+        const lightboxImage = document.querySelector('#gallery-image')
+        const closeButton = document.querySelector('#gallery-close')
+        const prevButton = document.querySelector('#gallery-prev')
+        const nextButton = document.querySelector('#gallery-next')
+
+        if (!gallery || !lightbox || !lightboxImage || !closeButton || !prevButton || !nextButton) {
+          window[cleanupKey] = null
+          return
+        }
+
+        const images = JSON.parse(gallery.getAttribute('data-images') || '[]')
+        if (!Array.isArray(images) || images.length === 0) {
+          window[cleanupKey] = null
+          return
+        }
+
+        let activeIndex = 0
+
+        const openLightbox = index => {
+          activeIndex = index
+          lightboxImage.setAttribute('src', images[activeIndex])
+          lightboxImage.setAttribute('alt', `${activeIndex + 1}. workshop galéria kép`)
+          lightbox.classList.remove('hidden')
+          lightbox.classList.add('flex')
+          lightbox.setAttribute('aria-hidden', 'false')
+          document.body.style.overflow = 'hidden'
+        }
+
+        const closeLightbox = () => {
+          lightbox.classList.add('hidden')
+          lightbox.classList.remove('flex')
+          lightbox.setAttribute('aria-hidden', 'true')
+          document.body.style.overflow = ''
+        }
+
+        const showRelative = direction => {
+          activeIndex = (activeIndex + direction + images.length) % images.length
+          lightboxImage.setAttribute('src', images[activeIndex])
+          lightboxImage.setAttribute('alt', `${activeIndex + 1}. workshop galéria kép`)
+        }
+
+        const onGalleryClick = event => {
+          const trigger = event.target.closest('[data-gallery-index]')
+          if (!trigger) {
+            return
+          }
+          const index = Number(trigger.getAttribute('data-gallery-index'))
+          if (!Number.isFinite(index)) {
+            return
+          }
+          openLightbox(index)
+        }
+
+        const onPrevClick = () => showRelative(-1)
+        const onNextClick = () => showRelative(1)
+
+        const onLightboxClick = event => {
+          if (event.target === lightbox) {
+            closeLightbox()
+          }
+        }
+
+        const onKeyDown = event => {
+          if (lightbox.getAttribute('aria-hidden') === 'true') {
+            return
+          }
+          if (event.key === 'Escape') {
+            closeLightbox()
+          } else if (event.key === 'ArrowLeft') {
+            showRelative(-1)
+          } else if (event.key === 'ArrowRight') {
+            showRelative(1)
+          }
+        }
+
+        gallery.addEventListener('click', onGalleryClick)
+        closeButton.addEventListener('click', closeLightbox)
+        prevButton.addEventListener('click', onPrevClick)
+        nextButton.addEventListener('click', onNextClick)
+        lightbox.addEventListener('click', onLightboxClick)
+        document.addEventListener('keydown', onKeyDown)
+
+        window[cleanupKey] = () => {
+          gallery.removeEventListener('click', onGalleryClick)
+          closeButton.removeEventListener('click', closeLightbox)
+          prevButton.removeEventListener('click', onPrevClick)
+          nextButton.removeEventListener('click', onNextClick)
+          lightbox.removeEventListener('click', onLightboxClick)
+          document.removeEventListener('keydown', onKeyDown)
+          document.body.style.overflow = ''
+        }
+      }
+
+      initWorkshopGallery()
+      document.addEventListener('astro:page-load', initWorkshopGallery)
+    })()
+  </script>
+</BlankLayout>

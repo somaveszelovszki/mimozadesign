@@ -1,5 +1,6 @@
 export const popularDishes = [
   {
+    slug: 'adri-david',
     image: '/wedding/adri-david/adri-david-profile.jpg',
     alt: 'Adri és Dávid esküvője',
     name: 'Adri & Dávid',
@@ -7,6 +8,7 @@ export const popularDishes = [
     description: 'Időtálló, bézs-barna tónusú dekoráció természetes textúrákkal.'
   },
   {
+    slug: 'reka-balint',
     image: '/wedding/reka-balint/reka-balint-profile.jpg',
     alt: 'Réka és Bálint esküvője',
     name: 'Réka & Bálint',
@@ -14,6 +16,7 @@ export const popularDishes = [
     description: 'Élénk, játékos színvilág, amely a pár energikus stílusát emeli ki.'
   },
   {
+    slug: 'dori-david',
     image: '/wedding/dori-david/dori-david-profile.jpg',
     alt: 'Dóri és Dávid esküvője',
     name: 'Dóri & Dávid',
@@ -21,6 +24,7 @@ export const popularDishes = [
     description: 'Erdei ihletésű kompozíciók mély terrakotta és moha zöld árnyalatokkal.'
   },
   {
+    slug: 'anna-bence',
     image: '/wedding/anna-bence/anna-bence-profile.jpg',
     alt: 'Anna és Bence esküvője',
     name: 'Anna & Bence',

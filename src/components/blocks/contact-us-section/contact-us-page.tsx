@@ -2,7 +2,6 @@ import type { ComponentType } from 'react'
 
 import { Card, CardContent } from '@/components/ui/card'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-import { Badge } from '@/components/ui/badge'
 
 type ContactInfo = {
   title: string
@@ -19,10 +18,7 @@ const ContactUs = ({ contactInfo }: { contactInfo: ContactInfo }) => {
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         {/* Header */}
         <div className='mx-auto mb-12 flex max-w-2xl flex-col items-center justify-center space-y-4 text-center sm:mb-16 lg:mb-24'>
-          <Badge variant='outline' className='text-sm font-normal'>
-            Kapcsolat
-          </Badge>
-          <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>Lépj kapcsolatba velünk</h2>
+          <h2 className='font-serif text-2xl font-semibold md:text-3xl lg:text-4xl'>Lépj kapcsolatba velünk</h2>
           <p className='text-muted-foreground text-xl'>
             Írd meg az elképzeléseiteket, és egyeztetünk egy rövid beszélgetést, ahol közösen kialakítjuk a dekoráció
             irányát.
@@ -38,7 +34,7 @@ const ContactUs = ({ contactInfo }: { contactInfo: ContactInfo }) => {
           />
 
           <div>
-            <h3 className='mb-2 text-2xl'>Itt kezdődik a közös tervezés</h3>
+            <h3 className='font-serif mb-2 text-2xl'>Itt kezdődik a közös tervezés</h3>
             <p className='text-muted-foreground mb-10 text-lg'>
               Legyen szó teljes esküvői dekorációról vagy egyedi virágkötészetről, segítünk megtalálni a hozzátok illő
               megoldást.
@@ -58,7 +54,7 @@ const ContactUs = ({ contactInfo }: { contactInfo: ContactInfo }) => {
                       </AvatarFallback>
                     </Avatar>
                     <div className='space-y-3'>
-                      <h4 className='text-lg font-semibold'>{info.title}</h4>
+                      <h4 className='font-serif text-lg font-semibold'>{info.title}</h4>
                       <div className='text-muted-foreground text-base font-medium'>
                         {info.description.split('\n').map((line, idx) => (
                           <p key={idx}>{line}</p>

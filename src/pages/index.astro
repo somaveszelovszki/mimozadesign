@@ -10,7 +10,6 @@ import Offers from '@/components/blocks/offers-section/offers-section'
 
 import { menudata } from '@/assets/data/hero'
 import { popularDishes } from '@/assets/data/popular-dishes'
-import { stats } from '@/assets/data/about-us'
 import { testimonials } from '@/assets/data/testimonials'
 import { newItems } from '@/assets/data/new-items'
 import { contactInfo } from '@/assets/data/contact-us'
@@ -43,7 +42,7 @@ const schema = {
 <Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} schema={schema}>
   <HeroSectionPage menudata={menudata} client:load />
   <PopularDishes popularDishes={popularDishes} client:load />
-  <AboutUs stats={stats} />
+  <AboutUs />
   <Testimonials testimonials={testimonials} client:load />
   <NewItems newItems={newItems} />
   <ContactUs contactInfo={contactInfo} />

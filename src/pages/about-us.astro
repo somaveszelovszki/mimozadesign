@@ -1,0 +1,23 @@
+---
+import Layout from '@/layouts/Layout.astro'
+
+const pageTitle = 'Rólunk | Mimóza Memories'
+const pageDescription =
+  'Ismerd meg Lizát és a Mimóza Memories történetét: természetes, személyes és időtálló virágdekorációk szeretettel.'
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <section class='mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 py-12 sm:px-6 lg:px-8 lg:py-16'>
+    <div class='space-y-4'>
+      <h1 class='font-serif text-3xl font-semibold tracking-tight sm:text-4xl'>Rólunk</h1>
+      <p class='text-muted-foreground text-lg'>
+        A Mimóza Memoriesnél Liza építészeti szemléletét és virágkötészeti tapasztalatát ötvözve alkotunk természetes,
+        elegáns és személyes tereket.
+      </p>
+    </div>
+
+    <div class='overflow-hidden rounded-xl'>
+      <img src='/about-me/liza-working.jpg' alt='Liza munka közben' class='h-full w-full object-cover' loading='lazy' />
+    </div>
+  </section>
+</Layout>

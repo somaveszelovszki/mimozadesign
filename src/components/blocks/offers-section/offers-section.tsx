@@ -1,4 +1,3 @@
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 
 import { cn } from '@/lib/utils'
@@ -24,11 +23,7 @@ const Gallery = ({ galleryImage }: { galleryImage: GalleryImage }) => {
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         {/* Header */}
         <div className='mb-12 space-y-4 text-center sm:mb-16 lg:mb-24'>
-          <Badge variant='outline' className='text-sm font-normal'>
-            Galéria
-          </Badge>
-
-          <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>Inspiráció valódi esküvőkből</h2>
+          <h2 className='font-serif text-2xl font-semibold md:text-3xl lg:text-4xl'>Inspiráció valódi esküvőkből</h2>
 
           <p className='text-muted-foreground text-xl'>
             Vizuális részletek a korábbi munkáinkból, ahol a természetes stílus és az évszak karaktere találkozik.
@@ -48,7 +43,7 @@ const Gallery = ({ galleryImage }: { galleryImage: GalleryImage }) => {
 
               {image.offerText && (
                 <div className={cn('absolute', image.offerText.className)}>
-                  <p className='font-(family-name:--font-kaushan-script) text-lg text-white md:text-xl lg:text-2xl xl:text-3xl'>
+                  <p className='font-serif text-lg text-white md:text-xl lg:text-2xl xl:text-3xl'>
                     {image.offerText.text}
                   </p>
                 </div>

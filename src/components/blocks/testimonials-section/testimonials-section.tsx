@@ -1,11 +1,11 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import { Rating } from '@/components/ui/rating'
 
 export type TestimonialItem = {
   name: string
+  slug: string
   avatar: string
   rating: number
   content: string
@@ -30,11 +30,7 @@ const TestimonialsComponent = ({ testimonials }: TestimonialsComponentProps) => 
       >
         {/* Left Content */}
         <div className='space-y-4 sm:w-1/2 lg:w-1/3'>
-          <Badge variant='outline' className='text-sm font-normal'>
-            Visszajelzések
-          </Badge>
-
-          <h2 className='text-2xl font-semibold sm:text-3xl lg:text-4xl'>
+          <h2 className='font-serif text-2xl font-semibold sm:text-3xl lg:text-4xl'>
             Párok <br />
             tapasztalatai
           </h2>
@@ -60,8 +56,13 @@ const TestimonialsComponent = ({ testimonials }: TestimonialsComponentProps) => 
           <CarouselContent className='sm:-ml-6'>
             {testimonials.map((testimonial, index) => (
               <CarouselItem key={index} className='sm:pl-6 lg:basis-1/2'>
-                <Card className='hover:border-primary h-full rounded-none transition-colors duration-300'>
-                  <CardContent className='space-y-5'>
+                <Card className='hover:border-primary group h-full rounded-none p-0 transition-colors duration-300'>
+                  <a
+                    href={`/weddings/${testimonial.slug}`}
+                    aria-label={`${testimonial.name} esküvői portfólió megnyitása`}
+                    className='focus-visible:ring-ring block h-full rounded-none p-6 outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
+                  >
+                  <CardContent className='space-y-5 px-0'>
                     <div className='flex items-center gap-3'>
                       <Avatar className='size-10 rounded-full'>
                         <AvatarImage src={testimonial.avatar} alt={testimonial.name} loading='lazy' />
@@ -74,13 +75,15 @@ const TestimonialsComponent = ({ testimonials }: TestimonialsComponentProps) => 
                       </Avatar>
 
                       <div className='flex-1'>
-                        <h4 className='font-medium'>{testimonial.name}</h4>
+                        <h4 className='font-serif font-medium'>{testimonial.name}</h4>
                       </div>
                     </div>
 
                     <Rating readOnly variant='yellow' size={24} value={testimonial.rating} precision={0.5} />
                     <p>{testimonial.content}</p>
+                    <p className='text-primary text-sm font-medium group-hover:underline'>Portfólió megtekintése</p>
                   </CardContent>
+                  </a>
                 </Card>
               </CarouselItem>
             ))}

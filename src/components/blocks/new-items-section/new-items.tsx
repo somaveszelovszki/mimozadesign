@@ -1,7 +1,6 @@
 import { ArrowRightIcon } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardTitle, CardDescription, CardHeader, CardFooter } from '@/components/ui/card'
 
 type NewItem = {
@@ -18,10 +17,7 @@ const NewItems = ({ newItems }: { newItems: NewItem }) => {
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         {/* Header */}
         <div className='mx-auto mb-12 flex max-w-2xl flex-col items-center justify-center space-y-4 text-center sm:mb-16 lg:mb-24'>
-          <Badge variant='outline' className='text-sm font-normal'>
-            Szolgáltatások
-          </Badge>
-          <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>Fő területeink</h2>
+          <h2 className='font-serif text-2xl font-semibold md:text-3xl lg:text-4xl'>Fő területeink</h2>
           <p className='text-muted-foreground text-xl'>
             A menyasszonyi csokortól a szertartási installációkon át a komplett dekorációig minden elemet közös
             koncepció mentén tervezünk.

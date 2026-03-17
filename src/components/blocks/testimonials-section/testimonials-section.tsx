@@ -36,7 +36,7 @@ const TestimonialsComponent = ({ testimonials }: TestimonialsComponentProps) => 
           </h2>
 
           <p className='text-muted-foreground text-xl'>
-            Így élték meg a közös tervezést és a Mimóza Memories által megálmodott esküvői tereket.
+            Így élték meg a közös tervezést és az általunk megalkotott esküvői dekorációkat.
           </p>
 
           <div className='flex items-center gap-4'>
@@ -62,27 +62,27 @@ const TestimonialsComponent = ({ testimonials }: TestimonialsComponentProps) => 
                     aria-label={`${testimonial.name} esküvői portfólió megnyitása`}
                     className='focus-visible:ring-ring block h-full p-6 outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
                   >
-                  <CardContent className='space-y-5 px-0'>
-                    <div className='flex items-center gap-3'>
-                      <Avatar className='size-10 rounded-full'>
-                        <AvatarImage src={testimonial.avatar} alt={testimonial.name} loading='lazy' />
-                        <AvatarFallback className='rounded-full text-sm'>
-                          {testimonial.name
-                            .split(' ', 2)
-                            .map(n => n[0])
-                            .join('')}
-                        </AvatarFallback>
-                      </Avatar>
+                    <CardContent className='space-y-5 px-0'>
+                      <div className='flex items-center gap-3'>
+                        <Avatar className='size-10 rounded-full'>
+                          <AvatarImage src={testimonial.avatar} alt={testimonial.name} loading='lazy' />
+                          <AvatarFallback className='rounded-full text-sm'>
+                            {testimonial.name
+                              .split(' ', 2)
+                              .map(n => n[0])
+                              .join('')}
+                          </AvatarFallback>
+                        </Avatar>
 
-                      <div className='flex-1'>
-                        <h4 className='font-serif font-medium'>{testimonial.name}</h4>
+                        <div className='flex-1'>
+                          <h4 className='font-serif font-medium'>{testimonial.name}</h4>
+                        </div>
                       </div>
-                    </div>
 
-                    <Rating readOnly variant='yellow' size={24} value={testimonial.rating} precision={0.5} />
-                    <p>{testimonial.content}</p>
-                    <p className='text-primary text-sm font-medium group-hover:underline'>Portfólió megtekintése</p>
-                  </CardContent>
+                      <Rating readOnly variant='yellow' size={24} value={testimonial.rating} precision={0.5} />
+                      <p>{testimonial.content}</p>
+                      <p className='text-primary text-sm font-medium group-hover:underline'>Portfólió megtekintése</p>
+                    </CardContent>
                   </a>
                 </Card>
               </CarouselItem>

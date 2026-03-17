@@ -7,27 +7,21 @@ export const testimonials: TestimonialItem[] = [
     avatar: '/wedding/adri-david/adri-david-profile.jpg',
     rating: 5,
     content:
-      'A szárazvirágos dekoráció minden részlete harmonikus volt, és a nap végéig tökéletesen tartotta a hangulatot.'
+      'Az esküvőnk egyik fénypontja kétség kívül a dekoráció volt. A vendégek el voltak ragadtatva tőle, és csodálatosan összefogta az egész eseményt. Liza az egész folyamatban proaktív volt, mindig javasolt, példákat hozott, és hajlandó volt bármit megpróbálni, amit kitaláltunk. Számunkra így az egész folyamat szuper élmény volt, hálás köszönet érte!'
   },
   {
     name: 'Réka & Bálint',
     slug: 'reka-balint',
     avatar: '/wedding/reka-balint/reka-balint-profile.jpg',
     rating: 5,
-    content: 'Pont azt kaptuk, amit elképzeltünk: színes, felszabadult és mégis kifinomult virágvilágot.'
-  },
-  {
-    name: 'Dóri & Dávid',
-    slug: 'dori-david',
-    avatar: '/wedding/dori-david/dori-david-profile.jpg',
-    rating: 5,
-    content: 'A helyszínből kihozták a maximumot, az őszi színek pedig gyönyörűen mutattak minden fotón.'
+    content:
+      'Amikor Lizát megkerestük, még egy kaotikus kép élt bennünk a vágyainkról. Ezt a káoszt sikerült kitisztítania. Amikor úgy érezte, hogy két elképzelés egymással ütközik, azt mindig kiemelte és alternatív javaslatot tett, de sosem erőltette ránk az ötletét. Neki is annyira fontos volt, hogy tökéletes legyen a nagy napunk, mint nekünk. Nagyon sok szeretettel ajánljuk!'
   },
   {
     name: 'Anna & Bence',
     slug: 'anna-bence',
     avatar: '/wedding/anna-bence/anna-bence-profile.jpg',
-    rating: 4.5,
-    content: 'Közvetlen, profi együttműködés volt, és végig éreztük, hogy valóban ránk szabott koncepció készül.'
+    rating: 5,
+    content: 'TODO'
   }
 ]

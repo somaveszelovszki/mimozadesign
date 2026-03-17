@@ -12,8 +12,12 @@ type ContactInfo = {
 
 const ContactUs = ({ contactInfo }: { contactInfo: ContactInfo }) => {
   return (
-    <section id='contact-us' className='bg-muted relative py-8 sm:py-16 lg:py-24'>
-      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
+    <section id='contact-us' className='relative overflow-hidden py-12 sm:py-20 lg:py-28'>
+      <div
+        aria-hidden='true'
+        className='bg-muted absolute inset-0 [clip-path:polygon(0_2.5rem,100%_0,100%_100%,0_100%)] sm:[clip-path:polygon(0_3rem,100%_0,100%_100%,0_100%)]'
+      />
+      <div className='relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         {/* Header */}
         <div className='mx-auto mb-12 flex max-w-2xl flex-col items-center justify-center space-y-4 text-center sm:mb-16 lg:mb-24'>
           <h2 className='font-serif text-2xl font-semibold md:text-3xl lg:text-4xl'>Lépj kapcsolatba velünk</h2>

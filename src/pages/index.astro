@@ -40,8 +40,11 @@ const schema = {
 <Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} schema={schema}>
   <HeroSection heroSlides={heroSlides} client:load />
   <FeaturedWeddings featuredWeddings={featuredWeddings} client:load />
+  <div class='w-full py-2' aria-hidden='true'>
+    <div class='bg-primary/30 h-[1px] w-full -rotate-1 transform-gpu'></div>
+  </div>
+  <Workshops workshops={workshops} />
   <AboutUs />
   <Testimonials testimonials={testimonials} client:load />
-  <Workshops workshops={workshops} />
   <ContactUs contactInfo={contactInfo} />
 </Layout>

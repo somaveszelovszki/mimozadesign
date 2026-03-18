@@ -45,7 +45,7 @@ export const SITE_METADATA = {
       'Természetes, rusztikus és őszi hangulatú esküvői dekorációk, menyasszonyi csokrok és személyes virágkoncepciók.',
     images: [
       {
-        url: '/wedding/dori-david/dori-david-profile.jpg',
+        url: '/weddings/dori-david/dori-david-profile.jpg',
         width: 1200,
         height: 630,
         alt: 'Mimóza Memories esküvői dekoráció'
@@ -59,7 +59,7 @@ export const SITE_METADATA = {
     title: 'Mimóza Memories | Esküvői dekoráció',
     description:
       'Természetes, rusztikus és őszi hangulatú esküvői dekorációk, menyasszonyi csokrok és személyes virágkoncepciók.',
-    images: ['/wedding/dori-david/dori-david-profile.jpg']
+    images: ['/weddings/dori-david/dori-david-profile.jpg']
   },
   verification: {
     google: '',

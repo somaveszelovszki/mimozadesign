@@ -36,10 +36,10 @@ const imageExtensionPattern = /\.(jpg|jpeg|png|webp)$/i
 const fileNameCollator = new Intl.Collator('hu', { numeric: true, sensitivity: 'base' })
 
 const getWeddingImages = (slug: string): string[] => {
-  const weddingFolderPath = resolve(process.cwd(), 'public', 'wedding', slug)
+  const weddingsFolderPath = resolve(process.cwd(), 'public', 'weddings', slug)
 
   try {
-    const folderImages = readdirSync(weddingFolderPath)
+    const folderImages = readdirSync(weddingsFolderPath)
       .filter(fileName => imageExtensionPattern.test(fileName))
       .sort((firstImage, secondImage) => {
         const firstIsProfile = firstImage.includes('-profile.')
@@ -56,7 +56,7 @@ const getWeddingImages = (slug: string): string[] => {
         return fileNameCollator.compare(firstImage, secondImage)
       })
 
-    return folderImages.map(fileName => `/wedding/${slug}/${fileName}`)
+    return folderImages.map(fileName => `/weddings/${slug}/${fileName}`)
   } catch (error) {
     console.error(`[weddings] Unable to read image folder for "${slug}".`, error)
 
@@ -69,7 +69,7 @@ export const weddings: Wedding[] = [
     slug: 'petra-mate',
     name: 'Petra és Máté',
     caption: 'Elegáns, romantikus dekoráció finom természetes részletekkel.',
-    coverImage: '/wedding/petra-mate/petra-mate-profile.jpg',
+    coverImage: '/weddings/petra-mate/petra-mate-profile.jpg',
     location: 'Tata, Grill Étterem',
     weddingDate: '2025. március 29.',
     card: {
@@ -84,7 +84,7 @@ export const weddings: Wedding[] = [
     name: 'Adri és Dávid',
     caption:
       'Szárazvirágból készült teljes dekoráció, amely a végtelenségig megőrzi az esküvő napjának gyönyörű emlékét.',
-    coverImage: '/wedding/adri-david/adri-david-profile.jpg',
+    coverImage: '/weddings/adri-david/adri-david-profile.jpg',
     location: 'Dabas, Jakab Lovasudvar',
     weddingDate: '2025. július 5.',
     card: {
@@ -98,7 +98,7 @@ export const weddings: Wedding[] = [
     slug: 'reka-balint',
     name: 'Réka és Bálint',
     caption: 'Amilyen a pár, olyan a csokor. Vidám, sokszínű, élénk.',
-    coverImage: '/wedding/reka-balint/reka-balint-profile.jpg',
+    coverImage: '/weddings/reka-balint/reka-balint-profile.jpg',
     location: 'Szomód, Pikant Pajta',
     weddingDate: '2024. május 17.',
     card: {
@@ -112,7 +112,7 @@ export const weddings: Wedding[] = [
     slug: 'dori-david',
     name: 'Dóri és Dávid',
     caption: 'Rusztikus stílusú, természetközeli dekor, az ősz színeivel.',
-    coverImage: '/wedding/dori-david/dori-david-profile.jpg',
+    coverImage: '/weddings/dori-david/dori-david-profile.jpg',
     location: 'Verőce, Lósi Major',
     weddingDate: '2023. szeptember 2.',
     card: {
@@ -126,7 +126,7 @@ export const weddings: Wedding[] = [
     slug: 'anna-bence',
     name: 'Anna és Bence',
     caption: 'Méhlegelő ihletésű csokor, novemberi kivitelben.',
-    coverImage: '/wedding/anna-bence/anna-bence-profile.jpg',
+    coverImage: '/weddings/anna-bence/anna-bence-profile.jpg',
     location: 'Budapest szívében',
     weddingDate: '2025. november 8.',
     card: {

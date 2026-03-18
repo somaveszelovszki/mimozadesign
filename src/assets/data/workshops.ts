@@ -1,6 +1,6 @@
 export const workshops = [
   {
-    img: '/wedding/reka-balint/reka-balint-6.jpg',
+    img: '/weddings/reka-balint/reka-balint-6.jpg',
     alt: 'Asztaldísz workshop',
     title: 'Tavaszi asztaldísz workshop',
     description: 'Élő virágokkal és természetes anyagokkal készítünk szezonális asztaldíszt kezdőknek is.',
@@ -17,7 +17,7 @@ export const workshops = [
     ]
   },
   {
-    img: '/wedding/dori-david/dori-david-4.jpg',
+    img: '/weddings/dori-david/dori-david-4.jpg',
     alt: 'Koszorúkészítő workshop',
     title: 'Nyári koszorúkészítő workshop',
     description: 'Színes mezei virágokkal és tartós alapanyagokkal készítünk ajtó- vagy falidíszt.',
@@ -34,7 +34,7 @@ export const workshops = [
     ]
   },
   {
-    img: '/wedding/anna-bence/anna-bence-3.jpg',
+    img: '/weddings/anna-bence/anna-bence-3.jpg',
     alt: 'Őszi csokor workshop',
     title: 'Őszi csokorkötő workshop',
     description: 'Színelmélet, textúrák és csokorkötési technikák egy gyakorlatorientált délutánon.',
@@ -80,12 +80,12 @@ export const workshopPortfolios: WorkshopPortfolio[] = [
     caption: 'Közösen készítettünk természetes adventi koszorúkat gyertyafényes, meghitt hangulatban.',
     date: '2025. november 30.',
     location: 'Budapest, Mimoza Studio',
-    coverImage: '/wedding/dori-david/dori-david-3.jpg',
+    coverImage: '/weddings/dori-david/dori-david-3.jpg',
     images: [
-      '/wedding/dori-david/dori-david-1.jpg',
-      '/wedding/dori-david/dori-david-2.jpg',
-      '/wedding/dori-david/dori-david-3.jpg',
-      '/wedding/dori-david/dori-david-4.jpg'
+      '/weddings/dori-david/dori-david-1.jpg',
+      '/weddings/dori-david/dori-david-2.jpg',
+      '/weddings/dori-david/dori-david-3.jpg',
+      '/weddings/dori-david/dori-david-4.jpg'
     ],
     facebookEventUrl: 'https://www.facebook.com/events/1196509952087690',
     registrationUrl: 'https://forms.gle/cMcf8fE8gG9ztX9o6'
@@ -96,12 +96,12 @@ export const workshopPortfolios: WorkshopPortfolio[] = [
     caption: 'Vadvirágos, laza kötésű csokrokat készítettünk szezonális alapanyagokból.',
     date: '2025. június 15.',
     location: 'Pécs, KertMűhely',
-    coverImage: '/wedding/reka-balint/reka-balint-5.jpg',
+    coverImage: '/weddings/reka-balint/reka-balint-5.jpg',
     images: [
-      '/wedding/reka-balint/reka-balint-1.jpg',
-      '/wedding/reka-balint/reka-balint-3.jpg',
-      '/wedding/reka-balint/reka-balint-5.jpg',
-      '/wedding/reka-balint/reka-balint-6.jpg'
+      '/weddings/reka-balint/reka-balint-1.jpg',
+      '/weddings/reka-balint/reka-balint-3.jpg',
+      '/weddings/reka-balint/reka-balint-5.jpg',
+      '/weddings/reka-balint/reka-balint-6.jpg'
     ],
     facebookEventUrl: 'https://www.facebook.com/events/887430266928277',
     registrationUrl: 'https://forms.gle/nrYCHu68baxF6KLd8'
@@ -112,12 +112,12 @@ export const workshopPortfolios: WorkshopPortfolio[] = [
     caption: 'Textúrák, színpaletta és kompozíció: mindenki saját asztaldísszel távozott.',
     date: '2025. március 9.',
     location: 'Győr, Közösségi Ház',
-    coverImage: '/wedding/anna-bence/anna-bence-2.jpg',
+    coverImage: '/weddings/anna-bence/anna-bence-2.jpg',
     images: [
-      '/wedding/anna-bence/anna-bence-1.jpg',
-      '/wedding/anna-bence/anna-bence-2.jpg',
-      '/wedding/anna-bence/anna-bence-3.jpg',
-      '/wedding/anna-bence/anna-bence-4.jpg'
+      '/weddings/anna-bence/anna-bence-1.jpg',
+      '/weddings/anna-bence/anna-bence-2.jpg',
+      '/weddings/anna-bence/anna-bence-3.jpg',
+      '/weddings/anna-bence/anna-bence-4.jpg'
     ],
     facebookEventUrl: 'https://www.facebook.com/events/1043388351226501',
     registrationUrl: 'https://forms.gle/SHYDPomUUm8n3uZt8'

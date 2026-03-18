@@ -1,6 +1,6 @@
 export const GalleryImage = [
   {
-    src: '/wedding/reka-balint/reka-balint-1.jpg',
+    src: '/weddings/reka-balint/reka-balint-1.jpg',
     alt: 'Kültéri ceremónia dekor',
     className: 'col-span-2 row-span-2',
     offerText: {
@@ -14,7 +14,7 @@ export const GalleryImage = [
     }
   },
   {
-    src: '/wedding/dori-david/dori-david-6.jpg',
+    src: '/weddings/dori-david/dori-david-6.jpg',
     alt: 'Őszi asztaldekoráció',
     className: 'col-span-2 max-h-60',
     offerText: {
@@ -28,7 +28,7 @@ export const GalleryImage = [
     }
   },
   {
-    src: '/wedding/anna-bence/anna-bence-4.jpg',
+    src: '/weddings/anna-bence/anna-bence-4.jpg',
     alt: 'Szárazvirág kompozíció',
     className: 'col-span-2 max-h-60',
     offerText: {

@@ -12,19 +12,6 @@ import {
 
 import { cn } from '@/lib/utils'
 
-// Inline scroll function
-const scrollToSection = (sectionId: string) => {
-  const element = document.getElementById(sectionId)
-
-  if (element) {
-    const headerHeight = 80
-    const elementPosition = element.getBoundingClientRect().top
-    const offsetPosition = elementPosition + window.pageYOffset - headerHeight
-
-    window.scrollTo({ top: offsetPosition, behavior: 'smooth' })
-  }
-}
-
 export type NavigationItem = {
   title: string
   href: string
@@ -46,35 +33,26 @@ export type NavigationSection = {
 
 type MenuNavigationProps = {
   navigationData: NavigationSection[]
-  activeSection?: string
   className?: string
 }
 
-const MenuNavigation = ({ navigationData, activeSection, className }: MenuNavigationProps) => {
+const MenuNavigation = ({ navigationData, className }: MenuNavigationProps) => {
   return (
     <NavigationMenu viewport={false} className={className}>
       <NavigationMenuList className='flex-wrap justify-start gap-0'>
         {navigationData.map(navItem => {
           if (navItem.href) {
-            // Extract section ID from href
-            const sectionId = navItem.href.replace('#', '')
-            const isActive = activeSection === sectionId && activeSection !== ''
-
             // Root link item
             return (
               <NavigationMenuItem key={navItem.title}>
                 <NavigationMenuLink
                   href={navItem.href}
-                  onClick={e => {
-                    e.preventDefault()
-                    scrollToSection(sectionId)
-                  }}
                   className={cn(
                     navigationMenuTriggerStyle(),
                     'rounded-full bg-transparent px-3 py-1.5 text-base! font-normal transition-colors duration-200',
                     'hover:text-primary hover:bg-primary/5 dark:hover:bg-primary/10',
                     'focus:text-primary focus:bg-primary/5 dark:focus:bg-primary/10',
-                    isActive ? 'text-primary bg-primary/5 dark:bg-primary/10' : 'text-muted-foreground'
+                    'text-muted-foreground'
                   )}
                 >
                   {navItem.title}

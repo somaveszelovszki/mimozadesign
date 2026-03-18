@@ -12,6 +12,17 @@ export type WeddingCard = {
 
 export const allWeddingCards: WeddingCard[] = [
   {
+    slug: 'petra-mate',
+    image: '/wedding/petra-mate/petra-mate-profile.jpg',
+    alt: 'Petra és Máté esküvője',
+    name: 'Petra és Máté',
+    subtitle: 'Romantikus elegancia',
+    description: 'Légies, harmonikus kompozíciók természetes tónusokkal és finom részletekkel.',
+    location: 'Tata, Grill Étterem',
+    weddingDate: '2025. március 29.',
+    isFeatured: true
+  },
+  {
     slug: 'adri-david',
     image: '/wedding/adri-david/adri-david-profile.jpg',
     alt: 'Adri és Dávid esküvője',
@@ -54,17 +65,6 @@ export const allWeddingCards: WeddingCard[] = [
     location: 'Budapest szívében',
     weddingDate: '2025. november 8.',
     isFeatured: false
-  },
-  {
-    slug: 'petra-mate',
-    image: '/wedding/petra-mate/petra-mate-profile.jpg',
-    alt: 'Petra és Máté esküvője',
-    name: 'Petra és Máté',
-    subtitle: 'Romantikus elegancia',
-    description: 'Légies, harmonikus kompozíciók természetes tónusokkal és finom részletekkel.',
-    location: 'Tata, Grill Étterem',
-    weddingDate: '2025. március 29.',
-    isFeatured: true
   }
 ]
 

@@ -3,18 +3,14 @@ import type { NavigationSection } from '@/components/blocks/menu-navigation'
 export const navigationData: NavigationSection[] = [
   {
     title: 'Rólunk',
-    href: '#about-us'
+    href: '/about-us'
   },
   {
-    title: 'Visszajelzések',
-    href: '#testimonials'
+    title: 'Esküvő',
+    href: '/weddings'
   },
   {
-    title: 'Kapcsolat',
-    href: '#contact-us'
-  },
-  {
-    title: 'Galéria',
-    href: '#offers'
+    title: 'Workshop',
+    href: '/workshops'
   }
 ]

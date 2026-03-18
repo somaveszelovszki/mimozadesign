@@ -27,34 +27,6 @@ const seoProps = Astro.props as Props
   <head>
     <HeadSeo {...seoProps} />
     <ClientRouter />
-    <script is:inline>
-      ;(function () {
-        const getTheme = () => {
-          if (typeof localStorage !== 'undefined') {
-            const stored = localStorage.getItem('theme')
-            if (stored === 'light' || stored === 'dark') {
-              return stored
-            }
-          }
-          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-        }
-
-        const applyTheme = () => {
-          const theme = getTheme()
-          if (theme === 'dark') {
-            document.documentElement.classList.add('dark')
-          } else {
-            document.documentElement.classList.remove('dark')
-          }
-        }
-
-        // Apply theme immediately on initial load
-        applyTheme()
-
-        // Re-apply theme on Astro page transitions
-        document.addEventListener('astro:page-load', applyTheme)
-      })()
-    </script>
     <style>
       /* Disable all view transitions while keeping client-side navigation */
       ::view-transition-group(*),

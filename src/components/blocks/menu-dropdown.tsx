@@ -13,21 +13,6 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 
-import { cn } from '@/lib/utils'
-
-// Inline scroll function
-const scrollToSection = (sectionId: string) => {
-  const element = document.getElementById(sectionId)
-
-  if (element) {
-    const headerHeight = 80
-    const elementPosition = element.getBoundingClientRect().top
-    const offsetPosition = elementPosition + window.pageYOffset - headerHeight
-
-    window.scrollTo({ top: offsetPosition, behavior: 'smooth' })
-  }
-}
-
 export type NavigationItem = {
   title: string
   href: string
@@ -50,34 +35,21 @@ export type NavigationSection = {
 type Props = {
   trigger: ReactNode
   navigationData: NavigationSection[]
-  activeSection?: string
   align?: 'center' | 'end' | 'start'
 }
 
-const MenuDropdown = ({ trigger, navigationData, activeSection, align = 'start' }: Props) => {
+const MenuDropdown = ({ trigger, navigationData, align = 'start' }: Props) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
       <DropdownMenuContent className='mt-1 w-[min(93vw,800px)]' align={align}>
         {navigationData.map(navItem => {
           if (navItem.href) {
-            // Extract section ID from href
-            const sectionId = navItem.href.replace('#', '')
-            const isActive = activeSection === sectionId && activeSection !== ''
-
             return (
               <DropdownMenuItem key={navItem.title} asChild>
                 <a
                   href={navItem.href}
-                  onClick={e => {
-                    e.preventDefault()
-                    scrollToSection(sectionId)
-                  }}
-                  className={cn(
-                    'transition-colors duration-200',
-                    'hover:bg-primary/10 hover:text-primary focus:bg-primary/10 focus:text-primary',
-                    isActive ? 'bg-primary/10 text-primary font-medium' : 'text-foreground'
-                  )}
+                  className='text-foreground transition-colors duration-200 hover:bg-primary/10 hover:text-primary focus:bg-primary/10 focus:text-primary'
                 >
                   {navItem.icon}
                   {navItem.title}

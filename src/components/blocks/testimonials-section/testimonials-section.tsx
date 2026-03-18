@@ -39,20 +39,14 @@ const TestimonialsComponent = ({ testimonials }: TestimonialsComponentProps) => 
             Így élték meg a közös tervezést és az általunk megalkotott esküvői dekorációkat.
           </p>
 
-          <div className='flex items-center gap-4'>
-            <CarouselPrevious
-              variant='default'
-              className='disabled:bg-primary/10 disabled:text-primary static size-9 translate-y-0 rounded-full disabled:opacity-100'
-            />
-            <CarouselNext
-              variant='default'
-              className='disabled:bg-primary/10 disabled:text-primary static size-9 translate-y-0 rounded-full disabled:opacity-100'
-            />
-          </div>
         </div>
 
         {/* Right Testimonial Carousel */}
-        <div className='relative max-w-196 sm:w-1/2 lg:w-2/3'>
+        <div className='relative max-w-196 sm:w-1/2 sm:px-10 lg:w-2/3 lg:px-12'>
+          <CarouselPrevious
+            variant='default'
+            className='disabled:bg-primary/10 disabled:text-primary absolute top-1/2 left-0 z-10 size-9 -translate-y-1/2 rounded-full disabled:opacity-100 max-sm:hidden'
+          />
           <CarouselContent className='sm:-ml-6'>
             {testimonials.map((testimonial, index) => (
               <CarouselItem key={index} className='sm:pl-6 lg:basis-1/2'>
@@ -88,6 +82,21 @@ const TestimonialsComponent = ({ testimonials }: TestimonialsComponentProps) => 
               </CarouselItem>
             ))}
           </CarouselContent>
+          <CarouselNext
+            variant='default'
+            className='disabled:bg-primary/10 disabled:text-primary absolute top-1/2 right-0 z-10 size-9 -translate-y-1/2 rounded-full disabled:opacity-100 max-sm:hidden'
+          />
+
+          <div className='mt-6 flex items-center justify-center gap-4 sm:hidden'>
+            <CarouselPrevious
+              variant='default'
+              className='disabled:bg-primary/10 disabled:text-primary static size-9 translate-y-0 rounded-full disabled:opacity-100'
+            />
+            <CarouselNext
+              variant='default'
+              className='disabled:bg-primary/10 disabled:text-primary static size-9 translate-y-0 rounded-full disabled:opacity-100'
+            />
+          </div>
         </div>
       </Carousel>
     </section>

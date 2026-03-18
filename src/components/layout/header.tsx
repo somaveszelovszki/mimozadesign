@@ -13,8 +13,6 @@ import type { NavigationSection } from '@/components/blocks/menu-navigation'
 
 import { cn } from '@/lib/utils'
 
-import BistroLogo from '@/assets/svg/bistro-logo'
-
 type HeaderProps = {
   navigationData: NavigationSection[]
   className?: string
@@ -48,9 +46,19 @@ const Header = ({ navigationData, className }: HeaderProps) => {
     >
       <div className='mx-auto flex h-full max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8'>
         {/* Logo */}
-        <a href='/' className='flex items-center gap-3'>
-          <BistroLogo />
-          <span className='text-primary text-[20px] font-semibold'>Mimóza Memories</span>
+        <a href='/' className='flex items-center'>
+          <span
+            className='h-14 shrink-0 overflow-hidden sm:h-16'
+            style={{ aspectRatio: '1.846' }}
+          >
+            <img
+              src='/mimoza-memories-logo.png'
+              alt='Mimóza Memories'
+              className='h-full w-auto max-w-none translate-y-1 transform-gpu'
+              loading='eager'
+              decoding='async'
+            />
+          </span>
         </a>
 
         {/* Navigation */}

@@ -27,37 +27,31 @@ const ContactUs = ({ contactInfo }: { contactInfo: ContactInfo }) => {
           </p>
         </div>
 
-        <div className='grid items-center gap-12 lg:grid-cols-2'>
+        <div className='grid items-start gap-6 lg:grid-cols-2 lg:items-stretch lg:gap-12'>
           <img
-            src='/wedding/reka-balint/reka-balint-4.jpg'
+            src='/contact/kedves-mimoza.jpg'
             alt='Kapcsolatfelvétel a Mimóza Memories csapatával'
-            className='size-full object-cover max-lg:max-h-70'
+            className='aspect-square w-full max-w-md justify-self-center object-cover lg:justify-self-end'
             loading='lazy'
           />
 
-          <div>
-            <h3 className='font-serif mb-2 text-2xl'>Itt kezdődik a közös tervezés</h3>
-            <p className='text-muted-foreground mb-10 text-lg'>
-              Legyen szó teljes esküvői dekorációról vagy egyedi virágkötészetről, segítünk megtalálni a hozzátok illő
-              megoldást.
-            </p>
-
+          <div className='flex h-full max-w-[24rem] flex-col justify-between'>
             {/* Contact Info Grid */}
-            <div className='grid gap-6 sm:grid-cols-2'>
+            <div className='grid grid-cols-2 gap-4'>
               {contactInfo.map((info, index) => (
                 <Card
-                  className='bg-background hover:border-primary shadow-none transition-colors duration-300'
+                  className='bg-background hover:border-primary aspect-square overflow-hidden shadow-none transition-colors duration-300'
                   key={index}
                 >
-                  <CardContent className='flex flex-col items-center gap-4 text-center'>
-                    <Avatar className='size-9 border'>
-                      <AvatarFallback className='bg-transparent [&>svg]:size-5'>
+                  <CardContent className='flex h-full min-h-0 flex-col items-center justify-center gap-2.5 p-3 text-center sm:p-4'>
+                    <Avatar className='size-8 border'>
+                      <AvatarFallback className='bg-transparent [&>svg]:size-4.5'>
                         <info.icon />
                       </AvatarFallback>
                     </Avatar>
-                    <div className='space-y-3'>
-                      <h4 className='font-serif text-lg font-semibold'>{info.title}</h4>
-                      <div className='text-muted-foreground text-base font-medium'>
+                    <div className='space-y-1.5'>
+                      <h4 className='font-serif text-sm font-semibold sm:text-base'>{info.title}</h4>
+                      <div className='text-muted-foreground text-sm font-medium'>
                         {info.description.split('\n').map((line, idx) => (
                           <p key={idx}>{line}</p>
                         ))}
@@ -68,7 +62,7 @@ const ContactUs = ({ contactInfo }: { contactInfo: ContactInfo }) => {
               ))}
             </div>
 
-            <Button asChild size='lg' className='mt-10 mx-auto flex w-fit rounded-full px-10 text-base'>
+            <Button asChild size='lg' className='mx-auto mt-2 flex w-fit rounded-full px-10 text-base'>
               <a href='/contact'>Írj nekünk</a>
             </Button>
           </div>

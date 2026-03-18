@@ -3,7 +3,7 @@ export type WeddingCard = {
   image: string
   alt: string
   name: string
-  type: string
+  subtitle: string
   description: string
   location: string
   weddingDate: string
@@ -16,10 +16,10 @@ export const allWeddingCards: WeddingCard[] = [
     image: '/wedding/adri-david/adri-david-profile.jpg',
     alt: 'Adri és Dávid esküvője',
     name: 'Adri és Dávid',
-    type: 'Szárazvirágos koncepció',
+    subtitle: 'Szárazvirágos koncepció',
     description: 'Időtálló, bézs-barna tónusú dekoráció természetes textúrákkal.',
-    location: 'Szentendre',
-    weddingDate: '2024. augusztus 24.',
+    location: 'Dabas, Jakab Lovasudvar',
+    weddingDate: '2025. július 5.',
     isFeatured: true
   },
   {
@@ -27,10 +27,10 @@ export const allWeddingCards: WeddingCard[] = [
     image: '/wedding/reka-balint/reka-balint-profile.jpg',
     alt: 'Réka és Bálint esküvője',
     name: 'Réka és Bálint',
-    type: 'Vadvirágos hangulat',
+    subtitle: 'Vadvirágos hangulat',
     description: 'Élénk, játékos színvilág, amely a pár energikus stílusát emeli ki.',
-    location: 'Tata',
-    weddingDate: '2024. szeptember 7.',
+    location: 'Szomód, Pikant Pajta',
+    weddingDate: '2024. május 17.',
     isFeatured: true
   },
   {
@@ -38,10 +38,10 @@ export const allWeddingCards: WeddingCard[] = [
     image: '/wedding/dori-david/dori-david-profile.jpg',
     alt: 'Dóri és Dávid esküvője',
     name: 'Dóri és Dávid',
-    type: 'Őszi rusztikus dekor',
+    subtitle: 'Őszi rusztikus dekor',
     description: 'Erdei ihletésű kompozíciók mély terrakotta és moha zöld árnyalatokkal.',
-    location: 'Etyek',
-    weddingDate: '2023. október 14.',
+    location: 'Verőce, Lósi Major',
+    weddingDate: '2023. szeptember 2.',
     isFeatured: true
   },
   {
@@ -49,10 +49,10 @@ export const allWeddingCards: WeddingCard[] = [
     image: '/wedding/anna-bence/anna-bence-profile.jpg',
     alt: 'Anna és Bence esküvője',
     name: 'Anna és Bence',
-    type: 'Méhlegelő inspiráció',
+    subtitle: 'Méhlegelő inspiráció',
     description: 'Finom, késő őszi virágvilág letisztult, romantikus részletekkel.',
-    location: 'Balatonfüred',
-    weddingDate: '2023. november 11.',
+    location: 'Budapest szívében',
+    weddingDate: '2025. november 8.',
     isFeatured: false
   },
   {
@@ -60,10 +60,10 @@ export const allWeddingCards: WeddingCard[] = [
     image: '/wedding/petra-mate/petra-mate-profile.jpg',
     alt: 'Petra és Máté esküvője',
     name: 'Petra és Máté',
-    type: 'Romantikus elegancia',
+    subtitle: 'Romantikus elegancia',
     description: 'Légies, harmonikus kompozíciók természetes tónusokkal és finom részletekkel.',
-    location: 'Szeged',
-    weddingDate: '2025. május 17.',
+    location: 'Tata, Grill Étterem',
+    weddingDate: '2025. március 29.',
     isFeatured: true
   }
 ]

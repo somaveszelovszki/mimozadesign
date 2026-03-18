@@ -50,7 +50,7 @@ const FeaturedWeddings = ({ featuredWeddings, showAllWeddingsLink = true }: Feat
                     <CardTitle className='text-lg'>{wedding.name}</CardTitle>
                     <Separator />
                     <div className='text-muted-foreground'>
-                      <p className='mb-1 text-base font-medium'>{wedding.type}</p>
+                      <p className='mb-1 text-base font-medium'>{wedding.subtitle}</p>
                       <p>{wedding.description}</p>
                     </div>
                     <p className='text-primary text-sm font-medium group-hover:underline'>Portfólió megtekintése</p>

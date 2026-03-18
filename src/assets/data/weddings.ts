@@ -1,12 +1,35 @@
 import { readdirSync } from 'node:fs'
 import { resolve } from 'node:path'
 
-export type WeddingPortfolio = {
+export type Wedding = {
   slug: string
   name: string
   caption: string
   coverImage: string
+  location: string
+  weddingDate: string
+  card: {
+    alt: string
+    subtitle: string
+    description: string
+    isFeatured: boolean
+  }
+}
+
+export type WeddingPortfolio = Wedding & {
   images: string[]
+}
+
+export type WeddingCard = {
+  slug: string
+  image: string
+  alt: string
+  name: string
+  subtitle: string
+  description: string
+  location: string
+  weddingDate: string
+  isFeatured: boolean
 }
 
 const imageExtensionPattern = /\.(jpg|jpeg|png|webp)$/i
@@ -41,20 +64,20 @@ const getWeddingImages = (slug: string): string[] => {
   }
 }
 
-export const weddingPortfolios: WeddingPortfolio[] = [
+export const weddings: Wedding[] = [
   {
-    slug: 'dori-david',
-    name: 'Dóri és Dávid',
-    caption: 'Rusztikus stílusú, természetközeli dekor, az ősz színeivel.',
-    coverImage: '/wedding/dori-david/dori-david-profile.jpg',
-    images: getWeddingImages('dori-david')
-  },
-  {
-    slug: 'reka-balint',
-    name: 'Réka és Bálint',
-    caption: 'Amilyen a pár, olyan a csokor. Vidám, sokszínű, élénk.',
-    coverImage: '/wedding/reka-balint/reka-balint-profile.jpg',
-    images: getWeddingImages('reka-balint')
+    slug: 'petra-mate',
+    name: 'Petra és Máté',
+    caption: 'Elegáns, romantikus dekoráció finom természetes részletekkel.',
+    coverImage: '/wedding/petra-mate/petra-mate-profile.jpg',
+    location: 'Tata, Grill Étterem',
+    weddingDate: '2025. március 29.',
+    card: {
+      alt: 'Petra és Máté esküvője',
+      subtitle: 'Romantikus elegancia',
+      description: 'Légies, harmonikus kompozíciók természetes tónusokkal és finom részletekkel.',
+      isFeatured: true
+    }
   },
   {
     slug: 'adri-david',
@@ -62,20 +85,74 @@ export const weddingPortfolios: WeddingPortfolio[] = [
     caption:
       'Szárazvirágból készült teljes dekoráció, amely a végtelenségig megőrzi az esküvő napjának gyönyörű emlékét.',
     coverImage: '/wedding/adri-david/adri-david-profile.jpg',
-    images: getWeddingImages('adri-david')
+    location: 'Dabas, Jakab Lovasudvar',
+    weddingDate: '2025. július 5.',
+    card: {
+      alt: 'Adri és Dávid esküvője',
+      subtitle: 'Szárazvirágos koncepció',
+      description: 'Időtálló, bézs-barna tónusú dekoráció természetes textúrákkal.',
+      isFeatured: true
+    }
   },
   {
-    slug: 'petra-mate',
-    name: 'Petra és Máté',
-    caption: 'Elegáns, romantikus dekoráció finom természetes részletekkel.',
-    coverImage: '/wedding/petra-mate/petra-mate-profile.jpg',
-    images: getWeddingImages('petra-mate')
+    slug: 'reka-balint',
+    name: 'Réka és Bálint',
+    caption: 'Amilyen a pár, olyan a csokor. Vidám, sokszínű, élénk.',
+    coverImage: '/wedding/reka-balint/reka-balint-profile.jpg',
+    location: 'Szomód, Pikant Pajta',
+    weddingDate: '2024. május 17.',
+    card: {
+      alt: 'Réka és Bálint esküvője',
+      subtitle: 'Vadvirágos hangulat',
+      description: 'Élénk, játékos színvilág, amely a pár energikus stílusát emeli ki.',
+      isFeatured: true
+    }
+  },
+  {
+    slug: 'dori-david',
+    name: 'Dóri és Dávid',
+    caption: 'Rusztikus stílusú, természetközeli dekor, az ősz színeivel.',
+    coverImage: '/wedding/dori-david/dori-david-profile.jpg',
+    location: 'Verőce, Lósi Major',
+    weddingDate: '2023. szeptember 2.',
+    card: {
+      alt: 'Dóri és Dávid esküvője',
+      subtitle: 'Őszi rusztikus dekor',
+      description: 'Erdei ihletésű kompozíciók mély terrakotta és moha zöld árnyalatokkal.',
+      isFeatured: true
+    }
   },
   {
     slug: 'anna-bence',
     name: 'Anna és Bence',
     caption: 'Méhlegelő ihletésű csokor, novemberi kivitelben.',
     coverImage: '/wedding/anna-bence/anna-bence-profile.jpg',
-    images: getWeddingImages('anna-bence')
+    location: 'Budapest szívében',
+    weddingDate: '2025. november 8.',
+    card: {
+      alt: 'Anna és Bence esküvője',
+      subtitle: 'Méhlegelő inspiráció',
+      description: 'Finom, késő őszi virágvilág letisztult, romantikus részletekkel.',
+      isFeatured: false
+    }
   }
 ]
+
+export const weddingPortfolios: WeddingPortfolio[] = weddings.map(wedding => ({
+  ...wedding,
+  images: getWeddingImages(wedding.slug)
+}))
+
+export const allWeddingCards: WeddingCard[] = weddings.map(wedding => ({
+  slug: wedding.slug,
+  image: wedding.coverImage,
+  alt: wedding.card.alt,
+  name: wedding.name,
+  subtitle: wedding.card.subtitle,
+  description: wedding.card.description,
+  location: wedding.location,
+  weddingDate: wedding.weddingDate,
+  isFeatured: wedding.card.isFeatured
+}))
+
+export const featuredWeddings: WeddingCard[] = allWeddingCards.filter(wedding => wedding.isFeatured)

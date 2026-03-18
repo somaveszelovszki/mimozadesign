@@ -1,6 +1,6 @@
 import { Card, CardContent, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
-import type { WeddingCard } from '@/assets/data/featured-weddings'
+import type { WeddingCard } from '@/assets/data/weddings'
 
 type FeaturedWeddingsProps = {
   featuredWeddings: WeddingCard[]

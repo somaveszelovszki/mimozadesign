@@ -37,7 +37,7 @@ const schema = {
 }
 ---
 
-<Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} schema={schema}>
+<Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} schema={schema} footerClassName='bg-muted'>
   <HeroSection heroSlides={heroSlides} client:load />
   <FeaturedWeddings featuredWeddings={featuredWeddings} client:load />
   <div class='w-full py-2' aria-hidden='true'>

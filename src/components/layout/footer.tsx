@@ -1,8 +1,13 @@
 import { FacebookIcon, InstagramIcon } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
-const Footer = () => {
+type FooterProps = {
+  className?: string
+}
+
+const Footer = ({ className }: FooterProps) => {
   return (
-    <footer className='bg-muted'>
+    <footer className={cn('bg-background', className)}>
       <table className='mx-auto mb-8 w-full max-w-7xl table-fixed px-4 pt-8 pb-12 sm:px-6'>
         <tbody>
           <tr>

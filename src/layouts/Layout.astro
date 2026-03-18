@@ -20,9 +20,11 @@ interface Props {
   noindex?: boolean
   nofollow?: boolean
   schema?: Record<string, any>
+  footerClassName?: string
 }
 
 const seoProps = Astro.props as Props
+const { footerClassName } = seoProps
 ---
 
 <!doctype html>
@@ -45,7 +47,7 @@ const seoProps = Astro.props as Props
 
       <main class='flex flex-col pt-17.5 *:scroll-mt-16'><slot /></main>
 
-      <Footer client:load />
+      <Footer className={footerClassName} client:load />
     </div>
   </body>
 </html>

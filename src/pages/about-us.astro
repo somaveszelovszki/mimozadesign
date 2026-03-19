@@ -21,13 +21,12 @@ const pageDescription =
           </p>
         </div>
         <figure
-          class='instax-frame float-on-scroll is-hidden-right relative mx-auto w-full max-w-sm rotate-[3deg] shadow-[0_18px_40px_-20px_rgba(15,23,42,0.55)] lg:ml-auto lg:max-w-md'
-          data-direction='right'
+          class='float-on-scroll is-hidden relative mx-auto w-full max-w-[24rem] lg:ml-auto lg:max-w-[28rem]'
         >
           <img
             src='/about-us/about-us-liza-petra-children.jpg'
             alt='Liza gyerekként'
-            class='instax-image'
+            class='about-section-image'
             loading='lazy'
           />
         </figure>
@@ -39,13 +38,12 @@ const pageDescription =
     <div class='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
       <article class='mx-auto grid max-w-7xl gap-10 lg:grid-cols-2 lg:items-center lg:gap-16'>
         <figure
-          class='instax-frame float-on-scroll is-hidden-left relative mx-auto w-full max-w-sm rotate-[-4deg] shadow-[0_18px_40px_-20px_rgba(15,23,42,0.6)] lg:mr-auto lg:max-w-md'
-          data-direction='left'
+          class='float-on-scroll is-hidden relative mx-auto w-full max-w-[24rem] lg:mr-auto lg:max-w-[28rem]'
         >
           <img
             src='/about-us/about-us-liza-amsterdam.jpg'
             alt='Liza Amszterdamban'
-            class='instax-image instax-image--focus-right'
+            class='about-section-image about-section-image--focus-right'
             loading='lazy'
           />
         </figure>
@@ -71,10 +69,14 @@ const pageDescription =
           egy olyan megjelenéshez, amit elképzeltek.
         </p>
         <figure
-          class='instax-frame float-on-scroll is-hidden-right relative mx-auto w-full max-w-sm rotate-[2.5deg] shadow-[0_18px_40px_-20px_rgba(15,23,42,0.58)] lg:ml-auto lg:max-w-md'
-          data-direction='right'
+          class='float-on-scroll is-hidden relative mx-auto w-full max-w-[24rem] lg:ml-auto lg:max-w-[28rem]'
         >
-          <img src='/about-us/about-us-liza-working.jpg' alt='Liza munka közben' class='instax-image' loading='lazy' />
+          <img
+            src='/about-us/about-us-liza-working.jpg'
+            alt='Liza munka közben'
+            class='about-section-image'
+            loading='lazy'
+          />
         </figure>
       </article>
     </div>
@@ -87,9 +89,6 @@ const pageDescription =
     const PHOTO_SELECTOR = '.float-on-scroll'
     let observer
 
-    const hiddenClassFor = photo =>
-      photo.getAttribute('data-direction') === 'left' ? 'is-hidden-left' : 'is-hidden-right'
-
     const runFloatAnimations = () => {
       const sections = document.querySelectorAll(SECTION_SELECTOR)
       if (!sections.length) return
@@ -99,8 +98,8 @@ const pageDescription =
       for (const section of sections) {
         const photo = section.querySelector(PHOTO_SELECTOR)
         if (!photo) continue
-        photo.classList.remove('is-visible', 'is-hidden-left', 'is-hidden-right')
-        photo.classList.add(hiddenClassFor(photo))
+        photo.classList.remove('is-visible')
+        photo.classList.add('is-hidden')
       }
 
       requestAnimationFrame(() => {
@@ -111,7 +110,7 @@ const pageDescription =
                 const photo = entry.target.querySelector(PHOTO_SELECTOR)
                 if (!photo) continue
                 photo.classList.add('is-visible')
-                photo.classList.remove('is-hidden-left', 'is-hidden-right')
+                photo.classList.remove('is-hidden')
                 observer.unobserve(entry.target)
               }
             }
@@ -137,63 +136,35 @@ const pageDescription =
 </script>
 
 <style>
-  .instax-frame {
-    background: linear-gradient(165deg, #ffffff 0%, #f5f5f4 100%);
-    border-radius: 0.85rem;
-    padding: 0.75rem 0.75rem 1.2rem;
-    transition:
-      transform 650ms cubic-bezier(0.2, 0.65, 0.2, 1),
-      opacity 650ms ease;
-    will-change: transform, opacity;
-  }
-
-  .instax-image {
-    aspect-ratio: 4 / 5;
+  .about-section-image {
+    aspect-ratio: 16 / 10;
     width: 100%;
-    border-radius: 0.35rem;
+    border-radius: 0.75rem;
+    border: 1px solid rgb(231 229 228);
     object-fit: cover;
   }
 
-  .instax-image--focus-right {
+  .about-section-image--focus-right {
     object-position: 92% 50%;
   }
 
   .float-on-scroll {
-    opacity: 1;
+    transition: opacity 2000ms ease;
+    will-change: opacity;
   }
 
-  .float-on-scroll.is-hidden-left,
-  .float-on-scroll.is-hidden-right {
+  .float-on-scroll.is-hidden {
     opacity: 0;
-  }
-
-  .float-on-scroll.is-hidden-left {
-    transform: translate3d(-72px, 32px, 0) rotate(-8deg) scale(0.92);
-  }
-
-  .float-on-scroll.is-hidden-right {
-    transform: translate3d(72px, 32px, 0) rotate(8deg) scale(0.92);
   }
 
   .float-on-scroll.is-visible {
     opacity: 1;
-    transform: translate3d(0, 0, 0) rotate(var(--resting-rotation, 0deg)) scale(1);
-  }
-
-  .float-on-scroll[data-direction='left'].is-visible {
-    --resting-rotation: -4deg;
-  }
-
-  .float-on-scroll[data-direction='right'].is-visible {
-    --resting-rotation: 3deg;
   }
 
   @media (prefers-reduced-motion: reduce) {
     .float-on-scroll,
-    .float-on-scroll[data-direction='left'],
-    .float-on-scroll[data-direction='right'] {
+    .float-on-scroll.is-hidden {
       opacity: 1;
-      transform: none;
       transition: none;
     }
   }

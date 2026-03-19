@@ -65,16 +65,30 @@ const HeroSection = ({ heroSlides, className }: HeroSectionProps) => {
   return (
     <section
       id='home'
-      className={`relative min-h-[calc(100svh-4rem)] w-full bg-gradient-to-br from-background via-muted/55 to-secondary/45 py-8 sm:py-12 lg:py-16 ${className ?? ''}`}
+      className={`from-background via-muted/55 to-secondary/45 relative min-h-[calc(100svh-4rem)] w-full bg-gradient-to-br py-8 sm:py-12 lg:py-16 ${className ?? ''}`}
     >
       <div className='mx-auto flex h-full max-w-6xl flex-col items-center justify-center px-4 py-16 text-center sm:px-6 lg:px-8'>
-        <p className='text-muted-foreground mb-5 text-xs tracking-[0.14em] uppercase'>Mimoza memories</p>
-        <h1 className='text-foreground font-serif inline-flex whitespace-nowrap text-3xl leading-tight font-medium tracking-tight sm:text-4xl lg:text-6xl'>
-          <span>...mert néha elég egy&nbsp;</span>
+        <a href='/' className='mb-8 flex flex-col items-center leading-none'>
+          <span className='h-[clamp(84px,12vw,140px)] shrink-0 overflow-hidden' style={{ aspectRatio: '1.846' }}>
+            <img
+              src='/mimoza-memories-logo.png'
+              alt='Mimóza Memories'
+              className='h-full w-auto max-w-none translate-y-1 transform-gpu'
+              loading='eager'
+              decoding='async'
+            />
+          </span>
           <span
-            className='text-accent inline-block text-left'
-            style={{ width: `${averageDynamicWordLength}ch` }}
+            className='text-foreground/80 -mt-[30px] font-medium tracking-[0.32em]'
+            style={{ fontSize: 'clamp(11px,3vw,15px)', lineHeight: 1 }}
           >
+            DESIGN
+          </span>
+        </a>
+        <p className='text-muted-foreground mb-5 text-xs tracking-[0.14em] uppercase'>Mimoza memories</p>
+        <h1 className='text-foreground inline-flex font-serif text-3xl leading-tight font-medium tracking-tight whitespace-nowrap sm:text-4xl lg:text-6xl'>
+          <span>...mert néha elég egy&nbsp;</span>
+          <span className='text-accent inline-block text-left' style={{ width: `${averageDynamicWordLength}ch` }}>
             <AnimatePresence mode='wait'>
               <motion.span
                 key={`kinetic-word-${activeTextIndex}`}
@@ -93,10 +107,16 @@ const HeroSection = ({ heroSlides, className }: HeroSectionProps) => {
           Természetes, személyes, időtálló virágdekorációkat tervezünk a ti történetetekhez, mindig szeretettel.
         </p>
         <div className='mt-10 flex flex-wrap justify-center gap-3'>
-          <a href='#contact' className='bg-primary text-primary-foreground rounded-full px-6 py-3 text-sm font-medium transition-opacity hover:opacity-90'>
+          <a
+            href='#contact'
+            className='bg-primary text-primary-foreground rounded-full px-6 py-3 text-sm font-medium transition-opacity hover:opacity-90'
+          >
             Kezdd el
           </a>
-          <a href='#services' className='border-border bg-card text-foreground rounded-full border px-6 py-3 text-sm font-medium transition-colors hover:bg-muted'>
+          <a
+            href='#services'
+            className='border-border bg-card text-foreground hover:bg-muted rounded-full border px-6 py-3 text-sm font-medium transition-colors'
+          >
             Folyamat megnezese
           </a>
         </div>

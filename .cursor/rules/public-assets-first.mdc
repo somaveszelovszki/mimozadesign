@@ -5,6 +5,6 @@ alwaysApply: true
 
 # Public Assets First
 
-- When a component/page uses URL-style asset paths (for example `'/about-me/liza-working.jpg'`), the file must exist under `public/`.
+- When a component/page uses URL-style asset paths (for example `'/about-us/about-us-liza-working.jpg'`), the file must exist under `public/`.
 - If an asset is currently under `resources/` and needs URL access, copy it into the matching folder under `public/` and reference the `public` URL path.
 - Prefer stable, direct public paths for repeated or shared images used across pages/components.

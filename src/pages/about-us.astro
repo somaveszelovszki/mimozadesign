@@ -7,33 +7,194 @@ const pageDescription =
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
-  <section class='mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 py-12 sm:px-6 lg:px-8 lg:py-16'>
-    <div class='space-y-4'>
-      <h1 class='font-serif text-3xl font-semibold tracking-tight sm:text-4xl'>Rólunk</h1>
-      <p class='text-muted-foreground text-lg'>
-        Liza vagyok, virágkötő, textiltervező, építész, feleség és anyuka, a Mimóza Memories megálmodója.
-      </p>
-      <p class='text-muted-foreground text-lg'>
-        Már kisgyermekkoromban is nagy boldogsággal töltött el, amikor anyukám virágboltjában ténykedhettem, és
-        figyelhettem, ahogyan a virágokból gyönyörű csokrokat varázsol. Már ekkor eldöntöttem, hogy ha nagy leszek, én
-        is tervezni, alkotni fogok.
-      </p>
-      <p class='text-muted-foreground text-lg'>
-        Ezen ötlettől vezérelve először textiltervező, majd pedig építész lettem. Bár mindkét hivatást nagyon szerettem,
-        és lelkesen végeztem, mindig azt éreztem, hogy a természetben, virágok és növények között érzem magam igazán
-        jól. Ezért amikor az élet Hollandiába sodort pár évre, ott elszegődtem egy virágboltba Amsterdam belvárosában,
-        hogy kitanuljam a szakma csínját-bínját. Lenyűgözött a hollandok mezei stílusú virágkötészete, és nagyon hálás
-        vagyok érte, hogy tapasztalatot gyűjthettem benne. Miután férjemmel hazaköltözünk, egyre inkább érlelődött
-        bennem egy saját virágdekoros vállalkozás ötlete, és végül így született meg a Mimóza Memories.
-      </p>
-      <p class='text-muted-foreground text-lg'>
-        TODO ...ezt a természetes, rusztikus, játékossággal átszőtt stílust viszem bele minden megkötött csokorba és
-        koszorúba.
-      </p>
+  <section class='about-float-section bg-background py-8 sm:py-16 lg:py-24'>
+    <div class='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
+      <article class='mx-auto grid max-w-7xl gap-10 lg:grid-cols-2 lg:items-center lg:gap-16'>
+        <div class='space-y-4'>
+          <p class='text-muted-foreground text-lg'>
+            Liza vagyok, virágkötő, textiltervező, építész, feleség és anyuka, a Mimóza Design megálmodója.
+          </p>
+          <p class='text-muted-foreground text-lg'>
+            Már kisgyermekkoromban is nagy boldogsággal töltött el, amikor anyukám virágboltjában ténykedhettem, és
+            figyelhettem, ahogyan a virágokból gyönyörű csokrokat varázsol. Már ekkor eldöntöttem, hogy ha nagy leszek,
+            én is tervezni, alkotni fogok.
+          </p>
+        </div>
+        <figure
+          class='instax-frame float-on-scroll is-hidden-right relative mx-auto w-full max-w-sm rotate-[3deg] shadow-[0_18px_40px_-20px_rgba(15,23,42,0.55)] lg:ml-auto lg:max-w-md'
+          data-direction='right'
+        >
+          <img
+            src='/about-us/about-us-liza-petra-children.jpg'
+            alt='Liza gyerekként'
+            class='instax-image'
+            loading='lazy'
+          />
+        </figure>
+      </article>
     </div>
+  </section>
 
-    <div class='overflow-hidden rounded-xl'>
-      <img src='/about-me/liza-working.jpg' alt='Liza munka közben' class='h-full w-full object-cover' loading='lazy' />
+  <section class='about-float-section bg-white py-8 sm:py-16 lg:py-24'>
+    <div class='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
+      <article class='mx-auto grid max-w-7xl gap-10 lg:grid-cols-2 lg:items-center lg:gap-16'>
+        <figure
+          class='instax-frame float-on-scroll is-hidden-left relative mx-auto w-full max-w-sm rotate-[-4deg] shadow-[0_18px_40px_-20px_rgba(15,23,42,0.6)] lg:mr-auto lg:max-w-md'
+          data-direction='left'
+        >
+          <img
+            src='/about-us/about-us-liza-amsterdam.jpg'
+            alt='Liza Amszterdamban'
+            class='instax-image instax-image--focus-right'
+            loading='lazy'
+          />
+        </figure>
+        <p class='text-muted-foreground text-lg'>
+          Ezen ötlettől vezérelve először textiltervező, majd pedig építész lettem. Bár mindkét hivatást nagyon
+          szerettem, és lelkesen végeztem, mindig azt éreztem, hogy a természetben, virágok és növények között érzem
+          magam igazán jól. Ezért amikor az élet Hollandiába sodort pár évre, ott elszegődtem egy virágboltba Amszterdam
+          belvárosában, hogy kitanuljam a szakma csínját-bínját. Lenyűgözött a hollandok mezei stílusú virágkötészete,
+          és nagyon hálás vagyok érte, hogy tapasztalatot gyűjthettem benne. Miután férjemmel hazaköltözünk, egyre
+          inkább érlelődött bennem egy saját virágdekoros vállalkozás ötlete, és végül így született meg a Mimóza
+          Design.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class='about-float-section bg-background py-8 sm:py-16 lg:py-24'>
+    <div class='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
+      <article class='mx-auto grid max-w-7xl gap-10 lg:grid-cols-2 lg:items-center lg:gap-16'>
+        <p class='text-muted-foreground text-lg'>
+          Az alkotásaimban a Hollandiában tanult természetes, rusztikus, játékossággal átszőtt stílus elevenedik meg.
+          Emellett mindig nagy hangsúlyt fektetek arra, hogy a párokkal közösen együttműködve, őket segítve jussunk el
+          egy olyan megjelenéshez, amit elképzeltek.
+        </p>
+        <figure
+          class='instax-frame float-on-scroll is-hidden-right relative mx-auto w-full max-w-sm rotate-[2.5deg] shadow-[0_18px_40px_-20px_rgba(15,23,42,0.58)] lg:ml-auto lg:max-w-md'
+          data-direction='right'
+        >
+          <img src='/about-us/about-us-liza-working.jpg' alt='Liza munka közben' class='instax-image' loading='lazy' />
+        </figure>
+      </article>
     </div>
   </section>
 </Layout>
+
+<script>
+  ;(() => {
+    const SECTION_SELECTOR = '.about-float-section'
+    const PHOTO_SELECTOR = '.float-on-scroll'
+    let observer
+
+    const hiddenClassFor = photo =>
+      photo.getAttribute('data-direction') === 'left' ? 'is-hidden-left' : 'is-hidden-right'
+
+    const runFloatAnimations = () => {
+      const sections = document.querySelectorAll(SECTION_SELECTOR)
+      if (!sections.length) return
+
+      if (observer) observer.disconnect()
+
+      for (const section of sections) {
+        const photo = section.querySelector(PHOTO_SELECTOR)
+        if (!photo) continue
+        photo.classList.remove('is-visible', 'is-hidden-left', 'is-hidden-right')
+        photo.classList.add(hiddenClassFor(photo))
+      }
+
+      requestAnimationFrame(() => {
+        observer = new IntersectionObserver(
+          entries => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                const photo = entry.target.querySelector(PHOTO_SELECTOR)
+                if (!photo) continue
+                photo.classList.add('is-visible')
+                photo.classList.remove('is-hidden-left', 'is-hidden-right')
+                observer.unobserve(entry.target)
+              }
+            }
+          },
+          { threshold: 0.8, rootMargin: '0px' }
+        )
+
+        sections.forEach(section => observer.observe(section))
+      })
+    }
+
+    document.addEventListener(
+      'astro:before-swap',
+      () => {
+        if (observer) observer.disconnect()
+      },
+      { once: true }
+    )
+
+    document.addEventListener('astro:page-load', runFloatAnimations)
+    runFloatAnimations()
+  })()
+</script>
+
+<style>
+  .instax-frame {
+    background: linear-gradient(165deg, #ffffff 0%, #f5f5f4 100%);
+    border-radius: 0.85rem;
+    padding: 0.75rem 0.75rem 1.2rem;
+    transition:
+      transform 650ms cubic-bezier(0.2, 0.65, 0.2, 1),
+      opacity 650ms ease;
+    will-change: transform, opacity;
+  }
+
+  .instax-image {
+    aspect-ratio: 4 / 5;
+    width: 100%;
+    border-radius: 0.35rem;
+    object-fit: cover;
+  }
+
+  .instax-image--focus-right {
+    object-position: 92% 50%;
+  }
+
+  .float-on-scroll {
+    opacity: 1;
+  }
+
+  .float-on-scroll.is-hidden-left,
+  .float-on-scroll.is-hidden-right {
+    opacity: 0;
+  }
+
+  .float-on-scroll.is-hidden-left {
+    transform: translate3d(-72px, 32px, 0) rotate(-8deg) scale(0.92);
+  }
+
+  .float-on-scroll.is-hidden-right {
+    transform: translate3d(72px, 32px, 0) rotate(8deg) scale(0.92);
+  }
+
+  .float-on-scroll.is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(var(--resting-rotation, 0deg)) scale(1);
+  }
+
+  .float-on-scroll[data-direction='left'].is-visible {
+    --resting-rotation: -4deg;
+  }
+
+  .float-on-scroll[data-direction='right'].is-visible {
+    --resting-rotation: 3deg;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .float-on-scroll,
+    .float-on-scroll[data-direction='left'],
+    .float-on-scroll[data-direction='right'] {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

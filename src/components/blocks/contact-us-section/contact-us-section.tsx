@@ -15,7 +15,7 @@ const ContactUs = ({ contactInfo }: { contactInfo: ContactInfo }) => {
     <section id='contact-us' className='relative overflow-hidden py-12 sm:py-20 lg:py-28'>
       <div
         aria-hidden='true'
-        className='bg-muted absolute inset-0 [clip-path:polygon(0_2.5rem,100%_0,100%_100%,0_100%)] sm:[clip-path:polygon(0_3rem,100%_0,100%_100%,0_100%)]'
+        className='bg-muted absolute inset-0'
       />
       <div className='relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         {/* Header */}

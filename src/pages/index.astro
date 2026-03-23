@@ -7,7 +7,6 @@ import Testimonials from '@/components/blocks/testimonials-section/testimonials-
 import Workshops from '@/components/blocks/workshops-section/workshops'
 import ContactUsSection from '@/components/blocks/contact-us-section/contact-us-section'
 
-import { heroSlides } from '@/assets/data/hero'
 import { featuredWeddings } from '@/assets/data/weddings'
 import { testimonials } from '@/assets/data/testimonials'
 import { workshops } from '@/assets/data/workshops'
@@ -38,7 +37,7 @@ const schema = {
 ---
 
 <Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} schema={schema} footerClassName='bg-muted'>
-  <HeroSection heroSlides={heroSlides} client:load />
+  <HeroSection className='-mt-17.5' client:load />
   <FeaturedWeddings featuredWeddings={featuredWeddings} client:load />
   <div class='w-full py-2' aria-hidden='true'>
     <div class='bg-primary/30 h-[1px] w-full'></div>

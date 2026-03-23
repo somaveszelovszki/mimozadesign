@@ -19,30 +19,59 @@ type HeaderProps = {
 }
 
 const Header = ({ navigationData, className }: HeaderProps) => {
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [pathname, setPathname] = useState('/')
+  const [scrollY, setScrollY] = useState(0)
+  const [heroFadeDistance, setHeroFadeDistance] = useState(1)
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0)
+    const syncRouteAndViewport = () => {
+      setPathname(window.location.pathname)
+      setHeroFadeDistance(Math.max(window.innerHeight * 0.8, 1))
     }
 
-    window.addEventListener('scroll', handleScroll)
-    handleScroll()
+    const syncScroll = () => {
+      setScrollY(window.scrollY)
+    }
+
+    window.addEventListener('scroll', syncScroll)
+    window.addEventListener('resize', syncRouteAndViewport)
+    window.addEventListener('popstate', syncRouteAndViewport)
+    document.addEventListener('astro:page-load', syncRouteAndViewport)
+    syncRouteAndViewport()
+    syncScroll()
 
     return () => {
-      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('scroll', syncScroll)
+      window.removeEventListener('resize', syncRouteAndViewport)
+      window.removeEventListener('popstate', syncRouteAndViewport)
+      document.removeEventListener('astro:page-load', syncRouteAndViewport)
     }
   }, [])
+
+  const isHomepage = pathname === '/'
+  const scrollProgress = Math.min(scrollY / heroFadeDistance, 1)
+  const homeHeaderOpacity = 0.2 + scrollProgress * 0.8
+  const homeHeaderTintPercent = homeHeaderOpacity * 100
+  const shouldShowShadow = !isHomepage || scrollY > 0
 
   return (
     <header
       className={cn(
         'fixed top-0 z-50 h-16 w-full border-b transition-all duration-300',
         {
-          'bg-background shadow-md': isScrolled
+          'border-white/35 backdrop-blur-md': isHomepage,
+          'border-border bg-background': !isHomepage,
+          'shadow-md': shouldShowShadow
         },
         className
       )}
+      style={
+        isHomepage
+          ? {
+              backgroundColor: `color-mix(in srgb, var(--background) ${homeHeaderTintPercent}%, transparent)`
+            }
+          : undefined
+      }
     >
       <div className='mx-auto flex h-full max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8'>
         {/* Logo */}
@@ -67,7 +96,7 @@ const Header = ({ navigationData, className }: HeaderProps) => {
         {/* Actions */}
         <div className='flex items-center'>
           <Button
-            className='group relative w-fit overflow-hidden rounded-full text-base before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.5)_50%,transparent_75%,transparent_100%)] before:bg-[length:250%_250%,100%_100%] before:bg-[position:200%_0,0_0] before:bg-no-repeat before:transition-[background-position_0s_ease] before:duration-1000 hover:before:bg-[position:-100%_0,0_0] has-[>svg]:px-6 max-sm:hidden'
+            className='rounded-full text-base has-[>svg]:px-6 max-sm:hidden'
             asChild
           >
             <a href='/contact'>Ajánlatkérés</a>

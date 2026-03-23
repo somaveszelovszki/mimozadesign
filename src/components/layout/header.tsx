@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { MenuIcon } from 'lucide-react'
 
@@ -22,15 +22,62 @@ const Header = ({ navigationData, className }: HeaderProps) => {
   const [pathname, setPathname] = useState('/')
   const [scrollY, setScrollY] = useState(0)
   const [heroFadeDistance, setHeroFadeDistance] = useState(1)
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true)
+  const [isOverHero, setIsOverHero] = useState(false)
+
+  const lastScrollYRef = useRef(0)
+  const pathnameRef = useRef('/')
+  const heroShadowThresholdRef = useRef(0)
 
   useEffect(() => {
+    const HEADER_HEIGHT = 64
+    const TOP_VISIBILITY_THRESHOLD = 24
+    const HIDE_HEADER_SCROLL_THRESHOLD = 80
+
+    const isHomepagePath = (path: string) => path === '/' || path === '/index.html'
+
+    const syncHeroThreshold = (path: string) => {
+      if (!isHomepagePath(path)) {
+        heroShadowThresholdRef.current = 0
+        return
+      }
+
+      const heroSection = document.querySelector<HTMLElement>('#home')
+      if (!heroSection) {
+        heroShadowThresholdRef.current = 0
+        return
+      }
+
+      const heroRect = heroSection.getBoundingClientRect()
+      const heroBottom = heroRect.top + window.scrollY + heroRect.height
+      heroShadowThresholdRef.current = Math.max(heroBottom - HEADER_HEIGHT, 0)
+    }
+
     const syncRouteAndViewport = () => {
-      setPathname(window.location.pathname)
+      const nextPathname = window.location.pathname
+      pathnameRef.current = nextPathname
+      setPathname(nextPathname)
       setHeroFadeDistance(Math.max(window.innerHeight * 0.8, 1))
+      syncHeroThreshold(nextPathname)
+      setIsOverHero(isHomepagePath(nextPathname) && window.scrollY < heroShadowThresholdRef.current)
     }
 
     const syncScroll = () => {
-      setScrollY(window.scrollY)
+      const currentScrollY = window.scrollY
+      const previousScrollY = lastScrollYRef.current
+
+      setScrollY(currentScrollY)
+      setIsOverHero(isHomepagePath(pathnameRef.current) && currentScrollY < heroShadowThresholdRef.current)
+
+      if (currentScrollY <= TOP_VISIBILITY_THRESHOLD) {
+        setIsHeaderVisible(true)
+      } else if (currentScrollY > previousScrollY && currentScrollY > HIDE_HEADER_SCROLL_THRESHOLD) {
+        setIsHeaderVisible(false)
+      } else if (currentScrollY < previousScrollY) {
+        setIsHeaderVisible(true)
+      }
+
+      lastScrollYRef.current = currentScrollY
     }
 
     window.addEventListener('scroll', syncScroll)
@@ -48,20 +95,22 @@ const Header = ({ navigationData, className }: HeaderProps) => {
     }
   }, [])
 
-  const isHomepage = pathname === '/'
+  const isHomepage = pathname === '/' || pathname === '/index.html'
   const scrollProgress = Math.min(scrollY / heroFadeDistance, 1)
   const homeHeaderOpacity = 0.2 + scrollProgress * 0.8
   const homeHeaderTintPercent = homeHeaderOpacity * 100
-  const shouldShowShadow = !isHomepage || scrollY > 0
+  const shouldShowShadow = !isOverHero
 
   return (
     <header
       className={cn(
-        'fixed top-0 z-50 h-16 w-full border-b transition-all duration-300',
+        'fixed top-0 z-50 h-16 w-full border-b transition-transform duration-300',
         {
           'border-white/35 backdrop-blur-md': isHomepage,
           'border-border bg-background': !isHomepage,
-          'shadow-md': shouldShowShadow
+          'shadow-[0_10px_28px_rgba(15,15,15,0.22)]': shouldShowShadow,
+          'translate-y-0': isHeaderVisible,
+          '-translate-y-full': !isHeaderVisible
         },
         className
       )}

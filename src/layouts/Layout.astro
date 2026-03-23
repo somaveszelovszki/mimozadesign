@@ -49,5 +49,119 @@ const { footerClassName } = seoProps
 
       <Footer className={footerClassName} client:load />
     </div>
+    <script>
+      ;(() => {
+        const REVEAL_CLASS = 'scroll-reveal-item'
+        const VISIBLE_CLASS = 'is-visible'
+        const EXEMPT_CLASS = 'scroll-reveal-exempt'
+        const BLOCK_DELAY_MS = 85
+        let observer
+
+        const isHomePage = () => {
+          const path = window.location.pathname
+          return path === '/' || path === '/index.html'
+        }
+
+        const addTarget = (targets, seen, element, delayIndex = 0) => {
+          if (!(element instanceof HTMLElement)) return
+          if (element.classList.contains(EXEMPT_CLASS)) return
+          if (seen.has(element)) return
+          element.style.setProperty('--scroll-reveal-delay', `${delayIndex * BLOCK_DELAY_MS}ms`)
+          targets.push(element)
+          seen.add(element)
+        }
+
+        const collectRevealTargets = () => {
+          const sectionRoots = Array.from(document.querySelectorAll('main > *')).filter(
+            element => !element.classList.contains(EXEMPT_CLASS)
+          )
+
+          const targets = []
+          const seen = new Set()
+
+          sectionRoots.forEach(section => {
+            const title =
+              section.querySelector(':scope > header, :scope > div > header') ||
+              section.querySelector(':scope > h1, :scope > div > h1, :scope > h2, :scope > div > h2')
+
+            addTarget(targets, seen, title, 0)
+
+            const blockCandidates = section.querySelectorAll(
+              ':scope > article, :scope > figure, :scope > form, :scope > p, :scope > ul > li, :scope > ol > li, :scope > .grid > *, :scope > .columns-1 > *, :scope > .columns-2 > *, :scope > .columns-3 > *, :scope > div > article, :scope > div > figure, :scope > div > form, :scope > div > p, :scope > div > ul > li, :scope > div > ol > li, :scope > div > .grid > *, :scope > div > .columns-1 > *, :scope > div > .columns-2 > *, :scope > div > .columns-3 > *'
+            )
+
+            if (blockCandidates.length > 0) {
+              blockCandidates.forEach((element, index) => addTarget(targets, seen, element, index + 1))
+            } else {
+              addTarget(targets, seen, section, 1)
+            }
+          })
+
+          document.querySelectorAll('[data-scroll-reveal]').forEach((element, index) => {
+            addTarget(targets, seen, element, index + 1)
+          })
+
+          return targets
+        }
+
+        const showAll = elements => {
+          elements.forEach(element => {
+            element.classList.add(REVEAL_CLASS, VISIBLE_CLASS)
+          })
+        }
+
+        const initScrollReveal = () => {
+          if (observer) {
+            observer.disconnect()
+          }
+
+          if (!isHomePage()) {
+            return
+          }
+
+          const revealTargets = collectRevealTargets()
+
+          if (!revealTargets.length) {
+            return
+          }
+
+          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            showAll(revealTargets)
+            return
+          }
+
+          revealTargets.forEach(element => {
+            element.classList.add(REVEAL_CLASS)
+            element.classList.remove(VISIBLE_CLASS)
+          })
+
+          observer = new IntersectionObserver(
+            entries => {
+              entries.forEach(entry => {
+                if (!entry.isIntersecting) return
+                entry.target.classList.add(VISIBLE_CLASS)
+                observer?.unobserve(entry.target)
+              })
+            },
+            {
+              threshold: 0.14,
+              rootMargin: '0px 0px -10% 0px'
+            }
+          )
+
+          revealTargets.forEach(element => observer.observe(element))
+        }
+
+        document.addEventListener(
+          'astro:before-swap',
+          () => {
+            observer?.disconnect()
+          },
+          { once: true }
+        )
+        document.addEventListener('astro:page-load', initScrollReveal)
+        initScrollReveal()
+      })()
+    </script>
   </body>
 </html>

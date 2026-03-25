@@ -19,8 +19,6 @@ type HeaderProps = {
 
 const Header = ({ navigationData, className }: HeaderProps) => {
   const [pathname, setPathname] = useState('/')
-  const [scrollY, setScrollY] = useState(0)
-  const [heroFadeDistance, setHeroFadeDistance] = useState(1)
   const [isHeaderVisible, setIsHeaderVisible] = useState(true)
   const [isOverHero, setIsOverHero] = useState(false)
 
@@ -61,7 +59,6 @@ const Header = ({ navigationData, className }: HeaderProps) => {
 
       pathnameRef.current = nextPathname
       setPathname(nextPathname)
-      setHeroFadeDistance(Math.max(window.innerHeight * 0.8, 1))
       syncHeroThreshold(nextPathname)
       setIsOverHero(isHomepagePath(nextPathname) && window.scrollY < heroShadowThresholdRef.current)
     }
@@ -70,7 +67,6 @@ const Header = ({ navigationData, className }: HeaderProps) => {
       const currentScrollY = window.scrollY
       const previousScrollY = lastScrollYRef.current
 
-      setScrollY(currentScrollY)
       setIsOverHero(isHomepagePath(pathnameRef.current) && currentScrollY < heroShadowThresholdRef.current)
 
       if (currentScrollY <= TOP_VISIBILITY_THRESHOLD) {
@@ -100,9 +96,10 @@ const Header = ({ navigationData, className }: HeaderProps) => {
   }, [])
 
   const isHomepage = pathname === '/' || pathname === '/index.html'
-  const scrollProgress = Math.min(scrollY / heroFadeDistance, 1)
-  const homeHeaderOpacity = 0.2 + scrollProgress * 0.8
+  const isHeroInView = isHomepage && isOverHero
+  const homeHeaderOpacity = isHeroInView ? 0.12 : 1
   const homeHeaderTintPercent = homeHeaderOpacity * 100
+  const homeHeaderBlurPx = homeHeaderOpacity * 12
   const shouldShowShadow = !isOverHero
 
   const mobileNavigationData: NavigationSection[] = [
@@ -118,7 +115,7 @@ const Header = ({ navigationData, className }: HeaderProps) => {
       className={cn(
         'fixed top-0 z-50 h-16 w-full border-b transition-transform duration-300',
         {
-          'border-white/35 backdrop-blur-md': isHomepage,
+          'border-white/35': isHomepage,
           'border-border bg-background': !isHomepage,
           'shadow-[0_10px_28px_rgba(15,15,15,0.22)]': shouldShowShadow,
           'translate-y-0': isHeaderVisible,
@@ -129,34 +126,47 @@ const Header = ({ navigationData, className }: HeaderProps) => {
       style={
         isHomepage
           ? {
-              backgroundColor: `color-mix(in srgb, var(--background) ${homeHeaderTintPercent}%, transparent)`
+              backgroundColor: `color-mix(in srgb, var(--background) ${homeHeaderTintPercent}%, transparent)`,
+              backdropFilter: `blur(${homeHeaderBlurPx}px)`,
+              WebkitBackdropFilter: `blur(${homeHeaderBlurPx}px)`
             }
           : undefined
       }
     >
-      <div className='mx-auto flex h-full max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8'>
-        {/* Logo */}
-        <a href='/' className='flex items-center'>
-          <span className='h-14 shrink-0 overflow-hidden sm:h-16' style={{ aspectRatio: '1.846' }}>
-            <img
-              src='/mimoza-design-logo.png'
-              alt='Mimóza Design'
-              className='h-full w-auto max-w-none translate-y-1 transform-gpu'
-              loading='eager'
-              decoding='async'
-            />
-          </span>
-        </a>
+      <div className='mx-auto grid h-full max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-6 px-4 sm:px-6 lg:px-8'>
+        <div className='min-w-0'>
+          {/* Logo */}
+          <a href='/' className='flex items-center'>
+            <span className='h-14 shrink-0 overflow-hidden sm:h-16' style={{ aspectRatio: '1.846' }}>
+              <img
+                src='/mimoza-design-logo.png'
+                alt='Mimóza Design'
+                className='h-full w-auto max-w-none translate-y-1 transform-gpu'
+                loading='eager'
+                decoding='async'
+              />
+            </span>
+          </a>
+        </div>
 
         {/* Navigation */}
         <MenuNavigation
           navigationData={navigationData}
-          className='**:data-[slot=navigation-menu-list]:gap-1 max-lg:hidden'
+          className={cn(
+            '**:data-[slot=navigation-menu-list]:gap-1 max-lg:hidden',
+            isHeroInView && '[&_a]:!text-white [&_button]:!text-white [&_svg]:!text-white'
+          )}
         />
 
         {/* Actions */}
-        <div className='flex items-center'>
-          <Button className='hidden rounded-full text-base has-[>svg]:px-6 lg:inline-flex' asChild>
+        <div className='flex items-center justify-self-end'>
+          <Button
+            className={cn(
+              'hidden rounded-full text-base has-[>svg]:px-6 lg:inline-flex',
+              isHeroInView && 'border border-white bg-transparent text-white hover:bg-accent hover:text-accent-foreground'
+            )}
+            asChild
+          >
             <a href='/contact'>Ajánlatkérés</a>
           </Button>
 
@@ -165,7 +175,11 @@ const Header = ({ navigationData, className }: HeaderProps) => {
             align='end'
             navigationData={mobileNavigationData}
             trigger={
-              <Button variant='outline' size='icon' className='ml-2 rounded-full lg:hidden'>
+              <Button
+                variant={isHeroInView ? 'ghost' : 'outline'}
+                size='icon'
+                className={cn('ml-2 rounded-full lg:hidden', isHeroInView && 'text-white hover:bg-white/10 hover:text-white')}
+              >
                 <MenuIcon />
                 <span className='sr-only'>Menu</span>
               </Button>

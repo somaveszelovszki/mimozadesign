@@ -13,10 +13,11 @@ import { workshops } from '@/assets/data/workshops'
 import { contactInfo } from '@/assets/data/contact-us'
 
 // Page-specific SEO configuration
-const pageTitle = ''
+const pageTitle = 'Esküvői dekoráció és kreatív workshopok'
 const pageDescription =
-  'Mimóza Design - természetes, rusztikus és őszi hangulatú esküvői dekorációk, személyre szabott virágkötészettel.'
-const pageKeywords = 'esküvői dekoráció, menyasszonyi csokor, virágkötészet, rusztikus esküvő, Mimóza Design'
+  'A Mimóza Design esküvői dekorációt tervez, kreatív workshopokat tart, valamint szárazvirág kompozíciókat, virágcsokrokat és koszorúkat készít.'
+const pageKeywords =
+  'esküvői dekoráció, kreatív workshop, szárazvirág kompozíció, virágcsokor, koszorú, virágkötészet, menyasszonyi csokor, Mimóza, Mimóza Design, Veszelovszki-Petró Liza, Petró Liza'
 
 // Structured data for better SEO
 const schema = {
@@ -25,6 +26,12 @@ const schema = {
   name: 'Mimóza Design',
   description: pageDescription,
   image: '/weddings/dori-david/dori-david-profile.jpg',
+  url: Astro.site?.toString(),
+  areaServed: {
+    '@type': 'Country',
+    name: 'Magyarország'
+  },
+  serviceType: ['Esküvői dekoráció', 'Kreatív workshop', 'Szárazvirág kompozíciók', 'Virágcsokrok'],
   offers: {
     '@type': 'Offer',
     priceCurrency: 'HUF'

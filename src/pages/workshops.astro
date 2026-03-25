@@ -5,7 +5,9 @@ import Layout from '@/layouts/Layout.astro'
 
 const pageTitle = 'Workshopok | Mimóza Design'
 const pageDescription =
-  'Nézd meg a korábbi Mimóza Design workshopokat, jelentkezz a következő alkalmakra, és kövesd a workshop naptárat.'
+  'Kreatív workshop események, szárazvirág kompozíciók és virágcsokor-készítési inspirációk a Mimóza Design-tól.'
+const pageKeywords =
+  'kreatív workshop, DIY workshop, virág workshop, workshop, szárazvirág kompozíció, virágcsokor, koszorú, Mimóza, Mimóza Design, Veszelovszki-Petró Liza, Petró Liza'
 
 const workshopsCalendarEvents = [
   ...workshopPortfolios.map(workshop => ({
@@ -28,14 +30,13 @@ const workshopsCalendarEvents = [
 ]
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
+<Layout title={pageTitle} description={pageDescription} keywords={pageKeywords}>
   <section
     class='bg-background text-foreground mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-10 sm:px-6 sm:py-14 lg:px-8'
   >
     <h1 class='font-serif text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl'>Workshopok</h1>
     <p class='text-muted-foreground max-w-3xl text-lg'>
-      Itt találod a korábbi workshopok összefoglalóit és a következő alkalmakat. Minden workshophoz külön Facebook
-      esemény és Google Forms jelentkezés tartozik.
+      Itt találod a korábbi workshopok összefoglalóit és a következő alkalmakat.
     </p>
   </section>
 

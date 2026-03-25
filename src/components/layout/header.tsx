@@ -127,7 +127,7 @@ const Header = ({ navigationData, className }: HeaderProps) => {
         <a href='/' className='flex items-center'>
           <span className='h-14 shrink-0 overflow-hidden sm:h-16' style={{ aspectRatio: '1.846' }}>
             <img
-              src='/mimoza-Design-logo.png'
+              src='/mimoza-design-logo.png'
               alt='Mimóza Design'
               className='h-full w-auto max-w-none translate-y-1 transform-gpu'
               loading='eager'

@@ -3,7 +3,7 @@
 
 export const SITE_TITLE = 'Mimóza Design | Esküvői dekoráció'
 export const SITE_DESCRIPTION =
-  'Természetes, rusztikus és őszi hangulatú esküvői dekorációk, menyasszonyi csokrok és személyes virágkoncepciók.'
+  'Esküvői dekoráció, kreatív workshopok, szárazvirág kompozíciók és egyedi virágcsokrok a Mimóza Design-tól.'
 
 export const GITHUB_URL = 'https://github.com/shadcnstudio/shadcn-astro-bistro-landing-page-free'
 export const SITE_URL = 'https://mimozaDesign.hu/'
@@ -12,15 +12,21 @@ export const SITE_METADATA = {
   title: {
     default: 'Mimóza Design | Esküvői dekoráció'
   },
-  description:
-    'Természetes, rusztikus és őszi hangulatú esküvői dekorációk, menyasszonyi csokrok és személyes virágkoncepciók.',
+  description: SITE_DESCRIPTION,
   keywords: [
+    'esküvői dekoráció',
+    'kreatív workshop',
+    'szárazvirág kompozíció',
+    'virágcsokor',
     'esküvői dekoráció',
     'menyasszonyi csokor',
     'rusztikus esküvő',
     'virágkötészet',
     'őszi esküvő',
-    'Mimóza Design'
+    'Mimóza',
+    'Mimóza Design',
+    'Veszelovszki-Petró Liza',
+    'Petró Liza'
   ],
   authors: [{ name: 'Mimóza Design', url: SITE_URL }],
   creator: 'Mimóza Design',
@@ -40,9 +46,8 @@ export const SITE_METADATA = {
     type: 'website',
     locale: 'hu_HU',
     siteName: 'Mimóza Design',
-    title: 'Mimóza Design | Esküvői dekoráció',
-    description:
-      'Természetes, rusztikus és őszi hangulatú esküvői dekorációk, menyasszonyi csokrok és személyes virágkoncepciók.',
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     images: [
       {
         url: '/weddings/dori-david/dori-david-profile.jpg',
@@ -56,10 +61,9 @@ export const SITE_METADATA = {
     card: 'summary_large_image',
     site: '@mimozaDesign',
     creator: '@mimozaDesign',
-    title: 'Mimóza Design | Esküvői dekoráció',
-    description:
-      'Természetes, rusztikus és őszi hangulatú esküvői dekorációk, menyasszonyi csokrok és személyes virágkoncepciók.',
-    images: ['/weddings/dori-david/dori-david-profile.jpg']
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: ['/weddings/reka-balint/reka-balint-8.jpg']
   },
   verification: {
     google: '',
@@ -73,7 +77,7 @@ export const SOCIAL_LINKS = {
   github: GITHUB_URL,
   twitter: 'https://www.instagram.com/mimozaDesign',
   linkedin: 'https://www.facebook.com/mimozadesign',
-  discord: 'mailto:liza@mimozaDesign.hu'
+  discord: 'mailto:liza@mimozadesign.hu'
 }
 
 // Company information for structured data
@@ -82,18 +86,18 @@ export const COMPANY_INFO = {
   legalName: 'Mimóza Design',
   url: SITE_URL,
   logo: `/favicon.ico`,
-  foundingDate: '2021',
+  foundingDate: '2026',
   address: {
-    streetAddress: 'Budapest',
-    addressLocality: 'Budapest',
+    streetAddress: 'Vértesszőlős',
+    addressLocality: 'Vértesszőlős',
     addressRegion: 'HU',
-    postalCode: '1111',
+    postalCode: '2837',
     addressCountry: 'HU'
   },
   contactPoint: {
-    telephone: '+36-20-123-4567',
+    telephone: '+36-30-2866-471',
     contactType: 'customer support',
-    email: 'liza@mimozaDesign.hu'
+    email: 'liza@mimozadesign.hu'
   },
   sameAs: Object.values(SOCIAL_LINKS)
 }

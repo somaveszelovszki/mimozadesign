@@ -40,8 +40,10 @@ const HeroSection = ({ className }: HeroSectionProps) => {
 
       <div className='relative mx-auto flex min-h-[100svh] w-full max-w-7xl items-center justify-center px-4'>
         <div className='text-center text-white'>
-          <h1 className='font-sans text-4xl font-light tracking-[0.22em] uppercase sm:text-5xl'>MIMÓZA DESIGN</h1>
-          <p className='mt-4 font-sans text-sm font-light tracking-[0.04em] sm:text-base'>
+          <h1 className='font-sans text-[2.25rem] leading-none font-light tracking-[0.22em] uppercase sm:text-[3.25rem] md:text-[4.25rem]'>
+            MIMÓZA DESIGN
+          </h1>
+          <p className='mt-5 font-sans text-lg font-light tracking-[0.04em] sm:text-xl md:text-2xl'>
             ...mert minden szép történet egy szál virággal kezdődik
           </p>
         </div>

@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from 'react'
 import { MenuIcon } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
 import MenuDropdown from '@/components/blocks/menu-dropdown'
 import MenuNavigation from '@/components/blocks/menu-navigation'
@@ -39,22 +38,27 @@ const Header = ({ navigationData, className }: HeaderProps) => {
     const syncHeroThreshold = (path: string) => {
       if (!isHomepagePath(path)) {
         heroShadowThresholdRef.current = 0
+
         return
       }
 
       const heroSection = document.querySelector<HTMLElement>('#home')
+
       if (!heroSection) {
         heroShadowThresholdRef.current = 0
+
         return
       }
 
       const heroRect = heroSection.getBoundingClientRect()
       const heroBottom = heroRect.top + window.scrollY + heroRect.height
+
       heroShadowThresholdRef.current = Math.max(heroBottom - HEADER_HEIGHT, 0)
     }
 
     const syncRouteAndViewport = () => {
       const nextPathname = window.location.pathname
+
       pathnameRef.current = nextPathname
       setPathname(nextPathname)
       setHeroFadeDistance(Math.max(window.innerHeight * 0.8, 1))
@@ -101,6 +105,14 @@ const Header = ({ navigationData, className }: HeaderProps) => {
   const homeHeaderTintPercent = homeHeaderOpacity * 100
   const shouldShowShadow = !isOverHero
 
+  const mobileNavigationData: NavigationSection[] = [
+    ...navigationData,
+    {
+      title: 'Ajánlatkérés',
+      href: '/contact'
+    }
+  ]
+
   return (
     <header
       className={cn(
@@ -144,28 +156,16 @@ const Header = ({ navigationData, className }: HeaderProps) => {
 
         {/* Actions */}
         <div className='flex items-center'>
-          <Button className='rounded-full text-base has-[>svg]:px-6 max-sm:hidden' asChild>
+          <Button className='hidden rounded-full text-base has-[>svg]:px-6 lg:inline-flex' asChild>
             <a href='/contact'>Ajánlatkérés</a>
           </Button>
-
-          {/* Mobile book table button */}
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button className='ml-4 rounded-full sm:hidden' asChild>
-                  <a href='/contact'>Kapcsolat</a>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Kapcsolat</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
 
           {/* Mobile menu button */}
           <MenuDropdown
             align='end'
-            navigationData={navigationData}
+            navigationData={mobileNavigationData}
             trigger={
-              <Button variant='outline' size='icon' className='ml-3 rounded-full lg:hidden'>
+              <Button variant='outline' size='icon' className='ml-2 rounded-full lg:hidden'>
                 <MenuIcon />
                 <span className='sr-only'>Menu</span>
               </Button>

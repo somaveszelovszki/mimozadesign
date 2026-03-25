@@ -37,6 +37,7 @@ const normalizeDateKey = (date: Date): string => {
   const year = date.getFullYear()
   const month = String(date.getMonth() + 1).padStart(2, '0')
   const day = String(date.getDate()).padStart(2, '0')
+
   return `${year}-${month}-${day}`
 }
 
@@ -49,6 +50,7 @@ const parseHungarianDate = (dateText: string): Date | null => {
     .trim()
 
   const dateMatch = cleanedDate.match(/^(\d{4})\.\s*([a-z]+)\s*(\d{1,2})\.$/)
+
   if (!dateMatch) {
     return null
   }
@@ -69,6 +71,7 @@ const WorkshopsCalendar = ({ events }: WorkshopsCalendarProps) => {
     return events
       .map(event => {
         const parsedDate = parseHungarianDate(event.date)
+
         if (!parsedDate) {
           return null
         }
@@ -115,6 +118,7 @@ const WorkshopsCalendar = ({ events }: WorkshopsCalendarProps) => {
         events={calendarEvents}
         eventContent={(info: EventContentArg) => {
           const workshop = info.event.extendedProps.workshop as WorkshopCalendarEvent | undefined
+
           return (
             <div className='mimoza-fc-event-content'>
               <span className='mimoza-fc-event-title'>{info.event.title}</span>
@@ -124,6 +128,7 @@ const WorkshopsCalendar = ({ events }: WorkshopsCalendarProps) => {
         }}
         eventDidMount={info => {
           const element = info.el as HTMLAnchorElement
+
           element.setAttribute('target', '_blank')
           element.setAttribute('rel', 'noreferrer')
         }}

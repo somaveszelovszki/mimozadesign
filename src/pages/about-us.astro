@@ -94,7 +94,6 @@ const pageKeywords =
       for (const section of sections) {
         const photo = section.querySelector(PHOTO_SELECTOR)
         if (!photo) continue
-        photo.classList.remove('is-visible')
         photo.classList.add('is-hidden')
       }
 
@@ -105,7 +104,6 @@ const pageKeywords =
               if (entry.isIntersecting) {
                 const photo = entry.target.querySelector(PHOTO_SELECTOR)
                 if (!photo) continue
-                photo.classList.add('is-visible')
                 photo.classList.remove('is-hidden')
                 observer.unobserve(entry.target)
               }
@@ -151,10 +149,6 @@ const pageKeywords =
 
   .float-on-scroll.is-hidden {
     opacity: 0;
-  }
-
-  .float-on-scroll.is-visible {
-    opacity: 1;
   }
 
   @media (prefers-reduced-motion: reduce) {

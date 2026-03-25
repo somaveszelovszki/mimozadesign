@@ -14,7 +14,7 @@ export const contactInfo = [
   {
     title: 'Email',
     icon: Mail,
-    description: 'liza@mimozamemories.hu'
+    description: 'liza@mimozaDesign.hu'
   },
   {
     title: 'Telefon',

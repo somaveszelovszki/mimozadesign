@@ -16,7 +16,7 @@ interface Props {
 
 const { portfolio } = Astro.props as Props
 
-const pageTitle = `${portfolio.title} | Workshop portfólió | Mimóza Memories`
+const pageTitle = `${portfolio.title} | Workshop portfólió | Mimóza Design`
 const pageDescription = `${portfolio.title} workshop összefoglaló. ${portfolio.caption}`
 const pageImage = portfolio.coverImage
 ---
@@ -25,7 +25,7 @@ const pageImage = portfolio.coverImage
   <section class='bg-background text-foreground mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-18'>
     <a
       href='/workshops#past-workshops'
-      class='text-primary hover:text-primary/80 focus-visible:ring-ring inline-flex items-center gap-2 text-sm font-medium underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
+      class='text-primary hover:text-primary/80 focus-visible:ring-ring inline-flex items-center gap-2 text-sm font-medium underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none'
     >
       Vissza a workshopokhoz
     </a>
@@ -59,24 +59,30 @@ const pageImage = portfolio.coverImage
   </section>
 
   <section class='mx-auto max-w-6xl px-4 pb-10 sm:px-6 sm:pb-14 lg:px-8 lg:pb-18'>
-    <div id='workshop-gallery' class='columns-1 gap-4 sm:columns-2 lg:columns-3' data-images={JSON.stringify(portfolio.images)}>
-      {portfolio.images.map((image, index) => (
-        <figure class='mb-4 break-inside-avoid overflow-hidden rounded-xl'>
-          <button
-            type='button'
-            data-gallery-index={index}
-            aria-label={`${index + 1}. kép megnyitása`}
-            class='focus-visible:ring-ring hover:border-primary group block w-full cursor-pointer rounded-lg border border-transparent outline-none transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-offset-2'
-          >
-            <img
-              src={image}
-              alt={`${portfolio.title} galéria kép ${index + 1}`}
-              class='h-auto w-full object-cover transition-transform duration-300 group-hover:scale-105'
-              loading='lazy'
-            />
-          </button>
-        </figure>
-      ))}
+    <div
+      id='workshop-gallery'
+      class='columns-1 gap-4 sm:columns-2 lg:columns-3'
+      data-images={JSON.stringify(portfolio.images)}
+    >
+      {
+        portfolio.images.map((image, index) => (
+          <figure class='mb-4 break-inside-avoid overflow-hidden rounded-xl'>
+            <button
+              type='button'
+              data-gallery-index={index}
+              aria-label={`${index + 1}. kép megnyitása`}
+              class='focus-visible:ring-ring hover:border-primary group block w-full cursor-pointer rounded-lg border border-transparent transition-colors duration-300 outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
+            >
+              <img
+                src={image}
+                alt={`${portfolio.title} galéria kép ${index + 1}`}
+                class='h-auto w-full object-cover transition-transform duration-300 group-hover:scale-105'
+                loading='lazy'
+              />
+            </button>
+          </figure>
+        ))
+      }
     </div>
   </section>
 
@@ -97,7 +103,7 @@ const pageImage = portfolio.coverImage
     <button
       type='button'
       id='gallery-prev'
-      class='bg-background/70 text-foreground hover:bg-background absolute left-4 top-1/2 z-10 -translate-y-1/2 rounded-full border px-3 py-2 text-2xl leading-none'
+      class='bg-background/70 text-foreground hover:bg-background absolute top-1/2 left-4 z-10 -translate-y-1/2 rounded-full border px-3 py-2 text-2xl leading-none'
       aria-label='Előző kép'
     >
       ‹
@@ -108,7 +114,7 @@ const pageImage = portfolio.coverImage
     <button
       type='button'
       id='gallery-next'
-      class='bg-background/70 text-foreground hover:bg-background absolute right-4 top-1/2 z-10 -translate-y-1/2 rounded-full border px-3 py-2 text-2xl leading-none'
+      class='bg-background/70 text-foreground hover:bg-background absolute top-1/2 right-4 z-10 -translate-y-1/2 rounded-full border px-3 py-2 text-2xl leading-none'
       aria-label='Következő kép'
     >
       ›

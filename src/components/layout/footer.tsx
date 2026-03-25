@@ -16,7 +16,7 @@ const Footer = ({ className }: FooterProps) => {
               <p className='text-muted-foreground whitespace-nowrap'>
                 {`©${new Date().getFullYear()}`}{' '}
                 <a href='/' className='hover:underline'>
-                  Mimóza Memories
+                  Mimóza Design
                 </a>
                 , természetes és személyes esküvői dekoráció.
               </p>
@@ -32,7 +32,7 @@ const Footer = ({ className }: FooterProps) => {
                   <FacebookIcon className='size-5' />
                 </a>
                 <a
-                  href='https://www.instagram.com/mimozamemories'
+                  href='https://www.instagram.com/mimozaDesign'
                   className='hover:text-primary'
                   target='_blank'
                   rel='noreferrer'

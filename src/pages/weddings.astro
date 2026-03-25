@@ -2,10 +2,10 @@
 import Layout from '@/layouts/Layout.astro'
 import { allWeddingCards } from '@/assets/data/weddings'
 
-const pageTitle = 'Esküvői munkáink | Mimóza Memories'
+const pageTitle = 'Esküvői munkáink | Mimóza Design'
 const pageDescription =
   'Teljes esküvői portfólió: valódi párok dekorációs történetei, virágkötészeti koncepciók és részletfotók.'
-const pageKeywords = 'esküvői portfólió, esküvői dekoráció, menyasszonyi csokor, Mimóza Memories'
+const pageKeywords = 'esküvői portfólió, esküvői dekoráció, menyasszonyi csokor, Mimóza Design'
 
 const schema = {
   '@context': 'https://schema.org',
@@ -28,31 +28,35 @@ const schema = {
       </header>
 
       <div class='grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6'>
-        {allWeddingCards.map((wedding, index) => (
-          <article class='border-border bg-card group overflow-hidden rounded-xl border transition-colors duration-300 hover:border-primary'>
-            <a
-              href={`/weddings/${wedding.slug}`}
-              aria-label={`${wedding.name} esküvői portfólió megnyitása`}
-              class='focus-visible:ring-ring block h-full outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
-            >
-              <div class='bg-muted'>
-                <img
-                  src={wedding.image}
-                  alt={wedding.alt}
-                  class='aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-105'
-                  loading={index < 3 ? 'eager' : 'lazy'}
-                />
-              </div>
-              <div class='p-4 text-center sm:p-5'>
-                <div class='space-y-1'>
-                  <p class='text-primary/90 text-[11px] font-medium tracking-[0.18em] uppercase'>{wedding.location}</p>
-                  <h2 class='font-serif text-2xl font-semibold'>{wedding.name}</h2>
-                  <p class='text-muted-foreground text-sm tracking-tight'>{wedding.weddingDate}</p>
+        {
+          allWeddingCards.map((wedding, index) => (
+            <article class='border-border bg-card group hover:border-primary overflow-hidden rounded-xl border transition-colors duration-300'>
+              <a
+                href={`/weddings/${wedding.slug}`}
+                aria-label={`${wedding.name} esküvői portfólió megnyitása`}
+                class='focus-visible:ring-ring block h-full outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
+              >
+                <div class='bg-muted'>
+                  <img
+                    src={wedding.image}
+                    alt={wedding.alt}
+                    class='aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-105'
+                    loading={index < 3 ? 'eager' : 'lazy'}
+                  />
                 </div>
-              </div>
-            </a>
-          </article>
-        ))}
+                <div class='p-4 text-center sm:p-5'>
+                  <div class='space-y-1'>
+                    <p class='text-primary/90 text-[11px] font-medium tracking-[0.18em] uppercase'>
+                      {wedding.location}
+                    </p>
+                    <h2 class='font-serif text-2xl font-semibold'>{wedding.name}</h2>
+                    <p class='text-muted-foreground text-sm tracking-tight'>{wedding.weddingDate}</p>
+                  </div>
+                </div>
+              </a>
+            </article>
+          ))
+        }
       </div>
     </div>
   </section>

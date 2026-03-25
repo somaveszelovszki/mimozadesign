@@ -1,6 +1,6 @@
-## Mimóza Memories
+## Mimóza Design
 
-This is the public-facing website for Mimóza Memories, a small Hungarian business offering full wedding decorations, bridal bouquets, and table arrangements.
+This is the public-facing website for Mimóza Design, a small Hungarian business offering full wedding decorations, bridal bouquets, and table arrangements.
 All the decorations are done by Liza, an architect who spent a year in Amsterdam learning how to arrange flowers and make decorations.
 Her style is rustic, natural field bouquets, subtle, yet elegant and modern decorations.
 Besides decorating weddings, she also holds creative workshops where the participants can make Christmas wreaths, small flower arrangements, and other DIY products.

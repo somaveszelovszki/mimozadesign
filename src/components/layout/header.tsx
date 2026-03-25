@@ -125,13 +125,10 @@ const Header = ({ navigationData, className }: HeaderProps) => {
       <div className='mx-auto flex h-full max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8'>
         {/* Logo */}
         <a href='/' className='flex items-center'>
-          <span
-            className='h-14 shrink-0 overflow-hidden sm:h-16'
-            style={{ aspectRatio: '1.846' }}
-          >
+          <span className='h-14 shrink-0 overflow-hidden sm:h-16' style={{ aspectRatio: '1.846' }}>
             <img
-              src='/mimoza-memories-logo.png'
-              alt='Mimóza Memories'
+              src='/mimoza-Design-logo.png'
+              alt='Mimóza Design'
               className='h-full w-auto max-w-none translate-y-1 transform-gpu'
               loading='eager'
               decoding='async'
@@ -140,14 +137,14 @@ const Header = ({ navigationData, className }: HeaderProps) => {
         </a>
 
         {/* Navigation */}
-        <MenuNavigation navigationData={navigationData} className='**:data-[slot=navigation-menu-list]:gap-1 max-lg:hidden' />
+        <MenuNavigation
+          navigationData={navigationData}
+          className='**:data-[slot=navigation-menu-list]:gap-1 max-lg:hidden'
+        />
 
         {/* Actions */}
         <div className='flex items-center'>
-          <Button
-            className='rounded-full text-base has-[>svg]:px-6 max-sm:hidden'
-            asChild
-          >
+          <Button className='rounded-full text-base has-[>svg]:px-6 max-sm:hidden' asChild>
             <a href='/contact'>Ajánlatkérés</a>
           </Button>
 

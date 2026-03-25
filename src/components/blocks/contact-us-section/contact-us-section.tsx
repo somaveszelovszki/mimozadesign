@@ -13,10 +13,7 @@ type ContactInfo = {
 const ContactUs = ({ contactInfo }: { contactInfo: ContactInfo }) => {
   return (
     <section id='contact-us' className='relative overflow-hidden py-12 sm:py-20 lg:py-28'>
-      <div
-        aria-hidden='true'
-        className='bg-muted absolute inset-0'
-      />
+      <div aria-hidden='true' className='bg-muted absolute inset-0' />
       <div className='relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         {/* Header */}
         <div className='mx-auto mb-12 flex max-w-2xl flex-col items-center justify-center space-y-4 text-center sm:mb-16 lg:mb-24'>
@@ -30,7 +27,7 @@ const ContactUs = ({ contactInfo }: { contactInfo: ContactInfo }) => {
         <div className='grid items-start gap-6 lg:grid-cols-2 lg:items-stretch lg:gap-12'>
           <img
             src='/contact/kedves-mimoza.jpg'
-            alt='Kapcsolatfelvétel a Mimóza Memories csapatával'
+            alt='Kapcsolatfelvétel a Mimóza Design csapatával'
             className='aspect-square w-full max-w-md justify-self-center object-cover lg:justify-self-end'
             loading='lazy'
           />

@@ -1,112 +1,107 @@
 ---
 import Layout from '@/layouts/Layout.astro'
 
-const pageTitle = 'Kapcsolat | Mimóza Memories'
+const pageTitle = 'Kapcsolat | Mimóza Design'
 const pageDescription =
   'Lépj kapcsolatba velünk emailen vagy social felületeken, és küldd el üzenetedet az ajánlatkérő űrlapon.'
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
   <section class='mx-auto w-full max-w-3xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-16'>
-    <section class='border-border rounded-xl border bg-card p-6 sm:p-8'>
-        <h2 class='font-serif text-2xl font-semibold sm:text-3xl'>Ajánlatkérés</h2>
-        <p class='text-muted-foreground mt-3 text-sm sm:text-base'>
-          Töltsd ki az űrlapot, és oszd meg velünk, miben segíthetünk.
-        </p>
+    <section class='border-border bg-card rounded-xl border p-6 sm:p-8'>
+      <h2 class='font-serif text-2xl font-semibold sm:text-3xl'>Ajánlatkérés</h2>
+      <p class='text-muted-foreground mt-3 text-sm sm:text-base'>
+        Töltsd ki az űrlapot, és oszd meg velünk, miben segíthetünk.
+      </p>
 
-        <form class='mt-6 space-y-5' method='post' enctype='multipart/form-data'>
-          <div class='space-y-2'>
-            <label for='name' class='text-sm font-medium'>Név</label>
-            <input
-              id='name'
-              name='name'
-              type='text'
-              autocomplete='name'
-              placeholder='Tavaszi Jázmin'
-              class='border-input bg-background focus:ring-ring w-full rounded-lg border px-4 py-3 text-base focus:ring-2 focus:outline-none'
-              required
-            />
-          </div>
+      <form class='mt-6 space-y-5' method='post' enctype='multipart/form-data'>
+        <div class='space-y-2'>
+          <label for='name' class='text-sm font-medium'>Név</label>
+          <input
+            id='name'
+            name='name'
+            type='text'
+            autocomplete='name'
+            placeholder='Tavaszi Jázmin'
+            class='border-input bg-background focus:ring-ring w-full rounded-lg border px-4 py-3 text-base focus:ring-2 focus:outline-none'
+            required
+          />
+        </div>
 
-          <div class='space-y-2'>
-            <label for='email' class='text-sm font-medium'>Email</label>
-            <input
-              id='email'
-              name='email'
-              type='email'
-              autocomplete='email'
-              placeholder='tavaszi.jazmin@viragzik.hu'
-              class='border-input bg-background focus:ring-ring w-full rounded-lg border px-4 py-3 text-base focus:ring-2 focus:outline-none'
-              required
-            />
-          </div>
+        <div class='space-y-2'>
+          <label for='email' class='text-sm font-medium'>Email</label>
+          <input
+            id='email'
+            name='email'
+            type='email'
+            autocomplete='email'
+            placeholder='tavaszi.jazmin@viragzik.hu'
+            class='border-input bg-background focus:ring-ring w-full rounded-lg border px-4 py-3 text-base focus:ring-2 focus:outline-none'
+            required
+          />
+        </div>
 
-          <div class='space-y-2'>
-            <label for='phone' class='text-sm font-medium'>Telefonszám</label>
-            <input
-              id='phone'
-              name='phone'
-              type='tel'
-              autocomplete='tel'
-              placeholder='06 20 123 4567'
-              class='border-input bg-background focus:ring-ring w-full rounded-lg border px-4 py-3 text-base focus:ring-2 focus:outline-none'
-            />
-          </div>
+        <div class='space-y-2'>
+          <label for='phone' class='text-sm font-medium'>Telefonszám</label>
+          <input
+            id='phone'
+            name='phone'
+            type='tel'
+            autocomplete='tel'
+            placeholder='06 20 123 4567'
+            class='border-input bg-background focus:ring-ring w-full rounded-lg border px-4 py-3 text-base focus:ring-2 focus:outline-none'
+          />
+        </div>
 
-          <div class='space-y-2'>
-            <label for='message' class='text-sm font-medium'>Üzenet</label>
-            <textarea
-              id='message'
-              name='message'
-              rows={6}
-              class='border-input bg-background focus:ring-ring w-full rounded-lg border px-4 py-3 text-base focus:ring-2 focus:outline-none'
-              required
+        <div class='space-y-2'>
+          <label for='message' class='text-sm font-medium'>Üzenet</label>
+          <textarea
+            id='message'
+            name='message'
+            rows={6}
+            class='border-input bg-background focus:ring-ring w-full rounded-lg border px-4 py-3 text-base focus:ring-2 focus:outline-none'
+            required
             >Kedves Mimóza!
-</textarea>
-          </div>
+          </textarea>
+        </div>
 
-          <div class='space-y-2'>
-            <label for='attachment' class='text-sm font-medium'>Fájl feltöltése</label>
-            <div class='border-input bg-background rounded-lg border border-dashed p-2'>
-              <input
-                id='attachment'
-                name='attachment'
-                type='file'
-                class='peer sr-only'
-              />
-              <label
-                for='attachment'
-                class='hover:bg-muted/50 peer-focus-visible:ring-ring flex h-28 w-full cursor-pointer items-center justify-center rounded-md transition-colors peer-focus-visible:ring-2 peer-focus-visible:outline-none'
+        <div class='space-y-2'>
+          <label for='attachment' class='text-sm font-medium'>Fájl feltöltése</label>
+          <div class='border-input bg-background rounded-lg border border-dashed p-2'>
+            <input id='attachment' name='attachment' type='file' class='peer sr-only' />
+            <label
+              for='attachment'
+              class='hover:bg-muted/50 peer-focus-visible:ring-ring flex h-28 w-full cursor-pointer items-center justify-center rounded-md transition-colors peer-focus-visible:ring-2 peer-focus-visible:outline-none'
+            >
+              <span class='sr-only'>Fájl kiválasztása</span>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                viewBox='0 0 24 24'
+                width='32'
+                height='32'
+                fill='none'
+                stroke='currentColor'
+                stroke-width='1.75'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                class='text-muted-foreground h-8 w-8 shrink-0'
+                aria-hidden='true'
               >
-                <span class='sr-only'>Fájl kiválasztása</span>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  viewBox='0 0 24 24'
-                  width='32'
-                  height='32'
-                  fill='none'
-                  stroke='currentColor'
-                  stroke-width='1.75'
-                  stroke-linecap='round'
-                  stroke-linejoin='round'
-                  class='text-muted-foreground h-8 w-8 shrink-0'
-                  aria-hidden='true'
-                >
-                  <path d='M16 16l-4-4-4 4' />
-                  <path d='M12 12v9' />
-                  <path d='M20.4 18.4A5 5 0 0018 9h-1.3A8 8 0 103 16.3' />
-                </svg>
-              </label>
-            </div>
+                <path d='M16 16l-4-4-4 4'></path>
+                <path d='M12 12v9'></path>
+                <path d='M20.4 18.4A5 5 0 0018 9h-1.3A8 8 0 103 16.3'></path>
+              </svg>
+            </label>
           </div>
+        </div>
 
-          <button
-            type='submit'
-            class='bg-primary text-primary-foreground hover:bg-primary/90 inline-flex rounded-full px-6 py-3 text-sm font-medium transition-colors'
-          >
-            Üzenet küldése
-          </button>
-        </form>
+        <button
+          type='submit'
+          class='bg-primary text-primary-foreground hover:bg-primary/90 inline-flex rounded-full px-6 py-3 text-sm font-medium transition-colors'
+        >
+          Üzenet küldése
+        </button>
+      </form>
     </section>
   </section>
 </Layout>

@@ -66,20 +66,6 @@ const getWeddingImages = (slug: string): string[] => {
 
 export const weddings: Wedding[] = [
   {
-    slug: 'petra-mate',
-    name: 'Petra és Máté',
-    caption: 'Elegáns, romantikus dekoráció finom természetes részletekkel.',
-    coverImage: '/weddings/petra-mate/petra-mate-profile.jpg',
-    location: 'Tata, Grill Étterem',
-    weddingDate: '2025. március 29.',
-    card: {
-      alt: 'Petra és Máté esküvője',
-      subtitle: 'Romantikus elegancia',
-      description: 'Légies, harmonikus kompozíciók természetes tónusokkal és finom részletekkel.',
-      isFeatured: true
-    }
-  },
-  {
     slug: 'adri-david',
     name: 'Adri és Dávid',
     caption:

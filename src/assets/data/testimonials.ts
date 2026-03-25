@@ -23,19 +23,5 @@ export const testimonials: TestimonialItem[] = [
     avatar: '/weddings/dori-david/dori-david-profile.jpg',
     rating: 5,
     content: 'Maximálisan meg voltunk elégedve Liza munkájával. Pont olyan lett a dekor és a csokor, ahogy elképzeltük.'
-  },
-  {
-    name: 'Petra és Máté',
-    slug: 'petra-mate',
-    avatar: '/weddings/petra-mate/petra-mate-profile.jpg',
-    rating: 5,
-    content: 'TODO'
-  },
-  {
-    name: 'Anna és Bence',
-    slug: 'anna-bence',
-    avatar: '/weddings/anna-bence/anna-bence-profile.jpg',
-    rating: 5,
-    content: 'TODO'
   }
 ]

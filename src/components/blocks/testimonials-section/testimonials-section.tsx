@@ -17,10 +17,7 @@ type TestimonialsComponentProps = {
 
 const TestimonialsComponent = ({ testimonials }: TestimonialsComponentProps) => {
   return (
-    <section
-      id='testimonials'
-      className='relative py-14 sm:py-28 lg:py-36'
-    >
+    <section id='testimonials' className='scroll-reveal-exempt relative py-14 sm:py-28 lg:py-36'>
       <Carousel
         className='mx-auto flex max-w-7xl gap-12 px-4 max-sm:flex-col sm:items-center sm:gap-16 sm:px-6 lg:gap-24 lg:px-8'
         opts={{
@@ -29,7 +26,7 @@ const TestimonialsComponent = ({ testimonials }: TestimonialsComponentProps) => 
         }}
       >
         {/* Left Content */}
-        <div className='space-y-4 sm:w-1/2 lg:w-1/3'>
+        <div data-scroll-reveal className='space-y-4 sm:w-1/2 lg:w-1/3'>
           <h2 className='font-serif text-2xl font-semibold sm:text-3xl lg:text-4xl'>
             Párok <br />
             tapasztalatai
@@ -38,11 +35,10 @@ const TestimonialsComponent = ({ testimonials }: TestimonialsComponentProps) => 
           <p className='text-muted-foreground text-xl'>
             Így élték meg a közös tervezést és az általunk megalkotott esküvői dekorációkat.
           </p>
-
         </div>
 
         {/* Right Testimonial Carousel */}
-        <div className='relative max-w-196 sm:w-1/2 sm:px-10 lg:w-2/3 lg:px-12'>
+        <div data-scroll-reveal className='relative max-w-196 sm:w-1/2 sm:px-10 lg:w-2/3 lg:px-12'>
           <CarouselPrevious
             variant='default'
             className='disabled:bg-primary/10 disabled:text-primary absolute top-1/2 left-0 z-10 size-9 -translate-y-1/2 rounded-full disabled:opacity-100 max-sm:hidden'

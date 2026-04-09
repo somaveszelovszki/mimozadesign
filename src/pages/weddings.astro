@@ -42,6 +42,7 @@ const schema = {
                     src={wedding.image}
                     alt={wedding.alt}
                     class='aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-105'
+                    style={wedding.imagePosition ? `object-position: ${wedding.imagePosition}` : undefined}
                     loading={index < 3 ? 'eager' : 'lazy'}
                   />
                 </div>

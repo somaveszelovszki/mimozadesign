@@ -72,9 +72,14 @@ const { footerClassName } = seoProps
         }
 
         const collectRevealTargets = () => {
-          const sectionRoots = Array.from(document.querySelectorAll('main > *')).filter(
-            element => !element.classList.contains(EXEMPT_CLASS)
-          )
+          const sectionRoots = Array.from(document.querySelectorAll('main > *'))
+            .flatMap(element => {
+              if (element.tagName.toLowerCase() === 'astro-island') {
+                return Array.from(element.children)
+              }
+              return [element]
+            })
+            .filter(element => !element.classList.contains(EXEMPT_CLASS))
 
           const targets = []
           const seen = new Set()

@@ -9,7 +9,7 @@ const pageKeywords =
 ---
 
 <Layout title={pageTitle} description={pageDescription} keywords={pageKeywords}>
-  <section class='about-float-section bg-background py-8 sm:py-16 lg:py-24'>
+  <section class='bg-background py-8 sm:py-16 lg:py-24'>
     <div class='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
       <article class='mx-auto grid max-w-7xl gap-10 lg:grid-cols-2 lg:items-center lg:gap-16'>
         <div class='space-y-4'>
@@ -22,7 +22,7 @@ const pageKeywords =
             én is tervezni, alkotni fogok.
           </p>
         </div>
-        <figure class='float-on-scroll is-hidden relative mx-auto w-full max-w-[24rem] lg:ml-auto lg:max-w-[28rem]'>
+        <figure class='relative mx-auto w-full max-w-[24rem] lg:ml-auto lg:max-w-[28rem]'>
           <img
             src='/about-us/liza-profile.jpg'
             alt='Liza, a Mimóza alapítója'
@@ -34,10 +34,10 @@ const pageKeywords =
     </div>
   </section>
 
-  <section class='about-float-section bg-white py-8 sm:py-16 lg:py-24'>
+  <section class='bg-white py-8 sm:py-16 lg:py-24'>
     <div class='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
       <article class='mx-auto grid max-w-7xl gap-10 lg:grid-cols-2 lg:items-center lg:gap-16'>
-        <figure class='float-on-scroll is-hidden relative mx-auto w-full max-w-[24rem] lg:mr-auto lg:max-w-[28rem]'>
+        <figure class='relative mx-auto w-full max-w-[24rem] lg:mr-auto lg:max-w-[28rem]'>
           <img
             src='/about-us/amsterdam-bouquet.jpg'
             alt='Holland virágkompozíció'
@@ -58,7 +58,7 @@ const pageKeywords =
     </div>
   </section>
 
-  <section class='about-float-section bg-background py-8 sm:py-16 lg:py-24'>
+  <section class='bg-background py-8 sm:py-16 lg:py-24'>
     <div class='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
       <article class='mx-auto grid max-w-7xl gap-10 lg:grid-cols-2 lg:items-center lg:gap-16'>
         <p class='text-muted-foreground text-lg'>
@@ -66,7 +66,7 @@ const pageKeywords =
           Emellett mindig nagy hangsúlyt fektetek arra, hogy a párokkal közösen együttműködve, őket segítve jussunk el
           egy olyan megjelenéshez, amit elképzeltek.
         </p>
-        <figure class='float-on-scroll is-hidden relative mx-auto w-full max-w-[24rem] lg:ml-auto lg:max-w-[28rem]'>
+        <figure class='relative mx-auto w-full max-w-[24rem] lg:ml-auto lg:max-w-[28rem]'>
           <img
             src='/about-us/liza-in-amsterdam.jpg'
             alt='Liza munka közben'
@@ -79,56 +79,6 @@ const pageKeywords =
   </section>
 </Layout>
 
-<script>
-  ;(() => {
-    const SECTION_SELECTOR = '.about-float-section'
-    const PHOTO_SELECTOR = '.float-on-scroll'
-    let observer
-
-    const runFloatAnimations = () => {
-      const sections = document.querySelectorAll(SECTION_SELECTOR)
-      if (!sections.length) return
-
-      if (observer) observer.disconnect()
-
-      for (const section of sections) {
-        const photo = section.querySelector(PHOTO_SELECTOR)
-        if (!photo) continue
-        photo.classList.add('is-hidden')
-      }
-
-      requestAnimationFrame(() => {
-        observer = new IntersectionObserver(
-          entries => {
-            for (const entry of entries) {
-              if (entry.isIntersecting) {
-                const photo = entry.target.querySelector(PHOTO_SELECTOR)
-                if (!photo) continue
-                photo.classList.remove('is-hidden')
-                observer.unobserve(entry.target)
-              }
-            }
-          },
-          { threshold: 0.8, rootMargin: '0px' }
-        )
-
-        sections.forEach(section => observer.observe(section))
-      })
-    }
-
-    document.addEventListener(
-      'astro:before-swap',
-      () => {
-        if (observer) observer.disconnect()
-      },
-      { once: true }
-    )
-
-    document.addEventListener('astro:page-load', runFloatAnimations)
-    runFloatAnimations()
-  })()
-</script>
-
 <style>
   .about-section-image {
     aspect-ratio: 4 / 3;
@@ -136,22 +86,5 @@ const pageKeywords =
     border-radius: 0.75rem;
     border: 1px solid rgb(231 229 228);
     object-fit: cover;
-  }
-
-  .float-on-scroll {
-    transition: opacity 2000ms ease;
-    will-change: opacity;
-  }
-
-  .float-on-scroll.is-hidden {
-    opacity: 0;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .float-on-scroll,
-    .float-on-scroll.is-hidden {
-      opacity: 1;
-      transition: none;
-    }
   }
 </style>

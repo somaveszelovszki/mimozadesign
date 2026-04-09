@@ -1,4 +1,4 @@
-import { Clock8Icon, MapPinIcon, Mail, PhoneIcon } from 'lucide-react'
+import { Clock8Icon, Mail, MapPinIcon, PhoneIcon } from 'lucide-react'
 
 export const contactInfo = [
   {
@@ -14,7 +14,7 @@ export const contactInfo = [
   {
     title: 'Email',
     icon: Mail,
-    description: 'liza@mimozaDesign.hu'
+    description: 'liza@mimozadesign.hu'
   },
   {
     title: 'Telefon',

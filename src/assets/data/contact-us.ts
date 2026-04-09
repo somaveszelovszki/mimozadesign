@@ -1,10 +1,10 @@
-import { Clock8Icon, Mail, MapPinIcon, PhoneIcon } from 'lucide-react'
+import { Mail, MapPinIcon, MessageCircleIcon, PhoneIcon } from 'lucide-react'
 
 export const contactInfo = [
   {
-    title: 'Elérhető időszak',
-    icon: Clock8Icon,
-    description: 'Hétfő-Péntek\n9:00 - 17:00'
+    title: 'Konzultáció',
+    icon: MessageCircleIcon,
+    description: 'Az első egyeztetés ingyenes'
   },
   {
     title: 'Helyszín',

@@ -1,8 +1,8 @@
+import type { Workshop } from '@/assets/data/workshops'
 import { Card, CardContent, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
-import type { UpcomingWorkshop } from '@/assets/data/workshops'
 
-const Workshops = ({ workshops }: { workshops: UpcomingWorkshop[] }) => {
+const Workshops = ({ workshops }: { workshops: Workshop[] }) => {
   return (
     <section id='workshops' className='py-8 sm:py-16 lg:py-24'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>

@@ -1,6 +1,6 @@
 ---
 import WorkshopsCalendar from '@/components/blocks/workshops-section/workshops-calendar'
-import { upcomingWorkshops, pastWorkshopHighlight } from '@/assets/data/workshops'
+import { workshops, pastWorkshopHighlight } from '@/assets/data/workshops'
 import Layout from '@/layouts/Layout.astro'
 
 const pageTitle = 'Workshopok | Mimóza Design'
@@ -9,7 +9,7 @@ const pageDescription =
 const pageKeywords =
   'kreatív workshop, DIY workshop, virág workshop, workshop, szárazvirág kompozíció, virágcsokor, koszorú, Mimóza, Mimóza Design, Veszelovszki-Petró Liza, Petró Liza'
 
-const futureWorkshops = upcomingWorkshops.filter(w => !w.past)
+const futureWorkshops = workshops.filter(w => !w.past)
 
 const workshopsCalendarEvents = futureWorkshops.flatMap(workshop =>
   workshop.dates.map(d => ({

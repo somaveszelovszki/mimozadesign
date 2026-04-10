@@ -11,6 +11,7 @@ export type WorkshopDate = {
   date: string
   time: string
   location: string
+  registrationUrl?: string
 }
 
 export type Workshop = {
@@ -27,7 +28,6 @@ export type Workshop = {
   discount?: string
   maxParticipants?: number
   facebookEventUrl?: string
-  registrationUrl?: string
 }
 
 const imageExtensionPattern = /\.(jpg|jpeg|png|webp)$/i
@@ -97,15 +97,15 @@ const workshopData: Omit<Workshop, 'coverImage' | 'images'>[] = [
       {
         date: '2026. május 2. (szombat)',
         time: '13:00-16:00',
-        location: 'LeonArt Stúdió - 2890 Tata, Egység u. 7.'
+        location: 'LeonArt Stúdió - 2890 Tata, Egység u. 7.',
+        registrationUrl: 'https://docs.google.com/forms/d/1DKptHzzEMpeI0xUHIoIyuWhZQP-Pqjsu54UcQMESP1g/edit'
       }
     ],
     price: '15 000 Ft / fő',
     priceNote: 'minden szükséges eszközt és kelléket tartalmaz',
     discount: '20% páros kedvezmény, ha Édesanyáddal ketten jöttök. Részvétel 14 év felett lehetséges.',
     maxParticipants: 8,
-    facebookEventUrl: 'https://www.facebook.com/events/2549805432031408',
-    registrationUrl: 'https://docs.google.com/forms/d/1DKptHzzEMpeI0xUHIoIyuWhZQP-Pqjsu54UcQMESP1g/edit'
+    facebookEventUrl: 'https://www.facebook.com/events/2549805432031408'
   }
 ]
 

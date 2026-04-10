@@ -72,14 +72,31 @@ const pageImage = workshop.coverImage
       <h2 class='font-serif text-lg font-medium'>Időpontok</h2>
       <div class='grid gap-3 sm:grid-cols-2'>
         {
-          workshop.dates.map(d => (
-            <div class='border-border bg-card space-y-1 rounded-xl border p-5'>
-              <p class='text-foreground text-sm font-medium'>
-                {d.date} | {d.time}
-              </p>
-              <p class='text-muted-foreground text-sm'>{d.location}</p>
-            </div>
-          ))
+          workshop.dates.map(d =>
+            d.registrationUrl ? (
+              <a
+                href={d.registrationUrl}
+                target='_blank'
+                rel='noreferrer'
+                class='border-border bg-card hover:border-primary focus-visible:ring-ring group flex items-center justify-between gap-4 rounded-xl border p-5 transition-colors duration-300 outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
+              >
+                <div class='space-y-1'>
+                  <p class='text-foreground text-sm font-medium'>
+                    {d.date} | {d.time}
+                  </p>
+                  <p class='text-muted-foreground text-sm'>{d.location}</p>
+                </div>
+                <p class='text-primary shrink-0 text-sm font-medium group-hover:underline'>Jelentkezés</p>
+              </a>
+            ) : (
+              <div class='border-border bg-card space-y-1 rounded-xl border p-5'>
+                <p class='text-foreground text-sm font-medium'>
+                  {d.date} | {d.time}
+                </p>
+                <p class='text-muted-foreground text-sm'>{d.location}</p>
+              </div>
+            )
+          )
         }
       </div>
 
@@ -108,21 +125,6 @@ const pageImage = workshop.coverImage
         )
       }
     </div>
-
-    {
-      !workshop.past && workshop.registrationUrl && (
-        <div class='mt-6 sm:mt-8'>
-          <a
-            href={workshop.registrationUrl}
-            target='_blank'
-            rel='noreferrer'
-            class='bg-foreground text-background hover:bg-foreground/90 rounded-full px-8 py-3 text-base font-medium'
-          >
-            Jelentkezés
-          </a>
-        </div>
-      )
-    }
   </section>
 
   <section class='mx-auto w-full max-w-7xl px-4 pb-10 sm:px-6 sm:pb-14 lg:px-8 lg:pb-18'>

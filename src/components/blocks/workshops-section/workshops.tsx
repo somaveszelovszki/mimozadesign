@@ -7,7 +7,7 @@ const Workshops = ({ workshops }: { workshops: Workshop[] }) => {
     <section id='workshops' className='py-8 sm:py-16 lg:py-24'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         <div className='mx-auto mb-12 flex max-w-2xl flex-col items-center justify-center space-y-4 text-center sm:mb-16 lg:mb-24'>
-          <h2 className='font-serif text-2xl font-semibold md:text-3xl lg:text-4xl'>Workshopjaink</h2>
+          <h2 className='font-serif text-2xl font-semibold md:text-3xl lg:text-4xl'>Workshopok</h2>
           <p className='text-muted-foreground text-xl'>
             Több tematikus workshopot szervezünk, mindegyikhez Google Forms jelentkezéssel.
           </p>
@@ -44,6 +44,7 @@ const Workshops = ({ workshops }: { workshops: Workshop[] }) => {
                   <div className={`space-y-3 px-6 py-5 ${workshop.past ? 'opacity-50' : ''}`}>
                     <CardTitle className='text-lg'>{workshop.title}</CardTitle>
                     <Separator />
+                    <p className='text-muted-foreground text-sm'>{workshop.dates.map(d => d.date).join(' • ')}</p>
                     <p className='text-muted-foreground'>{workshop.description}</p>
                     <p className='text-primary text-sm font-medium group-hover:underline'>Olvass tovább</p>
                   </div>

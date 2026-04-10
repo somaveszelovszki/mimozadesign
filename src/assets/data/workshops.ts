@@ -117,7 +117,7 @@ export const workshops: Workshop[] = workshopData.map(workshop => {
 })
 
 export const pastWorkshopHighlight: PastWorkshopHighlight = {
-  title: 'Korábbi workshopjaink',
-  description: 'Ízelítő a korábbi workshopjainkból, ahol közösen alkottunk, tanultunk és jól éreztük magunkat.',
+  title: 'Korábbi workshopok',
+  description: 'Ízelítő a korábbi workshopokból, ahol közösen alkottunk, tanultunk és jól éreztük magunkat.',
   images: workshops.filter(workshop => workshop.past).flatMap(workshop => workshop.images)
 }

@@ -48,7 +48,7 @@ const parseHungarianDate = (dateText: string): Date | null => {
     .replace(/\s+/g, ' ')
     .trim()
 
-  const dateMatch = cleanedDate.match(/^(\d{4})\.\s*([a-z]+)\s*(\d{1,2})\.$/)
+  const dateMatch = cleanedDate.match(/^(\d{4})\.\s*([a-z]+)\s*(\d{1,2})\.(\s*\(.*\))?$/)
 
   if (!dateMatch) {
     return null

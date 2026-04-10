@@ -30,51 +30,84 @@ const pageImage = workshop.coverImage
       Vissza a workshopokhoz
     </a>
 
-    <header class='mt-6 space-y-3 sm:mt-8'>
-      <h1 class='font-serif text-3xl font-semibold sm:text-4xl lg:text-5xl'>{workshop.title}</h1>
-      <p class='text-muted-foreground max-w-3xl text-lg'>{workshop.description}</p>
+    <header class='mt-6 flex flex-col gap-8 sm:mt-8 lg:flex-row lg:items-center lg:gap-12'>
+      <div class='min-w-0 flex-1 space-y-3'>
+        <h1 class='font-serif text-3xl font-semibold sm:text-4xl lg:text-5xl'>{workshop.title}</h1>
+        {
+          workshop.details ? (
+            <div class='text-muted-foreground space-y-3 text-lg'>
+              {workshop.details.map(paragraph => (
+                <p>{paragraph}</p>
+              ))}
+            </div>
+          ) : (
+            <p class='text-muted-foreground text-lg'>{workshop.description}</p>
+          )
+        }
+      </div>
+      <div class='w-full shrink-0 lg:w-80 xl:w-96'>
+        <button
+          type='button'
+          data-gallery-index={workshop.images.indexOf(workshop.coverImage)}
+          aria-label='Galéria megnyitása'
+          class='focus-visible:ring-ring hover:border-primary group block w-full cursor-pointer overflow-hidden rounded-2xl border border-transparent transition-colors duration-300 outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
+        >
+          <img
+            src={workshop.coverImage}
+            alt={workshop.title}
+            class='w-full object-cover transition-transform duration-300 group-hover:scale-105'
+          />
+        </button>
+      </div>
     </header>
 
     <div class='mt-6 space-y-4 sm:mt-8'>
-      <div class='border-border bg-card rounded-xl border p-5'>
-        <h2 class='mb-3 font-serif text-lg font-medium'>Időpontok</h2>
-        <ul class='space-y-2'>
-          {
-            workshop.dates.map(d => (
-              <li class='text-muted-foreground text-sm'>
+      <h2 class='font-serif text-lg font-medium'>Időpontok</h2>
+      <div class='grid gap-3 sm:grid-cols-2'>
+        {
+          workshop.dates.map(d => (
+            <div class='border-border bg-card space-y-1 rounded-xl border p-5'>
+              <p class='text-foreground text-sm font-medium'>
                 {d.date} | {d.time}
-              </li>
-            ))
-          }
-        </ul>
+              </p>
+              <p class='text-muted-foreground text-sm'>{d.location}</p>
+            </div>
+          ))
+        }
       </div>
 
       <div class='flex flex-wrap gap-x-6 gap-y-2 text-sm'>
         <p class='text-muted-foreground'>
-          <span class='text-foreground font-medium'>Helyszín:</span>
-          {workshop.location}
-        </p>
-        <p class='text-muted-foreground'>
           <span class='text-foreground font-medium'>Részvételi díj:</span>
           {workshop.price}
+          {workshop.priceNote && <span> ({workshop.priceNote})</span>}
         </p>
       </div>
+
+      {
+        workshop.discount && (
+          <p class='text-muted-foreground text-sm'>
+            <span class='text-foreground font-medium'>Kedvezmény:</span>
+            {workshop.discount}
+          </p>
+        )
+      }
+
+      {
+        workshop.maxParticipants && (
+          <p class='text-muted-foreground text-sm'>
+            A résztvevők létszáma korlátozott, legfeljebb {workshop.maxParticipants} fő.
+          </p>
+        )
+      }
     </div>
 
-    <div class='mt-6 flex flex-wrap gap-3 sm:mt-8'>
-      <a
-        href={workshop.facebookEventUrl}
-        target='_blank'
-        rel='noreferrer'
-        class='bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-4 py-2 text-sm font-medium'
-      >
-        Facebook esemény
-      </a>
+    <div class='mt-6 sm:mt-8'>
       <a
         href={workshop.registrationUrl}
         target='_blank'
         rel='noreferrer'
-        class='border-border bg-background hover:bg-muted rounded-full border px-4 py-2 text-sm font-medium'
+        class='bg-foreground text-background hover:bg-foreground/90 rounded-full px-8 py-3 text-base font-medium'
       >
         Jelentkezés
       </a>
@@ -88,23 +121,25 @@ const pageImage = workshop.coverImage
       data-images={JSON.stringify(workshop.images)}
     >
       {
-        workshop.images.map((image, index) => (
-          <figure class='mb-4 break-inside-avoid overflow-hidden rounded-xl'>
-            <button
-              type='button'
-              data-gallery-index={index}
-              aria-label={`${index + 1}. kép megnyitása`}
-              class='focus-visible:ring-ring hover:border-primary group block w-full cursor-pointer rounded-lg border border-transparent transition-colors duration-300 outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
-            >
-              <img
-                src={image}
-                alt={`${workshop.title} galéria kép ${index + 1}`}
-                class='h-auto w-full object-cover transition-transform duration-300 group-hover:scale-105'
-                loading='lazy'
-              />
-            </button>
-          </figure>
-        ))
+        workshop.images.map((image, index) =>
+          image === workshop.coverImage ? null : (
+            <figure class='mb-4 break-inside-avoid overflow-hidden rounded-xl'>
+              <button
+                type='button'
+                data-gallery-index={index}
+                aria-label={`${index + 1}. kép megnyitása`}
+                class='focus-visible:ring-ring hover:border-primary group block w-full cursor-pointer rounded-lg border border-transparent transition-colors duration-300 outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
+              >
+                <img
+                  src={image}
+                  alt={`${workshop.title} galéria kép ${index + 1}`}
+                  class='h-auto w-full object-cover transition-transform duration-300 group-hover:scale-105'
+                  loading='lazy'
+                />
+              </button>
+            </figure>
+          )
+        )
       }
     </div>
   </section>
@@ -230,7 +265,7 @@ const pageImage = workshop.coverImage
           }
         }
 
-        gallery.addEventListener('click', onGalleryClick)
+        document.addEventListener('click', onGalleryClick)
         closeButton.addEventListener('click', closeLightbox)
         prevButton.addEventListener('click', onPrevClick)
         nextButton.addEventListener('click', onNextClick)
@@ -238,7 +273,7 @@ const pageImage = workshop.coverImage
         document.addEventListener('keydown', onKeyDown)
 
         window[cleanupKey] = () => {
-          gallery.removeEventListener('click', onGalleryClick)
+          document.removeEventListener('click', onGalleryClick)
           closeButton.removeEventListener('click', closeLightbox)
           prevButton.removeEventListener('click', onPrevClick)
           nextButton.removeEventListener('click', onNextClick)

@@ -61,17 +61,21 @@ export type PastWorkshopHighlight = {
 export type WorkshopDate = {
   date: string
   time: string
+  location: string
 }
 
 export type UpcomingWorkshop = {
   slug: string
   title: string
   description: string
+  details?: string[]
   coverImage: string
   images: string[]
   dates: WorkshopDate[]
-  location: string
   price: string
+  priceNote?: string
+  discount?: string
+  maxParticipants?: number
   facebookEventUrl: string
   registrationUrl: string
 }
@@ -91,17 +95,31 @@ export const upcomingWorkshops: UpcomingWorkshop[] = [
   {
     slug: 'anyak-napi-viragbura-workshop',
     title: 'Anyák napi virágbúra workshop',
-    description: 'Készíts egyedi virágbúrát édesanyádnak vagy magadnak egy kreatív, inspiráló délutánon.',
+    description:
+      'Lepd meg Édesanyádat valami igazán különlegessel! Alkoss egy gyönyörű, elegáns virágbúrát, amely nemcsak dekoráció, hanem egy kedves emlék is marad.',
+    details: [
+      'Lepd meg Édesanyádat valami igazán különlegessel!',
+      'Alkoss egy gyönyörű, elegáns virágbúrát, amely nemcsak dekoráció, hanem egy kedves emlék is marad – akár közös élményként, akár szívből készített ajándékként. 🌷✨',
+      'Az eseményen kellemes hangulattal, lélekmelengető zenével és ropogtatnivalóval, teával várunk Titeket, hogy igazán maradandó élményben legyen részetek.'
+    ],
     coverImage: '/workshops/anyak-napi-viragbura-workshop/anyak-napi-viragbura-workshop-profile.jpg',
     images: [
       '/workshops/anyak-napi-viragbura-workshop/anyak-napi-viragbura-workshop-profile.jpg',
       '/workshops/anyak-napi-viragbura-workshop/anyak-napi-viragbura-workshop-1.jpg',
       '/workshops/anyak-napi-viragbura-workshop/anyak-napi-viragbura-workshop-2.jpg'
     ],
-    dates: [{ date: '2026. május 2.', time: '13:00-16:00' }],
-    location: 'LeonArt Stúdió - 2890 Tata, Egység u. 7.',
-    price: '15 000 Ft',
+    dates: [
+      {
+        date: '2026. május 2. (szombat)',
+        time: '13:00-16:00',
+        location: 'LeonArt Stúdió - 2890 Tata, Egység u. 7.'
+      }
+    ],
+    price: '15 000 Ft / fő',
+    priceNote: 'minden szükséges eszközt és kelléket tartalmaz',
+    discount: '20% páros kedvezmény, ha Édesanyáddal ketten jöttök. Részvétel 14 év felett lehetséges.',
+    maxParticipants: 8,
     facebookEventUrl: 'https://www.facebook.com/events/2549805432031408',
-    registrationUrl: 'https://forms.gle/7MFQ8WJa2kL5wQ2g7'
+    registrationUrl: 'https://docs.google.com/forms/d/1DKptHzzEMpeI0xUHIoIyuWhZQP-Pqjsu54UcQMESP1g/edit'
   }
 ]

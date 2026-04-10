@@ -98,7 +98,7 @@ export const upcomingWorkshops: UpcomingWorkshop[] = [
       '/workshops/anyak-napi-viragbura-workshop/anyak-napi-viragbura-workshop-1.jpg',
       '/workshops/anyak-napi-viragbura-workshop/anyak-napi-viragbura-workshop-2.jpg'
     ],
-    dates: [{ date: '2026. május 2.', time: '13:00-17:00' }],
+    dates: [{ date: '2026. május 2.', time: '13:00-16:00' }],
     location: 'LeonArt Stúdió - 2890 Tata, Egység u. 7.',
     price: '15 000 Ft',
     facebookEventUrl: 'https://www.facebook.com/events/2549805432031408',

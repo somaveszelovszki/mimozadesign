@@ -9,8 +9,7 @@ type WorkshopCalendarEvent = {
   date: string
   time?: string
   location: string
-  facebookEventUrl: string
-  registrationUrl: string
+  slug: string
   isPast: boolean
 }
 
@@ -81,7 +80,7 @@ const WorkshopsCalendar = ({ events }: WorkshopsCalendarProps) => {
           dateKey: normalizeDateKey(parsedDate)
         }
       })
-      .filter((event): event is (WorkshopCalendarEvent & { dateKey: string }) => event !== null)
+      .filter((event): event is WorkshopCalendarEvent & { dateKey: string } => event !== null)
   }, [events])
 
   const calendarEvents = useMemo(() => {
@@ -89,7 +88,7 @@ const WorkshopsCalendar = ({ events }: WorkshopsCalendarProps) => {
       title: event.title,
       start: event.dateKey,
       allDay: true,
-      url: event.facebookEventUrl,
+      url: `/workshops/${event.slug}`,
       classNames: ['mimoza-fc-event', event.isPast ? 'mimoza-fc-event--past' : 'mimoza-fc-event--upcoming'],
       extendedProps: {
         workshop: event
@@ -98,7 +97,7 @@ const WorkshopsCalendar = ({ events }: WorkshopsCalendarProps) => {
   }, [parsedEvents])
 
   return (
-    <div className='mimoza-calendar rounded-2xl border bg-card p-2 sm:p-4'>
+    <div className='mimoza-calendar bg-card rounded-2xl border p-2 sm:p-4'>
       <FullCalendar
         plugins={[dayGridPlugin]}
         initialView='dayGridMonth'
@@ -129,8 +128,7 @@ const WorkshopsCalendar = ({ events }: WorkshopsCalendarProps) => {
         eventDidMount={info => {
           const element = info.el as HTMLAnchorElement
 
-          element.setAttribute('target', '_blank')
-          element.setAttribute('rel', 'noreferrer')
+          element.removeAttribute('target')
         }}
       />
     </div>

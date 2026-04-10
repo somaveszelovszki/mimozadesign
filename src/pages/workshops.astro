@@ -15,8 +15,7 @@ const workshopsCalendarEvents = upcomingWorkshops.flatMap(workshop =>
     date: d.date,
     time: d.time,
     location: workshop.location,
-    facebookEventUrl: workshop.facebookEventUrl,
-    registrationUrl: workshop.registrationUrl,
+    slug: workshop.slug,
     isPast: false
   }))
 )

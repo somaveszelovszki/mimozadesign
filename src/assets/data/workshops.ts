@@ -1,3 +1,6 @@
+import { readdirSync } from 'node:fs'
+import { resolve } from 'node:path'
+
 export type PastWorkshopHighlight = {
   title: string
   description: string
@@ -27,18 +30,38 @@ export type Workshop = {
   registrationUrl?: string
 }
 
-export const pastWorkshopHighlight: PastWorkshopHighlight = {
-  title: 'Korábbi workshopjaink',
-  description: 'Ízelítő a korábbi workshopjainkból, ahol közösen alkottunk, tanultunk és jól éreztük magunkat.',
-  images: [
-    '/workshops/karacsonyi-kopogtato-workshop/karacsonyi-kopogtato-workshop-1.jpg',
-    '/workshops/karacsonyi-kopogtato-workshop/karacsonyi-kopogtato-workshop-2.jpg',
-    '/workshops/karacsonyi-kopogtato-workshop/karacsonyi-kopogtato-workshop-3.jpg',
-    '/workshops/karacsonyi-kopogtato-workshop/karacsonyi-kopogtato-workshop-4.jpg'
-  ]
+const imageExtensionPattern = /\.(jpg|jpeg|png|webp)$/i
+const fileNameCollator = new Intl.Collator('hu', { numeric: true, sensitivity: 'base' })
+
+const getWorkshopImages = (slug: string): string[] => {
+  const workshopsFolderPath = resolve(process.cwd(), 'public', 'workshops', slug)
+
+  try {
+    const folderImages = readdirSync(workshopsFolderPath)
+      .filter(fileName => imageExtensionPattern.test(fileName))
+      .sort((firstImage, secondImage) => {
+        const firstIsProfile = firstImage.includes('-profile.')
+        const secondIsProfile = secondImage.includes('-profile.')
+
+        if (firstIsProfile && !secondIsProfile) {
+          return -1
+        }
+
+        if (!firstIsProfile && secondIsProfile) {
+          return 1
+        }
+
+        return fileNameCollator.compare(firstImage, secondImage)
+      })
+
+    return folderImages.map(fileName => `/workshops/${slug}/${fileName}`)
+  } catch (error) {
+    console.error(`[workshops] Unable to read image folder for "${slug}".`, error)
+    return []
+  }
 }
 
-export const workshops: Workshop[] = [
+const workshopData: Omit<Workshop, 'coverImage' | 'images'>[] = [
   {
     slug: 'karacsonyi-kopogtato-workshop',
     title: 'Karácsonyi kopogtató workshop',
@@ -47,14 +70,6 @@ export const workshops: Workshop[] = [
     details: [
       '🎄 Hangolódjunk továbbra is együtt az ünnepekre, és készítsünk egy gyönyörű kopogtatót, mely minden otthon éke lesz. 🎄',
       'Közösen kötjük meg a sokféle örökzöld alapú koszorút, melyet sokféle ünnepi dísszel és terméssel díszítünk.'
-    ],
-    coverImage: '/workshops/karacsonyi-kopogtato-workshop/karacsonyi-kopogtato-workshop-profile.jpg',
-    images: [
-      '/workshops/karacsonyi-kopogtato-workshop/karacsonyi-kopogtato-workshop-profile.jpg',
-      '/workshops/karacsonyi-kopogtato-workshop/karacsonyi-kopogtato-workshop-1.jpg',
-      '/workshops/karacsonyi-kopogtato-workshop/karacsonyi-kopogtato-workshop-2.jpg',
-      '/workshops/karacsonyi-kopogtato-workshop/karacsonyi-kopogtato-workshop-3.jpg',
-      '/workshops/karacsonyi-kopogtato-workshop/karacsonyi-kopogtato-workshop-4.jpg'
     ],
     past: true,
     dates: [
@@ -78,12 +93,6 @@ export const workshops: Workshop[] = [
       'Alkoss egy gyönyörű, elegáns virágbúrát, amely nemcsak dekoráció, hanem egy kedves emlék is marad – akár közös élményként, akár szívből készített ajándékként. 🌷✨',
       'Az eseményen kellemes hangulattal, lélekmelengető zenével és ropogtatnivalóval, teával várunk Titeket, hogy igazán maradandó élményben legyen részetek.'
     ],
-    coverImage: '/workshops/anyak-napi-viragbura-workshop/anyak-napi-viragbura-workshop-profile.jpg',
-    images: [
-      '/workshops/anyak-napi-viragbura-workshop/anyak-napi-viragbura-workshop-profile.jpg',
-      '/workshops/anyak-napi-viragbura-workshop/anyak-napi-viragbura-workshop-1.jpg',
-      '/workshops/anyak-napi-viragbura-workshop/anyak-napi-viragbura-workshop-2.jpg'
-    ],
     dates: [
       {
         date: '2026. május 2. (szombat)',
@@ -99,3 +108,16 @@ export const workshops: Workshop[] = [
     registrationUrl: 'https://docs.google.com/forms/d/1DKptHzzEMpeI0xUHIoIyuWhZQP-Pqjsu54UcQMESP1g/edit'
   }
 ]
+
+export const workshops: Workshop[] = workshopData.map(workshop => {
+  const images = getWorkshopImages(workshop.slug)
+  const coverImage = images.find(img => img.includes('-profile.')) ?? ''
+
+  return { ...workshop, coverImage, images }
+})
+
+export const pastWorkshopHighlight: PastWorkshopHighlight = {
+  title: 'Korábbi workshopjaink',
+  description: 'Ízelítő a korábbi workshopjainkból, ahol közösen alkottunk, tanultunk és jól éreztük magunkat.',
+  images: workshops.filter(workshop => workshop.past).flatMap(workshop => workshop.images)
+}

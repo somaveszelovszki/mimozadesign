@@ -5,7 +5,6 @@ export type Wedding = {
   slug: string
   name: string
   caption: string
-  coverImage: string
   coverImagePosition?: string
   location: string
   weddingDate: string
@@ -18,6 +17,7 @@ export type Wedding = {
 }
 
 export type WeddingPortfolio = Wedding & {
+  coverImage: string
   images: string[]
 }
 
@@ -71,7 +71,6 @@ export const weddings: Wedding[] = [
     slug: 'petra-mate',
     name: 'Petra és Máté',
     caption: 'Elegáns, romantikus dekoráció finom természetes részletekkel.',
-    coverImage: '/weddings/petra-mate/petra-mate-profile.jpg',
     coverImagePosition: 'center',
     location: 'Tata, Grill Étterem',
     weddingDate: '2025. március 29.',
@@ -87,7 +86,6 @@ export const weddings: Wedding[] = [
     name: 'Adri és Dávid',
     caption:
       'Szárazvirágból készült teljes dekoráció, amely a végtelenségig megőrzi az esküvő napjának gyönyörű emlékét.',
-    coverImage: '/weddings/adri-david/adri-david-profile.jpg',
     coverImagePosition: 'center',
     location: 'Dabas, Jakab Lovasudvar',
     weddingDate: '2025. július 5.',
@@ -102,7 +100,6 @@ export const weddings: Wedding[] = [
     slug: 'reka-balint',
     name: 'Réka és Bálint',
     caption: 'Amilyen a pár, olyan a csokor. Vidám, sokszínű, élénk.',
-    coverImage: '/weddings/reka-balint/reka-balint-profile.jpg',
     coverImagePosition: 'center',
     location: 'Szomód, Pikant Pajta',
     weddingDate: '2024. május 17.',
@@ -117,7 +114,6 @@ export const weddings: Wedding[] = [
     slug: 'dori-david',
     name: 'Dóri és Dávid',
     caption: 'Rusztikus stílusú, természetközeli dekor, az ősz színeivel.',
-    coverImage: '/weddings/dori-david/dori-david-profile.jpg',
     coverImagePosition: 'top',
     location: 'Verőce, Lósi Major',
     weddingDate: '2023. szeptember 2.',
@@ -132,7 +128,6 @@ export const weddings: Wedding[] = [
     slug: 'anna-bence',
     name: 'Anna és Bence',
     caption: 'Méhlegelő ihletésű csokor, novemberi kivitelben.',
-    coverImage: '/weddings/anna-bence/anna-bence-profile.jpg',
     coverImagePosition: 'center',
     location: 'Budapest szívében',
     weddingDate: '2025. november 8.',
@@ -145,12 +140,14 @@ export const weddings: Wedding[] = [
   }
 ]
 
-export const weddingPortfolios: WeddingPortfolio[] = weddings.map(wedding => ({
-  ...wedding,
-  images: getWeddingImages(wedding.slug)
-}))
+export const weddingPortfolios: WeddingPortfolio[] = weddings.map(wedding => {
+  const images = getWeddingImages(wedding.slug)
+  const coverImage = images.find(img => img.includes('-profile.')) ?? ''
 
-export const allWeddingCards: WeddingCard[] = weddings.map(wedding => ({
+  return { ...wedding, coverImage, images }
+})
+
+export const allWeddingCards: WeddingCard[] = weddingPortfolios.map(wedding => ({
   slug: wedding.slug,
   image: wedding.coverImage,
   imagePosition: wedding.coverImagePosition,

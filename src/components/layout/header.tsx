@@ -106,7 +106,7 @@ const Header = ({ navigationData, className }: HeaderProps) => {
     ...navigationData,
     {
       title: 'Ajánlatkérés',
-      href: '/contact'
+      href: '/kapcsolat'
     }
   ]
 
@@ -163,11 +163,12 @@ const Header = ({ navigationData, className }: HeaderProps) => {
           <Button
             className={cn(
               'hidden rounded-full text-base has-[>svg]:px-6 lg:inline-flex',
-              isHeroInView && 'border border-white bg-transparent text-white hover:bg-accent hover:text-accent-foreground'
+              isHeroInView &&
+                'hover:bg-accent hover:text-accent-foreground border border-white bg-transparent text-white'
             )}
             asChild
           >
-            <a href='/contact'>Ajánlatkérés</a>
+            <a href='/kapcsolat'>Ajánlatkérés</a>
           </Button>
 
           {/* Mobile menu button */}
@@ -178,7 +179,10 @@ const Header = ({ navigationData, className }: HeaderProps) => {
               <Button
                 variant={isHeroInView ? 'ghost' : 'outline'}
                 size='icon'
-                className={cn('ml-2 rounded-full lg:hidden', isHeroInView && 'text-white hover:bg-white/10 hover:text-white')}
+                className={cn(
+                  'ml-2 rounded-full lg:hidden',
+                  isHeroInView && 'text-white hover:bg-white/10 hover:text-white'
+                )}
               >
                 <MenuIcon />
                 <span className='sr-only'>Menu</span>

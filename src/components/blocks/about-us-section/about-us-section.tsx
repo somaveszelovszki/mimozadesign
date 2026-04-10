@@ -16,7 +16,7 @@ const AboutUs = () => {
             egyszerre elegánsak, természetesek és személyesek.
           </p>
           <Button size='lg' asChild className='rounded-full text-base has-[>svg]:px-6'>
-            <a href='/about-us'>
+            <a href='/rolunk'>
               Többet rólunk
               <ArrowRightIcon className='transition-transform duration-200' />
             </a>

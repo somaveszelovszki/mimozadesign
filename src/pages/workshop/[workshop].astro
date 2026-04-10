@@ -1,5 +1,5 @@
 ---
-import BlankLayout from '@/layouts/BlankLayout.astro'
+import Layout from '@/layouts/Layout.astro'
 import type { UpcomingWorkshop } from '@/assets/data/workshops'
 import { upcomingWorkshops } from '@/assets/data/workshops'
 
@@ -21,10 +21,10 @@ const pageDescription = `${workshop.title} — ${workshop.description}`
 const pageImage = workshop.coverImage
 ---
 
-<BlankLayout title={pageTitle} description={pageDescription} image={pageImage}>
-  <section class='bg-background text-foreground mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-18'>
+<Layout title={pageTitle} description={pageDescription} image={pageImage}>
+  <section class='bg-background text-foreground mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-18'>
     <a
-      href='/workshops#upcoming-workshops'
+      href='/workshop#upcoming-workshops'
       class='text-primary hover:text-primary/80 focus-visible:ring-ring inline-flex items-center gap-2 text-sm font-medium underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none'
     >
       Vissza a workshopokhoz
@@ -81,7 +81,7 @@ const pageImage = workshop.coverImage
     </div>
   </section>
 
-  <section class='mx-auto max-w-6xl px-4 pb-10 sm:px-6 sm:pb-14 lg:px-8 lg:pb-18'>
+  <section class='mx-auto w-full max-w-7xl px-4 pb-10 sm:px-6 sm:pb-14 lg:px-8 lg:pb-18'>
     <div
       id='workshop-gallery'
       class='columns-1 gap-4 sm:columns-2 lg:columns-3'
@@ -252,4 +252,4 @@ const pageImage = workshop.coverImage
       document.addEventListener('astro:page-load', initWorkshopGallery)
     })()
   </script>
-</BlankLayout>
+</Layout>

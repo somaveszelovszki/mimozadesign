@@ -34,7 +34,7 @@ const workshopsCalendarEvents = upcomingWorkshops.flatMap(workshop =>
           upcomingWorkshops.flatMap(workshop =>
             workshop.dates.map(d => (
               <article class='border-border hover:border-primary bg-card overflow-hidden rounded-xl border transition-colors duration-300 sm:w-1/2'>
-                <a href={`/workshops/${workshop.slug}`} class='group flex flex-col sm:flex-row'>
+                <a href={`/workshop/${workshop.slug}`} class='group flex flex-col sm:flex-row'>
                   <img
                     src={workshop.coverImage}
                     alt={`${workshop.title} borítókép`}

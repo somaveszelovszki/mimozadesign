@@ -60,7 +60,7 @@ const ContactUs = ({ contactInfo }: { contactInfo: ContactInfo }) => {
             </div>
 
             <Button asChild size='lg' className='mx-auto mt-2 flex w-fit rounded-full px-10 text-base'>
-              <a href='/contact'>Írj nekünk</a>
+              <a href='/kapcsolat'>Írj nekünk</a>
             </Button>
           </div>
         </div>

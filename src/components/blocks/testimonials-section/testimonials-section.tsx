@@ -48,7 +48,7 @@ const TestimonialsComponent = ({ testimonials }: TestimonialsComponentProps) => 
               <CarouselItem key={index} className='sm:pl-6 lg:basis-1/2'>
                 <Card className='hover:border-primary group h-full p-0 transition-colors duration-300'>
                   <a
-                    href={`/weddings/${testimonial.slug}`}
+                    href={`/eskuvo/${testimonial.slug}`}
                     aria-label={`${testimonial.name} esküvői portfólió megnyitása`}
                     className='focus-visible:ring-ring block h-full p-6 outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
                   >

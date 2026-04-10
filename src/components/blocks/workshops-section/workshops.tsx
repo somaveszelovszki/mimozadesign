@@ -22,10 +22,9 @@ const Workshops = ({ workshops }: { workshops: Workshop }) => {
         <div className='mx-auto mb-12 flex max-w-2xl flex-col items-center justify-center space-y-4 text-center sm:mb-16 lg:mb-24'>
           <h2 className='font-serif text-2xl font-semibold md:text-3xl lg:text-4xl'>Workshopjaink</h2>
           <p className='text-muted-foreground text-xl'>
-            Több tematikus workshopot szervezünk, mindegyikhez külön Facebook eseménnyel és Google Forms
-            jelentkezéssel.
+            Több tematikus workshopot szervezünk, mindegyikhez külön Facebook eseménnyel és Google Forms jelentkezéssel.
           </p>
-          <a href='/workshops' className='text-primary text-sm font-medium underline-offset-4 hover:underline'>
+          <a href='/workshop' className='text-primary text-sm font-medium underline-offset-4 hover:underline'>
             Összes workshop és naptár megtekintése
           </a>
         </div>

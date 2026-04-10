@@ -88,7 +88,7 @@ const WorkshopsCalendar = ({ events }: WorkshopsCalendarProps) => {
       title: event.title,
       start: event.dateKey,
       allDay: true,
-      url: `/workshops/${event.slug}`,
+      url: `/workshop/${event.slug}`,
       classNames: ['mimoza-fc-event', event.isPast ? 'mimoza-fc-event--past' : 'mimoza-fc-event--upcoming'],
       extendedProps: {
         workshop: event

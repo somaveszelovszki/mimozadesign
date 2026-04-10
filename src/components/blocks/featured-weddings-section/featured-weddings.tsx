@@ -1,6 +1,6 @@
 import { Card, CardContent, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
-import type { WeddingCard } from '@/assets/data/weddings'
+import type { WeddingCard } from '@/assets/data/eskuvo'
 
 type FeaturedWeddingsProps = {
   featuredWeddings: WeddingCard[]
@@ -18,7 +18,7 @@ const FeaturedWeddings = ({ featuredWeddings, showAllWeddingsLink = true }: Feat
           </p>
           {showAllWeddingsLink ? (
             <a
-              href='/weddings'
+              href='/eskuvo'
               className='text-primary hover:text-primary/80 focus-visible:ring-ring text-base font-medium underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none'
             >
               További esküvők megtekintése
@@ -33,7 +33,7 @@ const FeaturedWeddings = ({ featuredWeddings, showAllWeddingsLink = true }: Feat
               className='hover:border-primary group overflow-hidden p-0 shadow-none transition-colors duration-300'
             >
               <a
-                href={`/weddings/${wedding.slug}`}
+                href={`/eskuvo/${wedding.slug}`}
                 aria-label={`${wedding.name} esküvői portfólió megnyitása`}
                 className='focus-visible:ring-ring block h-full outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
               >

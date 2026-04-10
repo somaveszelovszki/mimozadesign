@@ -1,46 +1,69 @@
 ---
 import BlankLayout from '@/layouts/BlankLayout.astro'
-import type { WorkshopPortfolio } from '@/assets/data/workshops'
-import { workshopPortfolios } from '@/assets/data/workshops'
+import type { UpcomingWorkshop } from '@/assets/data/workshops'
+import { upcomingWorkshops } from '@/assets/data/workshops'
 
 export function getStaticPaths() {
-  return workshopPortfolios.map(portfolio => ({
-    params: { workshop: portfolio.slug },
-    props: { portfolio }
+  return upcomingWorkshops.map(workshop => ({
+    params: { workshop: workshop.slug },
+    props: { workshop }
   }))
 }
 
 interface Props {
-  portfolio: WorkshopPortfolio
+  workshop: UpcomingWorkshop
 }
 
-const { portfolio } = Astro.props as Props
+const { workshop } = Astro.props as Props
 
-const pageTitle = `${portfolio.title} | Workshop portfólió | Mimóza Design`
-const pageDescription = `${portfolio.title} workshop összefoglaló. ${portfolio.caption}`
-const pageImage = portfolio.coverImage
+const pageTitle = `${workshop.title} | Workshop | Mimóza Design`
+const pageDescription = `${workshop.title} — ${workshop.description}`
+const pageImage = workshop.coverImage
 ---
 
 <BlankLayout title={pageTitle} description={pageDescription} image={pageImage}>
   <section class='bg-background text-foreground mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-18'>
     <a
-      href='/workshops#past-workshops'
+      href='/workshops#upcoming-workshops'
       class='text-primary hover:text-primary/80 focus-visible:ring-ring inline-flex items-center gap-2 text-sm font-medium underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none'
     >
       Vissza a workshopokhoz
     </a>
 
     <header class='mt-6 space-y-3 sm:mt-8'>
-      <h1 class='font-serif text-3xl font-semibold sm:text-4xl lg:text-5xl'>{portfolio.title}</h1>
-      <p class='text-muted-foreground max-w-3xl text-lg'>{portfolio.caption}</p>
-      <p class='text-muted-foreground text-sm'>
-        {portfolio.date} - {portfolio.location}
-      </p>
+      <h1 class='font-serif text-3xl font-semibold sm:text-4xl lg:text-5xl'>{workshop.title}</h1>
+      <p class='text-muted-foreground max-w-3xl text-lg'>{workshop.description}</p>
     </header>
+
+    <div class='mt-6 space-y-4 sm:mt-8'>
+      <div class='border-border bg-card rounded-xl border p-5'>
+        <h2 class='mb-3 font-serif text-lg font-medium'>Időpontok</h2>
+        <ul class='space-y-2'>
+          {
+            workshop.dates.map(d => (
+              <li class='text-muted-foreground text-sm'>
+                {d.date} | {d.time}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class='flex flex-wrap gap-x-6 gap-y-2 text-sm'>
+        <p class='text-muted-foreground'>
+          <span class='text-foreground font-medium'>Helyszín:</span>
+          {workshop.location}
+        </p>
+        <p class='text-muted-foreground'>
+          <span class='text-foreground font-medium'>Részvételi díj:</span>
+          {workshop.price}
+        </p>
+      </div>
+    </div>
 
     <div class='mt-6 flex flex-wrap gap-3 sm:mt-8'>
       <a
-        href={portfolio.facebookEventUrl}
+        href={workshop.facebookEventUrl}
         target='_blank'
         rel='noreferrer'
         class='bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-4 py-2 text-sm font-medium'
@@ -48,12 +71,12 @@ const pageImage = portfolio.coverImage
         Facebook esemény
       </a>
       <a
-        href={portfolio.registrationUrl}
+        href={workshop.registrationUrl}
         target='_blank'
         rel='noreferrer'
         class='border-border bg-background hover:bg-muted rounded-full border px-4 py-2 text-sm font-medium'
       >
-        Jelentkezés Google Forms
+        Jelentkezés
       </a>
     </div>
   </section>
@@ -62,10 +85,10 @@ const pageImage = portfolio.coverImage
     <div
       id='workshop-gallery'
       class='columns-1 gap-4 sm:columns-2 lg:columns-3'
-      data-images={JSON.stringify(portfolio.images)}
+      data-images={JSON.stringify(workshop.images)}
     >
       {
-        portfolio.images.map((image, index) => (
+        workshop.images.map((image, index) => (
           <figure class='mb-4 break-inside-avoid overflow-hidden rounded-xl'>
             <button
               type='button'
@@ -75,7 +98,7 @@ const pageImage = portfolio.coverImage
             >
               <img
                 src={image}
-                alt={`${portfolio.title} galéria kép ${index + 1}`}
+                alt={`${workshop.title} galéria kép ${index + 1}`}
                 class='h-auto w-full object-cover transition-transform duration-300 group-hover:scale-105'
                 loading='lazy'
               />

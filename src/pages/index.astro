@@ -9,7 +9,7 @@ import ContactUsSection from '@/components/blocks/contact-us-section/contact-us-
 
 import { featuredWeddings } from '@/assets/data/weddings'
 import { testimonials } from '@/assets/data/testimonials'
-import { workshops } from '@/assets/data/workshops'
+import { upcomingWorkshops } from '@/assets/data/workshops'
 import { contactInfo } from '@/assets/data/contact-us'
 
 // Page-specific SEO configuration
@@ -55,7 +55,7 @@ const schema = {
   <div class='w-full py-2' aria-hidden='true'>
     <div class='bg-primary/30 h-[1px] w-full'></div>
   </div>
-  <Workshops workshops={workshops} />
+  <Workshops workshops={[...upcomingWorkshops].sort((a, b) => (a.past ? 1 : 0) - (b.past ? 1 : 0))} />
   <AboutUs />
   <Testimonials testimonials={testimonials} client:load />
   <ContactUsSection contactInfo={contactInfo} />

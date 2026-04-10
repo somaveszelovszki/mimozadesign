@@ -9,7 +9,9 @@ const pageDescription =
 const pageKeywords =
   'kreatív workshop, DIY workshop, virág workshop, workshop, szárazvirág kompozíció, virágcsokor, koszorú, Mimóza, Mimóza Design, Veszelovszki-Petró Liza, Petró Liza'
 
-const workshopsCalendarEvents = upcomingWorkshops.flatMap(workshop =>
+const futureWorkshops = upcomingWorkshops.filter(w => !w.past)
+
+const workshopsCalendarEvents = futureWorkshops.flatMap(workshop =>
   workshop.dates.map(d => ({
     title: workshop.title,
     date: d.date,
@@ -31,7 +33,7 @@ const workshopsCalendarEvents = upcomingWorkshops.flatMap(workshop =>
 
       <div class='grid grid-cols-1 gap-6'>
         {
-          upcomingWorkshops.flatMap(workshop =>
+          futureWorkshops.flatMap(workshop =>
             workshop.dates.map(d => (
               <article class='border-border hover:border-primary bg-card overflow-hidden rounded-xl border transition-colors duration-300 sm:w-1/2'>
                 <a href={`/workshop/${workshop.slug}`} class='group flex flex-col sm:flex-row'>

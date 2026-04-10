@@ -72,12 +72,13 @@ export type UpcomingWorkshop = {
   coverImage: string
   images: string[]
   dates: WorkshopDate[]
+  past?: boolean
   price: string
   priceNote?: string
   discount?: string
   maxParticipants?: number
-  facebookEventUrl: string
-  registrationUrl: string
+  facebookEventUrl?: string
+  registrationUrl?: string
 }
 
 export const pastWorkshopHighlight: PastWorkshopHighlight = {
@@ -92,6 +93,35 @@ export const pastWorkshopHighlight: PastWorkshopHighlight = {
 }
 
 export const upcomingWorkshops: UpcomingWorkshop[] = [
+  {
+    slug: 'adventi-koszoru-workshop',
+    title: 'Adventi koszorú workshop',
+    description:
+      'Hangolódjunk együtt az ünnepekre, és készítsünk egy gyönyörű kopogtatót, mely minden otthon éke lesz.',
+    details: [
+      '🎄 Hangolódjunk továbbra is együtt az ünnepekre, és készítsünk egy gyönyörű kopogtatót, mely minden otthon éke lesz. 🎄',
+      'Közösen kötjük meg a sokféle örökzöld alapú koszorút, melyet sokféle ünnepi dísszel és terméssel díszítünk.'
+    ],
+    coverImage: '/workshops/adventi-koszoru-workshop/adventi-koszoru-workshop-profile.jpg',
+    images: [
+      '/workshops/adventi-koszoru-workshop/adventi-koszoru-workshop-profile.jpg',
+      '/workshops/adventi-koszoru-workshop/adventi-koszoru-workshop-1.jpg',
+      '/workshops/adventi-koszoru-workshop/adventi-koszoru-workshop-2.jpg',
+      '/workshops/adventi-koszoru-workshop/adventi-koszoru-workshop-3.jpg',
+      '/workshops/adventi-koszoru-workshop/adventi-koszoru-workshop-4.jpg'
+    ],
+    past: true,
+    dates: [
+      {
+        date: '2025. december 6. (szombat)',
+        time: '13:00-17:00',
+        location: 'LeonArt Stúdió - 2890 Tata, Egység utca 7.'
+      }
+    ],
+    price: 'Becsületkasszás',
+    priceNote:
+      'Az alapanyagok, eszközök és a helyszín költsége összesen kb. 5000 Ft/fő. Támogatásoddal hozzájárulsz ahhoz, hogy a program olyanok számára is elérhető maradjon, akik anyagi okokból másként nem tudnának részt venni.'
+  },
   {
     slug: 'anyak-napi-viragbura-workshop',
     title: 'Anyák napi virágbúra workshop',

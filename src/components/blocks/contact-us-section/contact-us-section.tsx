@@ -8,6 +8,7 @@ type ContactInfo = {
   title: string
   icon: ComponentType
   description: string
+  link?: string
 }[]
 
 const ContactUs = ({ contactInfo }: { contactInfo: ContactInfo }) => {
@@ -35,28 +36,31 @@ const ContactUs = ({ contactInfo }: { contactInfo: ContactInfo }) => {
           <div className='flex h-full max-w-[24rem] flex-col justify-between'>
             {/* Contact Info Grid */}
             <div className='grid grid-cols-2 gap-4'>
-              {contactInfo.map((info, index) => (
-                <Card
-                  className='bg-background hover:border-primary aspect-square overflow-hidden shadow-none transition-colors duration-300'
-                  key={index}
-                >
-                  <CardContent className='flex h-full min-h-0 flex-col items-center justify-center gap-2.5 p-3 text-center sm:p-4'>
-                    <Avatar className='size-8 border'>
-                      <AvatarFallback className='bg-transparent [&>svg]:size-4.5'>
-                        <info.icon />
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className='space-y-1.5'>
-                      <h4 className='font-serif text-sm font-semibold sm:text-base'>{info.title}</h4>
-                      <div className='text-muted-foreground text-sm font-medium'>
-                        {info.description.split('\n').map((line, idx) => (
-                          <p key={idx}>{line}</p>
-                        ))}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+              {contactInfo.map((info, index) => {
+                const Wrapper = info.link ? 'a' : 'div'
+                const wrapperProps = info.link ? { href: info.link } : {}
+                return (
+                  <Wrapper {...wrapperProps} key={index} className='block'>
+                    <Card className='bg-background hover:border-primary aspect-square overflow-hidden shadow-none transition-colors duration-300'>
+                      <CardContent className='flex h-full min-h-0 flex-col items-center justify-center gap-2.5 p-3 text-center sm:p-4'>
+                        <Avatar className='size-8 border'>
+                          <AvatarFallback className='bg-transparent [&>svg]:size-4.5'>
+                            <info.icon />
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className='space-y-1.5'>
+                          <h4 className='font-serif text-sm font-semibold sm:text-base'>{info.title}</h4>
+                          <div className='text-muted-foreground text-sm font-medium'>
+                            {info.description.split('\n').map((line, idx) => (
+                              <p key={idx}>{line}</p>
+                            ))}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Wrapper>
+                )
+              })}
             </div>
 
             <Button asChild size='lg' className='mx-auto mt-2 flex w-fit rounded-full px-10 text-base'>

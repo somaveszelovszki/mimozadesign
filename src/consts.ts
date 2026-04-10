@@ -77,7 +77,7 @@ export const SOCIAL_LINKS = {
   github: GITHUB_URL,
   twitter: 'https://www.instagram.com/mimozaDesign',
   linkedin: 'https://www.facebook.com/mimozadesign',
-  discord: 'mailto:liza@mimozadesign.hu'
+  discord: 'mailto:petroliza11@gmail.com'
 }
 
 // Company information for structured data
@@ -95,9 +95,9 @@ export const COMPANY_INFO = {
     addressCountry: 'HU'
   },
   contactPoint: {
-    telephone: '+36-30-2866-471',
+    telephone: '+36 30 2866 471',
     contactType: 'customer support',
-    email: 'liza@mimozadesign.hu'
+    email: 'petroliza11@gmail.com'
   },
   sameAs: Object.values(SOCIAL_LINKS)
 }

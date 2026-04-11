@@ -118,7 +118,8 @@ export const weddings: Wedding[] = [
   {
     slug: 'reka-balint',
     name: 'Réka és Bálint',
-    caption: 'Amilyen a pár, olyan a csokor. Vidám, sokszínű, élénk.',
+    caption:
+      'Mindig nagy hangsúlyt fektetünk arra, hogy a dekoráció tükrözze a pár személyiségét. Rékában és Bálintban egy vidám, sokszínű, élénk párt ismerhetünk meg - ilyen lett hát a dekor is.',
     coverImagePosition: 'center',
     location: 'Szomód, Pikant Pajta',
     weddingDate: '2024. május 17.',

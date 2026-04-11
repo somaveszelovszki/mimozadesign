@@ -1,6 +1,6 @@
 import { Card, CardContent, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
-import type { WeddingCard } from '@/assets/data/eskuvo'
+import type { WeddingCard } from '@/assets/data/weddings'
 
 type FeaturedWeddingsProps = {
   featuredWeddings: WeddingCard[]
@@ -11,19 +11,11 @@ const FeaturedWeddings = ({ featuredWeddings, showAllWeddingsLink = true }: Feat
   return (
     <section id='featured-weddings' className='py-8 sm:py-16 lg:py-24'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
-        <div className='mx-auto mb-12 flex max-w-2xl flex-col items-center justify-center space-y-4 text-center sm:mb-16 lg:mb-24'>
+        <div className='mx-auto mb-8 flex max-w-2xl flex-col items-center justify-center space-y-4 text-center sm:mb-10 lg:mb-12'>
           <h2 className='font-serif text-2xl font-semibold md:text-3xl lg:text-4xl'>Esküvői munkáink</h2>
           <p className='text-muted-foreground text-xl'>
             Valódi párok valódi történetei, ahol a virágok, textíliák és részletek egy közös hangulattá álltak össze.
           </p>
-          {showAllWeddingsLink ? (
-            <a
-              href='/eskuvo'
-              className='text-primary hover:text-primary/80 focus-visible:ring-ring text-base font-medium underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none'
-            >
-              További esküvők megtekintése
-            </a>
-          ) : null}
         </div>
 
         <div className='grid gap-6 md:grid-cols-2 lg:gap-y-10 xl:grid-cols-4'>
@@ -60,6 +52,17 @@ const FeaturedWeddings = ({ featuredWeddings, showAllWeddingsLink = true }: Feat
             </Card>
           ))}
         </div>
+
+        {showAllWeddingsLink ? (
+          <div className='mt-8 flex justify-center sm:mt-10 lg:mt-12'>
+            <a
+              href='/eskuvo'
+              className='text-primary hover:text-primary/80 focus-visible:ring-ring text-base font-medium underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none'
+            >
+              További esküvők megtekintése
+            </a>
+          </div>
+        ) : null}
       </div>
     </section>
   )

@@ -8,6 +8,7 @@ export type Wedding = {
   coverImagePosition?: string
   location: string
   weddingDate: string
+  testimonial?: string
   card: {
     alt: string
     subtitle: string
@@ -89,10 +90,28 @@ export const weddings: Wedding[] = [
     coverImagePosition: 'center',
     location: 'Dabas, Jakab Lovasudvar',
     weddingDate: '2025. július 5.',
+    testimonial:
+      'Az esküvőnk egyik fénypontja kétség kívül a dekoráció volt, és ezt Lizának köszönhetjük! A vendégek el voltak ragadtatva tőle, és csodálatosan összefogta az egész eseményt, teljesen integrálódott a többi elemmel. Régóta ismerjük Lizát, és mikor elkezdtük tervezni az esküvőnket, egyértelműen őt akartuk megbízni a virágdekorációval, amit nagy szerencsénkre elvállalt. A szárazvirág nagy előnye, hogy már hónapokkal az esküvő előtt elkészülhet, így sokkal könnyebb egyben látni, finomítani a koncepción. Liza az egész folyamatban proaktív volt, mindig javasolt, példákat hozott, döntési helyzetekben kikérte a véleményünket, és hajlandó volt bármit megpróbálni, amit kitaláltunk. Számunkra így az egész folyamat szuper élmény volt, ami a tökéletes nagy napunkon tetőzött, hálás köszönet érte!',
     card: {
       alt: 'Adri és Dávid esküvője',
       subtitle: 'Szárazvirágos koncepció',
       description: 'Időtálló, bézs-barna tónusú dekoráció természetes textúrákkal.',
+      isFeatured: true
+    }
+  },
+  {
+    slug: 'anna-bence',
+    name: 'Anna és Bence',
+    caption: 'Méhlegelő ihletésű csokor, novemberi kivitelben.',
+    coverImagePosition: 'center',
+    location: 'Budapest szívében',
+    weddingDate: '2025. november 8.',
+    testimonial:
+      'Kis esküvőnk gyönyörű dísze volt a menyasszonyi csokor, amit Liza készített. Becsempészte a napsütötte vadvirágos rétek hangulatát a novemberi őszbe, ami még meghittebbé és vidámabbá tette az ünnepünket. Beszélgetésünk a csokorról pedig a készülődés izgalmának egyik nagyon kedves emléke. Szívből ajánljuk mindenkinek!',
+    card: {
+      alt: 'Anna és Bence esküvője',
+      subtitle: 'Méhlegelő inspiráció',
+      description: 'Finom, késő őszi virágvilág letisztult, romantikus részletekkel.',
       isFeatured: true
     }
   },
@@ -103,6 +122,8 @@ export const weddings: Wedding[] = [
     coverImagePosition: 'center',
     location: 'Szomód, Pikant Pajta',
     weddingDate: '2024. május 17.',
+    testimonial:
+      'Amikor Lizát megkerestük, hogy elkészítse az esküvőhöz tartozó dekorációt akkor bennünk még egy kaotikus kép élt a vágyainkról. Ezt a káoszt sikerült rendszereznie és kitisztítania. Akkor, amikor úgy érezte, hogy két elképzelés egymással ütközik, azt mindig kiemelte és alternatív javaslatot tett, de sosem erőltette ránk az ötletét, hanem mindig engedte, hogy a végleges döntést mi hozzuk meg. Már az első perctől kezdve éreztük, hogy lelkesedéssel és odaadással végzi a munkáját, és ez a lelkesedés az esküvő napjáig sem csökkent. Neki is annyira fontos volt, hogy tökéletes legyen a nagy napunk, mint nekünk. Nagyon sok szeretettel ajánljuk!',
     card: {
       alt: 'Réka és Bálint esküvője',
       subtitle: 'Vadvirágos hangulat',
@@ -117,24 +138,12 @@ export const weddings: Wedding[] = [
     coverImagePosition: 'top',
     location: 'Verőce, Lósi Major',
     weddingDate: '2023. szeptember 2.',
+    testimonial:
+      'Maximálisan meg voltunk elégedve Liza munkájával. Pont olyan lett a dekor és a csokor, ahogy elképzeltük. ❤️',
     card: {
       alt: 'Dóri és Dávid esküvője',
       subtitle: 'Őszi rusztikus dekor',
       description: 'Erdei ihletésű kompozíciók mély terrakotta és moha zöld árnyalatokkal.',
-      isFeatured: true
-    }
-  },
-  {
-    slug: 'anna-bence',
-    name: 'Anna és Bence',
-    caption: 'Méhlegelő ihletésű csokor, novemberi kivitelben.',
-    coverImagePosition: 'center',
-    location: 'Budapest szívében',
-    weddingDate: '2025. november 8.',
-    card: {
-      alt: 'Anna és Bence esküvője',
-      subtitle: 'Méhlegelő inspiráció',
-      description: 'Finom, késő őszi virágvilág letisztult, romantikus részletekkel.',
       isFeatured: false
     }
   }

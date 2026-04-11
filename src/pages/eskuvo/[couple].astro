@@ -37,6 +37,13 @@ const pageImage = portfolio.coverImage
       </p>
       <p class='text-muted-foreground text-sm'>{portfolio.weddingDate}</p>
       <p class='text-muted-foreground max-w-3xl text-lg'>{portfolio.caption}</p>
+      {
+        portfolio.testimonial && (
+          <blockquote class='border-primary/40 text-muted-foreground mt-6 max-w-3xl border-l-2 pl-5 text-lg italic'>
+            {portfolio.testimonial}
+          </blockquote>
+        )
+      }
     </header>
   </section>
 

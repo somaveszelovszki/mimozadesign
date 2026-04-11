@@ -6,14 +6,11 @@ const Workshops = ({ workshops }: { workshops: Workshop[] }) => {
   return (
     <section id='workshops' className='py-8 sm:py-16 lg:py-24'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
-        <div className='mx-auto mb-12 flex max-w-2xl flex-col items-center justify-center space-y-4 text-center sm:mb-16 lg:mb-24'>
+        <div className='mx-auto mb-8 flex max-w-2xl flex-col items-center justify-center space-y-4 text-center sm:mb-10 lg:mb-12'>
           <h2 className='font-serif text-2xl font-semibold md:text-3xl lg:text-4xl'>Workshopok</h2>
           <p className='text-muted-foreground text-xl'>
-            Több tematikus workshopot szervezünk, mindegyikhez Google Forms jelentkezéssel.
+            Több tematikus workshopot szervezünk, neked melyik áll a legközelebb a szívedhez?
           </p>
-          <a href='/workshop' className='text-primary text-sm font-medium underline-offset-4 hover:underline'>
-            Összes workshop és naptár megtekintése
-          </a>
         </div>
 
         <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
@@ -52,6 +49,12 @@ const Workshops = ({ workshops }: { workshops: Workshop[] }) => {
               </a>
             </Card>
           ))}
+        </div>
+
+        <div className='mt-8 flex justify-center sm:mt-10 lg:mt-12'>
+          <a href='/workshop' className='text-primary text-sm font-medium underline-offset-4 hover:underline'>
+            Összes workshop és naptár megtekintése
+          </a>
         </div>
       </div>
     </section>

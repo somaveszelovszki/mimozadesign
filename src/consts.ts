@@ -63,7 +63,7 @@ export const SITE_METADATA = {
     creator: '@mimozaDesign',
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: ['/weddings/reka-balint/reka-balint-8.jpg']
+    images: ['/hero.jpg']
   },
   verification: {
     google: '',

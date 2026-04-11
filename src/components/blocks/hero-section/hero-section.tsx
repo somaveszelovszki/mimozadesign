@@ -1,7 +1,8 @@
 'use client'
 
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
+
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 
 interface HeroSectionProps {
   className?: string
@@ -25,7 +26,7 @@ const HeroSection = ({ className }: HeroSectionProps) => {
       className={`scroll-reveal-exempt relative min-h-[100svh] w-full overflow-hidden ${className ?? ''}`}
     >
       <motion.img
-        src='/weddings/reka-balint/reka-balint-8.jpg'
+        src='/hero.jpg'
         alt='Mimóza Design hero kép'
         className='absolute left-0 h-[115%] w-full object-cover object-center will-change-transform'
         style={{

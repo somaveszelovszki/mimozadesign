@@ -1,8 +1,8 @@
 import type { ComponentType } from 'react'
 
-import { Card, CardContent } from '@/components/ui/card'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
 
 type ContactInfo = {
   title: string
@@ -20,8 +20,8 @@ const ContactUs = ({ contactInfo }: { contactInfo: ContactInfo }) => {
         <div className='mx-auto mb-12 flex max-w-2xl flex-col items-center justify-center space-y-4 text-center sm:mb-16 lg:mb-24'>
           <h2 className='font-serif text-2xl font-semibold md:text-3xl lg:text-4xl'>Lépj kapcsolatba velünk</h2>
           <p className='text-muted-foreground text-xl'>
-            Írd meg az elképzeléseiteket, és egyeztetünk egy rövid beszélgetést, ahol közösen kialakítjuk a dekoráció
-            irányát.
+            Írjátok meg az elképzeléseiteket, és egyeztetünk egy rövid beszélgetést, ahol közösen megtervezzük, hogyan
+            fogjuk megvalósítani őket.
           </p>
         </div>
 

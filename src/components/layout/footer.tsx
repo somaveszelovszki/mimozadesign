@@ -33,7 +33,7 @@ const Footer = ({ className }: FooterProps) => {
                 </a>
                 <a
                   href='https://www.instagram.com/mimozaDesign'
-                  className='hover:text-primary'
+                  className='hover:text-primary hidden'
                   target='_blank'
                   rel='noreferrer'
                 >

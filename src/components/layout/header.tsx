@@ -4,12 +4,10 @@ import { useEffect, useRef, useState } from 'react'
 
 import { MenuIcon } from 'lucide-react'
 
-import { Button } from '@/components/ui/button'
-
 import MenuDropdown from '@/components/blocks/menu-dropdown'
-import MenuNavigation from '@/components/blocks/menu-navigation'
 import type { NavigationSection } from '@/components/blocks/menu-navigation'
-
+import MenuNavigation from '@/components/blocks/menu-navigation'
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
 type HeaderProps = {
@@ -139,7 +137,7 @@ const Header = ({ navigationData, className }: HeaderProps) => {
           <a href='/' className='flex items-center'>
             <span className='h-14 shrink-0 overflow-hidden sm:h-16' style={{ aspectRatio: '1.846' }}>
               <img
-                src='/mimoza-design-logo.png'
+                src='/mimoza_logo_black.png'
                 alt='Mimóza Design'
                 className='h-full w-auto max-w-none translate-y-1 transform-gpu'
                 loading='eager'

@@ -98,7 +98,7 @@ const workshopData: Omit<Workshop, 'coverImage' | 'images'>[] = [
         date: '2026. május 2. (szombat)',
         time: '13:00-16:00',
         location: 'LeonArt Stúdió - 2890 Tata, Egység u. 7.',
-        registrationUrl: 'https://docs.google.com/forms/d/1DKptHzzEMpeI0xUHIoIyuWhZQP-Pqjsu54UcQMESP1g/edit'
+        registrationUrl: 'https://forms.gle/49muU5wFgRKPaZMa6'
       }
     ],
     price: '15 000 Ft / fő',

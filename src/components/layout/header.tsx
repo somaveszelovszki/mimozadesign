@@ -134,16 +134,14 @@ const Header = ({ navigationData, className }: HeaderProps) => {
       <div className='mx-auto grid h-full max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-6 px-4 sm:px-6 lg:px-8'>
         <div className='min-w-0'>
           {/* Logo */}
-          <a href='/' className='flex items-center'>
-            <span className='h-14 shrink-0 overflow-hidden sm:h-16' style={{ aspectRatio: '1.846' }}>
-              <img
-                src='/mimoza_logo_black.png'
-                alt='Mimóza Design'
-                className='h-full w-auto max-w-none translate-y-1 transform-gpu'
-                loading='eager'
-                decoding='async'
-              />
-            </span>
+          <a href='/' className='flex items-center pb-1'>
+            <img
+              src={isHeroInView ? '/mimoza_logo_white.png' : '/mimoza_logo_black.png'}
+              alt='Mimóza Design'
+              className='h-10 w-auto sm:h-11'
+              loading='eager'
+              decoding='async'
+            />
           </a>
         </div>
 

@@ -33,7 +33,7 @@ const ContactUs = ({ contactInfo }: { contactInfo: ContactInfo }) => {
             loading='lazy'
           />
 
-          <div className='flex h-full max-w-[24rem] flex-col justify-between'>
+          <div className='flex h-full max-w-[24rem] flex-col justify-between justify-self-center'>
             {/* Contact Info Grid */}
             <div className='grid grid-cols-2 gap-4'>
               {contactInfo.map((info, index) => {

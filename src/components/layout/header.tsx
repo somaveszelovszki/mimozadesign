@@ -159,8 +159,9 @@ const Header = ({ navigationData, className }: HeaderProps) => {
           <Button
             className={cn(
               'hidden rounded-full text-base has-[>svg]:px-6 lg:inline-flex',
-              isHeroInView &&
-                'hover:bg-accent hover:text-accent-foreground border border-white bg-transparent text-white'
+              isHeroInView
+                ? 'hover:bg-accent hover:text-accent-foreground border border-white bg-transparent text-white'
+                : 'border border-black bg-transparent text-black hover:bg-black hover:text-white'
             )}
             asChild
           >

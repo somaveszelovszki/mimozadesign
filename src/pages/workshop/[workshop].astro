@@ -130,13 +130,13 @@ const pageImage = workshop.coverImage
   <section class='mx-auto w-full max-w-7xl px-4 pb-10 sm:px-6 sm:pb-14 lg:px-8 lg:pb-18'>
     <div
       id='workshop-gallery'
-      class='columns-1 gap-4 sm:columns-2 lg:columns-3'
+      class='columns-2 gap-3 sm:columns-2 lg:columns-3'
       data-images={JSON.stringify(workshop.images)}
     >
       {
         workshop.images.map((image, index) =>
           image === workshop.coverImage ? null : (
-            <figure class='mb-4 break-inside-avoid overflow-hidden rounded-xl'>
+            <figure class='mb-3 break-inside-avoid overflow-hidden rounded-xl'>
               <button
                 type='button'
                 data-gallery-index={index}

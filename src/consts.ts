@@ -38,9 +38,13 @@ export const SITE_METADATA = {
   language: 'hu-HU',
   locale: 'hu_HU',
   icons: {
-    icon: [{ url: '/favicon.ico', sizes: '48x48' }],
-    apple: [{ url: '/favicon.ico', sizes: '180x180' }],
-    shortcut: [{ url: '/favicon.ico' }]
+    icon: [
+      { url: '/favicon/favicon.ico', sizes: '48x48' },
+      { url: '/favicon/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon/favicon-96x96.png', type: 'image/png', sizes: '96x96' }
+    ],
+    apple: [{ url: '/favicon/apple-touch-icon.png', sizes: '180x180' }],
+    shortcut: [{ url: '/favicon/favicon.ico' }]
   },
   openGraph: {
     type: 'website',
@@ -85,7 +89,7 @@ export const COMPANY_INFO = {
   name: 'Mimóza Design',
   legalName: 'Mimóza Design',
   url: SITE_URL,
-  logo: `/favicon.ico`,
+  logo: `/favicon/favicon.svg`,
   foundingDate: '2026',
   address: {
     streetAddress: 'Vértesszőlős',

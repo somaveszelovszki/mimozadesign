@@ -17,7 +17,7 @@ interface Props {
 const { workshop } = Astro.props as Props
 
 const pageTitle = `${workshop.title} | Workshop | Mimóza Design`
-const pageDescription = `${workshop.title} — ${workshop.description}`
+const pageDescription = `${workshop.title} — ${workshop.summary}`
 const pageImage = workshop.coverImage
 ---
 
@@ -40,17 +40,9 @@ const pageImage = workshop.coverImage
           )
         }
         <h1 class='font-serif text-3xl font-semibold sm:text-4xl lg:text-5xl'>{workshop.title}</h1>
-        {
-          workshop.details ? (
-            <div class='text-muted-foreground space-y-3 text-lg'>
-              {workshop.details.map(paragraph => (
-                <p>{paragraph}</p>
-              ))}
-            </div>
-          ) : (
-            <p class='text-muted-foreground text-lg'>{workshop.description}</p>
-          )
-        }
+        <div class='text-muted-foreground space-y-3 text-lg'>
+          {workshop.description.map(paragraph => <p set:html={paragraph} />)}
+        </div>
       </div>
       <div class='w-full shrink-0 lg:w-80 xl:w-96'>
         <button
@@ -102,28 +94,13 @@ const pageImage = workshop.coverImage
         }
       </div>
 
-      <div class='flex flex-wrap gap-x-6 gap-y-2 text-sm'>
-        <p class='text-muted-foreground'>
-          <span class='text-foreground font-medium'>Részvételi díj:</span>
-          {workshop.price}
-          {workshop.priceNote && <span> ({workshop.priceNote})</span>}
-        </p>
-      </div>
-
       {
-        workshop.discount && (
-          <p class='text-muted-foreground text-sm'>
-            <span class='text-foreground font-medium'>Kedvezmény:</span>
-            {workshop.discount}
-          </p>
-        )
-      }
-
-      {
-        workshop.maxParticipants && (
-          <p class='text-muted-foreground text-sm'>
-            A résztvevők létszáma korlátozott, legfeljebb {workshop.maxParticipants} fő.
-          </p>
+        workshop.details && (
+          <div class='[&_strong]:text-foreground space-y-2 [&_strong]:font-medium'>
+            {workshop.details.map(detail => (
+              <p class='text-muted-foreground text-sm' set:html={detail} />
+            ))}
+          </div>
         )
       }
     </div>

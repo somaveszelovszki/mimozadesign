@@ -17,16 +17,13 @@ export type WorkshopDate = {
 export type Workshop = {
   slug: string
   title: string
-  description: string
-  details?: string[]
+  summary: string
+  description: string[]
   coverImage: string
   images: string[]
   dates: WorkshopDate[]
   past?: boolean
-  price: string
-  priceNote?: string
-  discount?: string
-  maxParticipants?: number
+  details?: string[]
   facebookEventUrl?: string
 }
 
@@ -57,6 +54,7 @@ const getWorkshopImages = (slug: string): string[] => {
     return folderImages.map(fileName => `/workshops/${slug}/${fileName}`)
   } catch (error) {
     console.error(`[workshops] Unable to read image folder for "${slug}".`, error)
+
     return []
   }
 }
@@ -65,10 +63,9 @@ const workshopData: Omit<Workshop, 'coverImage' | 'images'>[] = [
   {
     slug: 'karacsonyi-kopogtato-workshop',
     title: 'Karácsonyi kopogtató workshop',
-    description:
-      'Hangolódjunk együtt az ünnepekre, és készítsünk egy gyönyörű kopogtatót, mely minden otthon éke lesz.',
-    details: [
-      '🎄 Hangolódjunk továbbra is együtt az ünnepekre, és készítsünk egy gyönyörű kopogtatót, mely minden otthon éke lesz. 🎄',
+    summary: 'Hangolódjunk együtt az ünnepekre, és készítsünk egy gyönyörű kopogtatót, mely minden otthon éke lesz.',
+    description: [
+      '🎄 Hangolódjunk együtt az ünnepekre, és készítsünk egy gyönyörű kopogtatót, mely minden otthon éke lesz. 🎄',
       'Közösen kötjük meg a sokféle örökzöld alapú koszorút, melyet sokféle ünnepi dísszel és terméssel díszítünk.'
     ],
     past: true,
@@ -79,16 +76,17 @@ const workshopData: Omit<Workshop, 'coverImage' | 'images'>[] = [
         location: 'LeonArt Stúdió - 2890 Tata, Egység utca 7.'
       }
     ],
-    price: 'Becsületkasszás',
-    priceNote:
+    details: [
+      '<strong>Részvételi díj:</strong> Becsületkasszás',
       'Az alapanyagok, eszközök és a helyszín költsége összesen kb. 5000 Ft/fő. Támogatásoddal hozzájárulsz ahhoz, hogy a program olyanok számára is elérhető maradjon, akik anyagi okokból másként nem tudnának részt venni.'
+    ]
   },
   {
     slug: 'anyak-napi-viragbura-workshop',
     title: 'Anyák napi virágbúra workshop',
-    description:
+    summary:
       'Lepd meg Édesanyádat valami igazán különlegessel! Alkoss egy gyönyörű, elegáns virágbúrát, amely nemcsak dekoráció, hanem egy kedves emlék is marad.',
-    details: [
+    description: [
       'Lepd meg Édesanyádat valami igazán különlegessel!',
       'Alkoss egy gyönyörű, elegáns virágbúrát, amely nemcsak dekoráció, hanem egy kedves emlék is marad – akár közös élményként, akár szívből készített ajándékként. 🌷✨',
       'Az eseményen kellemes hangulattal, lélekmelengető zenével és ropogtatnivalóval, teával várunk Titeket, hogy igazán maradandó élményben legyen részetek.'
@@ -101,11 +99,12 @@ const workshopData: Omit<Workshop, 'coverImage' | 'images'>[] = [
         registrationUrl: 'https://forms.gle/49muU5wFgRKPaZMa6'
       }
     ],
-    price: '15 000 Ft / fő',
-    priceNote: 'minden szükséges eszközt és kelléket tartalmaz',
-    discount: '20% páros kedvezmény, ha Édesanyáddal ketten jöttök. Részvétel 14 év felett lehetséges.',
-    maxParticipants: 8,
-    facebookEventUrl: 'https://www.facebook.com/events/2549805432031408'
+    details: [
+      '<strong>Részvételi díj:</strong> 15 000 Ft / fő (minden szükséges eszközt és kelléket tartalmaz)',
+      '<strong>Kedvezmény:</strong> 20% páros kedvezmény, ha Édesanyáddal ketten jöttök.',
+      'A résztvevők létszáma korlátozott, legfeljebb 8 fő. Részvétel 14 év felett lehetséges.'
+    ],
+    facebookEventUrl: 'https://fb.me/e/6DrEiRSOo'
   }
 ]
 

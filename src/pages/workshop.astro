@@ -49,7 +49,12 @@ const workshopsCalendarEvents = futureWorkshops.flatMap(workshop =>
                       {d.date} | {d.time}
                     </p>
                     <p class='text-muted-foreground text-sm'>{d.location}</p>
-                    <p class='text-muted-foreground text-sm'>{workshop.price}</p>
+                    {workshop.details?.[0] && (
+                      <p
+                        class='text-muted-foreground [&_strong]:text-foreground text-sm [&_strong]:font-medium'
+                        set:html={workshop.details[0]}
+                      />
+                    )}
                     <span class='text-primary inline-block text-sm font-medium group-hover:underline'>Részletek</span>
                   </div>
                 </a>

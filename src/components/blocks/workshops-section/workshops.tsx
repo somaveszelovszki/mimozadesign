@@ -42,7 +42,7 @@ const Workshops = ({ workshops }: { workshops: Workshop[] }) => {
                     <CardTitle className='text-lg'>{workshop.title}</CardTitle>
                     <Separator />
                     <p className='text-muted-foreground text-sm'>{workshop.dates.map(d => d.date).join(' • ')}</p>
-                    <p className='text-muted-foreground'>{workshop.description}</p>
+                    <p className='text-muted-foreground'>{workshop.summary}</p>
                     <p className='text-primary text-sm font-medium group-hover:underline'>Olvass tovább</p>
                   </div>
                 </CardContent>

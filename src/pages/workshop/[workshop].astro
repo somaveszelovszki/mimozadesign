@@ -79,7 +79,7 @@ const pageImage = workshop.coverImage
                   <p class='text-muted-foreground text-sm'>{d.location}</p>
                 </div>
                 <span class='text-foreground shrink-0 rounded-full border border-current px-3 py-1.5 text-sm font-medium transition-colors duration-300 group-hover:bg-black group-hover:text-white'>
-                  Jelentkezés
+                  <span class='translate-y-px'>Jelentkezés</span>
                 </span>
               </a>
             ) : (
@@ -101,6 +101,32 @@ const pageImage = workshop.coverImage
               <p class='text-muted-foreground text-sm' set:html={detail} />
             ))}
           </div>
+        )
+      }
+
+      {
+        workshop.facebookEventUrl && (
+          <a
+            href={workshop.facebookEventUrl}
+            target='_blank'
+            rel='noreferrer'
+            class='text-foreground focus-visible:ring-ring inline-flex items-center gap-2 rounded-full border border-current px-4 py-2 text-sm leading-none font-medium transition-colors duration-300 hover:bg-black hover:text-white focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none'
+          >
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              aria-hidden='true'
+              class='size-4 shrink-0'
+            >
+              <path d='M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z' />
+            </svg>
+            <span class='translate-y-px'>Facebook esemény megtekintése</span>
+          </a>
         )
       }
     </div>

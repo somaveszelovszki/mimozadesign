@@ -64,7 +64,9 @@ const ContactUs = ({ contactInfo }: { contactInfo: ContactInfo }) => {
             </div>
 
             <Button asChild size='lg' className='mx-auto mt-2 flex w-fit rounded-full px-10 text-base'>
-              <a href='/kapcsolat'>Írj nekünk</a>
+              <a href='/kapcsolat'>
+                <span className='translate-y-px'>Írj nekünk</span>
+              </a>
             </Button>
           </div>
         </div>

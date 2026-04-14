@@ -165,7 +165,9 @@ const Header = ({ navigationData, className }: HeaderProps) => {
             )}
             asChild
           >
-            <a href='/kapcsolat'>Ajánlatkérés</a>
+            <a href='/kapcsolat'>
+              <span className='translate-y-px'>Ajánlatkérés</span>
+            </a>
           </Button>
 
           {/* Mobile menu button */}

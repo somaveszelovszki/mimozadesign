@@ -194,7 +194,7 @@
   }
 
   img {
-    @apply rounded-2xl border-0;
+    @apply rounded-xl border-0;
   }
 }
 

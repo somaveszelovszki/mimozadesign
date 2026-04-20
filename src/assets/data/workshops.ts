@@ -100,7 +100,7 @@ const workshopData: Omit<Workshop, 'coverImage' | 'images'>[] = [
       }
     ],
     details: [
-      '<strong>Részvételi díj:</strong> 15 000 Ft / fő (minden szükséges eszközt és kelléket tartalmaz)',
+      '<strong>Részvételi díj:</strong> 12 000 Ft / fő (minden szükséges eszközt és kelléket tartalmaz)',
       '<strong>Kedvezmény:</strong> 20% páros kedvezmény, ha Édesanyáddal ketten jöttök.',
       'A résztvevők létszáma korlátozott, legfeljebb 8 fő. Részvétel 14 év felett lehetséges.'
     ],

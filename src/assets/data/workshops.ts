@@ -105,6 +105,31 @@ const workshopData: Omit<Workshop, 'coverImage' | 'images'>[] = [
       'A résztvevők létszáma korlátozott, legfeljebb 8 fő. Részvétel 14 év felett lehetséges.'
     ],
     facebookEventUrl: 'https://fb.me/e/6DrEiRSOo'
+  },
+  {
+    slug: 'hajkoszoru-keszito-workshop',
+    title: 'Hajkoszorú készítő workshop',
+    summary:
+      'Esküvő, fesztivál, kismama fotózás - készítsd el saját, egyedi hajdíszedet, ami megkoronázza a megjelenésedet.',
+    description: [
+      '🌸 Esküvő, fesztivál, kismama fotózás… 🌸',
+      'Bármelyikről is legyen szó, a megjelenésedet megkoronázza a saját magad által készített hajdísz. De akár ajándékba is adhatod – gyere barátnőddel, anyukáddal, hogy egy maradandó közös élményt szerezzetek.',
+      'Az alkalmon minden szükséges eszközt és segítséget megkapsz tőlem ahhoz, hogy az elképzeléseid megvalósuljanak. Egy csodás, időtálló, szuper kényelmes fejdísszel és egy feltöltődős élménnyel távozhatsz. (Az esemény plakátján megjelenő filigrán hajkoszorúnál nagyobb és karakteresebb méretű fejdísz is készíthető.)',
+      'Az eseményen kellemes hangulattal, lélekmelengető zenével és ropogtatnivalóval, teával várlak Titeket, hogy igazán maradandó élményben legyen részetek. 🌻'
+    ],
+    dates: [
+      {
+        date: '2026. május 16. (szombat)',
+        time: '13:00-16:00',
+        location: 'LeonArt Stúdió - 2890 Tata, Egység u. 7.',
+        registrationUrl: 'https://forms.gle/kHjSmoyTreyXHUKq9'
+      }
+    ],
+    details: [
+      '<strong>Részvételi díj:</strong> 12 000 Ft / fő (minden szükséges eszközt és kelléket tartalmaz)',
+      'A résztvevők létszáma korlátozott, legfeljebb 8 fő.'
+    ],
+    facebookEventUrl: 'https://fb.me/e/5UP2j8Zc9'
   }
 ]
 

@@ -31,16 +31,16 @@ const workshopsCalendarEvents = futureWorkshops.flatMap(workshop =>
         <p class='text-muted-foreground max-w-3xl text-lg'>Válaszd ki a neked tetsző eseményt és jelentkezz!</p>
       </div>
 
-      <div class='grid grid-cols-1 gap-6'>
+      <div class='grid grid-cols-1 gap-6 sm:grid-cols-2'>
         {
           futureWorkshops.flatMap(workshop =>
             workshop.dates.map(d => (
-              <article class='border-border hover:border-primary bg-card overflow-hidden rounded-xl border transition-colors duration-300 sm:w-1/2'>
+              <article class='border-border hover:border-primary bg-card overflow-hidden rounded-xl border transition-colors duration-300'>
                 <a href={`/workshop/${workshop.slug}`} class='group flex flex-col sm:flex-row'>
                   <img
                     src={workshop.coverImage}
                     alt={`${workshop.title} borítókép`}
-                    class='h-52 w-full object-cover transition-transform duration-300 group-hover:scale-105 sm:h-auto sm:min-h-52 sm:w-72'
+                    class='aspect-square h-52 w-full object-cover transition-transform duration-300 group-hover:scale-105 sm:h-auto sm:w-1/2 sm:shrink-0'
                     loading='lazy'
                   />
                   <div class='space-y-3 p-5'>

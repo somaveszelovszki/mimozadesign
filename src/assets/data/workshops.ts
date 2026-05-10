@@ -59,7 +59,7 @@ const getWorkshopImages = (slug: string): string[] => {
   }
 }
 
-const workshopData: Omit<Workshop, 'coverImage' | 'images'>[] = [
+const workshopData: Omit<Workshop, 'coverImage' | 'images' | 'past'>[] = [
   {
     slug: 'karacsonyi-kopogtato-workshop',
     title: 'Karácsonyi kopogtató workshop',
@@ -68,7 +68,6 @@ const workshopData: Omit<Workshop, 'coverImage' | 'images'>[] = [
       '🎄 Hangolódjunk együtt az ünnepekre, és készítsünk egy gyönyörű kopogtatót, mely minden otthon éke lesz. 🎄',
       'Közösen kötjük meg a sokféle örökzöld alapú koszorút, melyet sokféle ünnepi dísszel és terméssel díszítünk.'
     ],
-    past: true,
     dates: [
       {
         date: '2025. december 6. (szombat)',
@@ -133,12 +132,83 @@ const workshopData: Omit<Workshop, 'coverImage' | 'images'>[] = [
   }
 ]
 
-export const workshops: Workshop[] = workshopData.map(workshop => {
-  const images = getWorkshopImages(workshop.slug)
-  const coverImage = images.find(img => img.includes('-profile.')) ?? ''
+const hungarianMonths: Record<string, number> = {
+  január: 0,
+  február: 1,
+  március: 2,
+  április: 3,
+  május: 4,
+  június: 5,
+  július: 6,
+  augusztus: 7,
+  szeptember: 8,
+  október: 9,
+  november: 10,
+  december: 11
+}
 
-  return { ...workshop, coverImage, images }
-})
+const parseWorkshopDate = (dateString: string): Date | null => {
+  const match = dateString.match(/(\d{4})\.\s+([a-záéíóöőúüű]+)\s+(\d{1,2})\./i)
+
+  if (!match) {
+    return null
+  }
+
+  const [, yearStr, monthName, dayStr] = match
+  const month = hungarianMonths[monthName.toLowerCase()]
+
+  if (month === undefined) {
+    return null
+  }
+
+  return new Date(Number(yearStr), month, Number(dayStr))
+}
+
+const getWorkshopDateExtremes = (dates: WorkshopDate[]): { earliest: number; latest: number } | null => {
+  const timestamps = dates
+    .map(d => parseWorkshopDate(d.date))
+    .filter((d): d is Date => d !== null)
+    .map(d => d.getTime())
+
+  if (timestamps.length === 0) {
+    return null
+  }
+
+  return { earliest: Math.min(...timestamps), latest: Math.max(...timestamps) }
+}
+
+const startOfToday = new Date()
+
+startOfToday.setHours(0, 0, 0, 0)
+const todayTimestamp = startOfToday.getTime()
+
+export const workshops: Workshop[] = workshopData
+  .map(workshop => {
+    const images = getWorkshopImages(workshop.slug)
+    const coverImage = images.find(img => img.includes('-profile.')) ?? ''
+    const extremes = getWorkshopDateExtremes(workshop.dates)
+    const past = extremes !== null && extremes.latest < todayTimestamp
+
+    return { ...workshop, coverImage, images, past }
+  })
+  .sort((first, second) => {
+    if (first.past !== second.past) {
+      return first.past ? 1 : -1
+    }
+
+    const firstExtremes = getWorkshopDateExtremes(first.dates)
+    const secondExtremes = getWorkshopDateExtremes(second.dates)
+
+    if (!firstExtremes || !secondExtremes) {
+      return 0
+    }
+
+    if (first.past) {
+      return secondExtremes.latest - firstExtremes.latest
+    }
+
+    return firstExtremes.earliest - secondExtremes.earliest
+  })
 
 export const pastWorkshopHighlight: PastWorkshopHighlight = {
   title: 'Korábbi workshopok',

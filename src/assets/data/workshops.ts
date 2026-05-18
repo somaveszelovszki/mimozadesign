@@ -22,6 +22,7 @@ export type Workshop = {
   coverImage: string
   images: string[]
   dates: WorkshopDate[]
+  futureDates: WorkshopDate[]
   past?: boolean
   details?: string[]
   facebookEventUrl?: string
@@ -59,7 +60,7 @@ const getWorkshopImages = (slug: string): string[] => {
   }
 }
 
-const workshopData: Omit<Workshop, 'coverImage' | 'images' | 'past'>[] = [
+const workshopData: Omit<Workshop, 'coverImage' | 'images' | 'past' | 'futureDates'>[] = [
   {
     slug: 'karacsonyi-kopogtato-workshop',
     title: 'Karácsonyi kopogtató workshop',
@@ -81,29 +82,39 @@ const workshopData: Omit<Workshop, 'coverImage' | 'images' | 'past'>[] = [
     ]
   },
   {
-    slug: 'anyak-napi-viragbura-workshop',
-    title: 'Anyák napi virágbúra workshop',
-    summary:
-      'Lepd meg Édesanyádat valami igazán különlegessel! Alkoss egy gyönyörű, elegáns virágbúrát, amely nemcsak dekoráció, hanem egy kedves emlék is marad.',
+    slug: 'viragbura-workshop',
+    title: 'Virágbúra workshop',
+    summary: 'Alkoss egy gyönyörű, elegáns virágbúrát, amely nemcsak dekoráció, hanem egy kedves emlék is marad.',
     description: [
-      'Lepd meg Édesanyádat valami igazán különlegessel!',
-      'Alkoss egy gyönyörű, elegáns virágbúrát, amely nemcsak dekoráció, hanem egy kedves emlék is marad – akár közös élményként, akár szívből készített ajándékként. 🌷✨',
-      'Az eseményen kellemes hangulattal, lélekmelengető zenével és ropogtatnivalóval, teával várunk Titeket, hogy igazán maradandó élményben legyen részetek.'
+      'Készíts elegáns virágbúrát, amely egyszerre lesz stílusos dekoráció és kedves emlék. Ajándékozd magadnak a pillanatot, vagy oszd meg az alkotás örömét a szeretteiddel.🌷',
+      'Az eseményen kellemes hangulattal, lélekmelengető zenével és ropogtatnivalóval, teával várlak Titeket, hogy igazán maradandó élményben legyen részetek.'
     ],
     dates: [
       {
         date: '2026. május 2. (szombat)',
         time: '13:00-16:00',
-        location: 'LeonArt Stúdió - 2890 Tata, Egység u. 7.',
+        location: 'LeonArt Stúdió | 2890 Tata, Egység u. 7.',
         registrationUrl: 'https://forms.gle/49muU5wFgRKPaZMa6'
+      },
+      {
+        date: '2026. június 6. (szombat)',
+        time: '9:00-12:00',
+        location: 'The Secret Garden - Keszthely | 8360 Keszthely, Sopron utca 10.',
+        registrationUrl: 'https://forms.gle/1WAQwwsBd4B1uCDZ9'
+      },
+      {
+        date: '2026. június 6. (szombat)',
+        time: '14:00-17:00',
+        location: 'The Secret Garden - Keszthely | 8360 Keszthely, Sopron utca 10.',
+        registrationUrl: 'https://forms.gle/1WAQwwsBd4B1uCDZ9'
       }
     ],
     details: [
       '<strong>Részvételi díj:</strong> 12 000 Ft / fő (minden szükséges eszközt és kelléket tartalmaz)',
-      '<strong>Kedvezmény:</strong> 20% páros kedvezmény, ha Édesanyáddal ketten jöttök.',
-      'A résztvevők létszáma korlátozott, legfeljebb 8 fő. Részvétel 14 év felett lehetséges.'
+      '<strong>Kedvezmény:</strong> 20% páros kedvezmény',
+      'A résztvevők létszáma korlátozott, legfeljebb 10 fő.'
     ],
-    facebookEventUrl: 'https://fb.me/e/6DrEiRSOo'
+    facebookEventUrl: 'https://fb.me/e/6X5Vu1uwJ'
   },
   {
     slug: 'hajkoszoru-keszito-workshop',
@@ -188,8 +199,13 @@ export const workshops: Workshop[] = workshopData
     const coverImage = images.find(img => img.includes('-profile.')) ?? ''
     const extremes = getWorkshopDateExtremes(workshop.dates)
     const past = extremes !== null && extremes.latest < todayTimestamp
+    const futureDates = workshop.dates.filter(d => {
+      const parsed = parseWorkshopDate(d.date)
 
-    return { ...workshop, coverImage, images, past }
+      return parsed !== null && parsed.getTime() >= todayTimestamp
+    })
+
+    return { ...workshop, coverImage, images, past, futureDates }
   })
   .sort((first, second) => {
     if (first.past !== second.past) {

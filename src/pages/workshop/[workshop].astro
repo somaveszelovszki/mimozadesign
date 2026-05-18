@@ -62,37 +62,44 @@ const pageImage = workshop.coverImage
 
     <div class='mt-6 space-y-4 sm:mt-8'>
       <h2 class='font-serif text-lg font-medium'>Időpontok</h2>
-      <div class='grid gap-3 sm:grid-cols-2'>
-        {
-          workshop.dates.map(d =>
-            d.registrationUrl ? (
-              <a
-                href={d.registrationUrl}
-                target='_blank'
-                rel='noreferrer'
-                class='border-border bg-card hover:border-primary focus-visible:ring-ring group flex items-center justify-between gap-4 rounded-xl border p-5 transition-colors duration-300 outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
-              >
-                <div class='space-y-1'>
+      {
+        workshop.futureDates.length === 0 ? (
+          <p class='text-muted-foreground text-sm'>
+            Jelenleg nincs meghirdetett időpont. Hamarosan érkeznek az új alkalmak — kövess minket, hogy elsőként
+            értesülj róluk!
+          </p>
+        ) : (
+          <div class='flex flex-col gap-3 sm:max-w-[calc(50%-0.375rem)]'>
+            {workshop.futureDates.map(d =>
+              d.registrationUrl ? (
+                <a
+                  href={d.registrationUrl}
+                  target='_blank'
+                  rel='noreferrer'
+                  class='border-border bg-card hover:border-primary focus-visible:ring-ring group flex items-center justify-between gap-4 rounded-xl border p-5 transition-colors duration-300 outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
+                >
+                  <div class='space-y-1'>
+                    <p class='text-foreground text-sm font-medium'>
+                      {d.date} | {d.time}
+                    </p>
+                    <p class='text-muted-foreground text-sm'>{d.location}</p>
+                  </div>
+                  <span class='text-foreground shrink-0 rounded-full border border-current px-3 py-1.5 text-sm font-medium transition-colors duration-300 group-hover:bg-black group-hover:text-white'>
+                    <span class='translate-y-px'>Jelentkezés</span>
+                  </span>
+                </a>
+              ) : (
+                <div class='border-border bg-card space-y-1 rounded-xl border p-5'>
                   <p class='text-foreground text-sm font-medium'>
                     {d.date} | {d.time}
                   </p>
                   <p class='text-muted-foreground text-sm'>{d.location}</p>
                 </div>
-                <span class='text-foreground shrink-0 rounded-full border border-current px-3 py-1.5 text-sm font-medium transition-colors duration-300 group-hover:bg-black group-hover:text-white'>
-                  <span class='translate-y-px'>Jelentkezés</span>
-                </span>
-              </a>
-            ) : (
-              <div class='border-border bg-card space-y-1 rounded-xl border p-5'>
-                <p class='text-foreground text-sm font-medium'>
-                  {d.date} | {d.time}
-                </p>
-                <p class='text-muted-foreground text-sm'>{d.location}</p>
-              </div>
-            )
-          )
-        }
-      </div>
+              )
+            )}
+          </div>
+        )
+      }
 
       {
         workshop.details && (

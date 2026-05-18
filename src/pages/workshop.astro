@@ -12,7 +12,7 @@ const pageKeywords =
 const futureWorkshops = workshops.filter(w => !w.past)
 
 const workshopsCalendarEvents = futureWorkshops.flatMap(workshop =>
-  workshop.dates.map(d => ({
+  workshop.futureDates.map(d => ({
     title: workshop.title,
     date: d.date,
     time: d.time,
@@ -34,7 +34,7 @@ const workshopsCalendarEvents = futureWorkshops.flatMap(workshop =>
       <div class='grid grid-cols-1 gap-6 sm:grid-cols-2'>
         {
           futureWorkshops.flatMap(workshop =>
-            workshop.dates.map(d => (
+            workshop.futureDates.map(d => (
               <article class='border-border hover:border-primary bg-card overflow-hidden rounded-xl border transition-colors duration-300'>
                 <a href={`/workshop/${workshop.slug}`} class='group flex flex-col sm:flex-row'>
                   <img

@@ -14,40 +14,49 @@ const Workshops = ({ workshops }: { workshops: Workshop[] }) => {
         </div>
 
         <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
-          {workshops
-            .filter(workshop => !workshop.past)
-            .map((workshop, index) => (
-              <Card
-                key={index}
-                className='hover:border-primary group overflow-hidden p-0 shadow-none transition-colors duration-300'
+          {workshops.map((workshop, index) => (
+            <Card
+              key={index}
+              className='hover:border-primary group overflow-hidden p-0 shadow-none transition-colors duration-300'
+            >
+              <a
+                href={`/workshop/${workshop.slug}`}
+                aria-label={`${workshop.title} megtekintése`}
+                className='focus-visible:ring-ring block h-full outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
               >
-                <a
-                  href={`/workshop/${workshop.slug}`}
-                  aria-label={`${workshop.title} megtekintése`}
-                  className='focus-visible:ring-ring block h-full outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
-                >
-                  <CardContent className='px-0'>
-                    <div className='bg-muted relative aspect-square overflow-hidden'>
-                      <img
-                        src={workshop.coverImage}
-                        alt={workshop.title}
-                        className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'
-                        loading='lazy'
-                      />
-                    </div>
-                    <div className='space-y-3 px-6 py-5'>
-                      <CardTitle className='text-lg'>{workshop.title}</CardTitle>
-                      <Separator />
-                      <p className='text-muted-foreground text-sm'>
-                        {workshop.futureDates.map(d => d.date).join(' • ')}
-                      </p>
-                      <p className='text-muted-foreground'>{workshop.summary}</p>
-                      <p className='text-primary text-sm font-medium group-hover:underline'>Olvass tovább</p>
-                    </div>
-                  </CardContent>
-                </a>
-              </Card>
-            ))}
+                <CardContent className='px-0'>
+                  <div className='bg-muted relative aspect-square overflow-hidden'>
+                    <img
+                      src={workshop.coverImage}
+                      alt={workshop.title}
+                      className={`h-full w-full object-cover transition-transform duration-300 group-hover:scale-105 ${workshop.past ? 'opacity-50' : ''}`}
+                      loading='lazy'
+                    />
+                    {workshop.past && (
+                      <span className='bg-muted text-muted-foreground absolute top-3 left-3 rounded-full px-3 py-1 text-xs font-medium'>
+                        Korábbi workshop
+                      </span>
+                    )}
+                  </div>
+                  <div className={`space-y-3 px-6 py-5 ${workshop.past ? 'opacity-50' : ''}`}>
+                    <CardTitle className='text-lg'>{workshop.title}</CardTitle>
+                    <Separator />
+                    {!workshop.past && workshop.futureDates.length > 0 && (
+                      <ul className='space-y-1'>
+                        {workshop.futureDates.map((d, dateIndex) => (
+                          <li key={dateIndex} className='text-muted-foreground text-sm'>
+                            {d.date} | {d.time}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    <p className='text-muted-foreground'>{workshop.summary}</p>
+                    <p className='text-primary text-sm font-medium group-hover:underline'>Olvass tovább</p>
+                  </div>
+                </CardContent>
+              </a>
+            </Card>
+          ))}
         </div>
 
         <div className='mt-8 flex justify-center sm:mt-10 lg:mt-12'>

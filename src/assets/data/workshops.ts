@@ -226,6 +226,34 @@ export const workshops: Workshop[] = workshopData
     return firstExtremes.earliest - secondExtremes.earliest
   })
 
+export type WorkshopOccurrence = {
+  workshop: Workshop
+  date: WorkshopDate
+  isPast: boolean
+}
+
+export const workshopOccurrences: WorkshopOccurrence[] = workshops
+  .flatMap(workshop =>
+    workshop.dates.map(date => {
+      const parsed = parseWorkshopDate(date.date)
+      const isPast = parsed !== null && parsed.getTime() < todayTimestamp
+
+      return { workshop, date, isPast, timestamp: parsed?.getTime() ?? 0 }
+    })
+  )
+  .sort((first, second) => {
+    if (first.isPast !== second.isPast) {
+      return first.isPast ? 1 : -1
+    }
+
+    if (first.isPast) {
+      return second.timestamp - first.timestamp
+    }
+
+    return first.timestamp - second.timestamp
+  })
+  .map(({ workshop, date, isPast }) => ({ workshop, date, isPast }))
+
 export const pastWorkshopHighlight: PastWorkshopHighlight = {
   title: 'Korábbi workshopok',
   description: 'Ízelítő a korábbi workshopokból, ahol közösen alkottunk, tanultunk és jól éreztük magunkat.',

@@ -319,6 +319,18 @@ button {
   box-shadow: 0 4px 10px color-mix(in srgb, var(--foreground) 15%, transparent);
 }
 
+.mimoza-calendar .fc .fc-event.mimoza-fc-event.mimoza-fc-event--past {
+  background: color-mix(in srgb, var(--primary) 35%, var(--background));
+  border-color: color-mix(in srgb, var(--primary) 35%, var(--background));
+  color: color-mix(in srgb, var(--primary-foreground) 80%, transparent);
+  box-shadow: none;
+}
+
+.mimoza-calendar .fc .fc-event.mimoza-fc-event.mimoza-fc-event--past:hover {
+  filter: brightness(1);
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--foreground) 10%, transparent);
+}
+
 .mimoza-calendar .fc .fc-event.mimoza-fc-event .fc-event-main {
   white-space: normal;
 }

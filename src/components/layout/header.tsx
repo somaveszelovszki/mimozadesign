@@ -2,12 +2,13 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-import { MenuIcon } from 'lucide-react'
+import { MenuIcon, ShoppingCart } from 'lucide-react'
 
 import MenuDropdown from '@/components/blocks/menu-dropdown'
 import type { NavigationSection } from '@/components/blocks/menu-navigation'
 import MenuNavigation from '@/components/blocks/menu-navigation'
 import { Button } from '@/components/ui/button'
+import { useCartCount } from '@/lib/cart'
 import { cn } from '@/lib/utils'
 
 type HeaderProps = {
@@ -19,6 +20,7 @@ const Header = ({ navigationData, className }: HeaderProps) => {
   const [pathname, setPathname] = useState('/')
   const [isHeaderVisible, setIsHeaderVisible] = useState(true)
   const [isOverHero, setIsOverHero] = useState(false)
+  const cartCount = useCartCount()
 
   const lastScrollYRef = useRef(0)
   const pathnameRef = useRef('/')
@@ -150,12 +152,33 @@ const Header = ({ navigationData, className }: HeaderProps) => {
           navigationData={navigationData}
           className={cn(
             '**:data-[slot=navigation-menu-list]:gap-1 max-lg:hidden',
-            isHeroInView && '[&_a]:!text-white [&_button]:!text-white [&_svg]:!text-white'
+            isHeroInView &&
+              '[&_[role=separator]]:!border-white [&_a]:!text-white [&_button]:!text-white [&_svg]:!text-white'
           )}
         />
 
         {/* Actions */}
-        <div className='flex items-center justify-self-end'>
+        <div className='flex items-center gap-2 justify-self-end'>
+          {cartCount > 0 && (
+            <a
+              href='/kosar'
+              aria-label={`Kosár (${cartCount} termék)`}
+              className={cn(
+                'relative inline-flex size-9 items-center justify-center rounded-full transition-colors',
+                isHeroInView ? 'text-white hover:bg-white/10' : 'text-black hover:bg-black hover:text-white'
+              )}
+            >
+              <ShoppingCart className='size-5' />
+              <span
+                className={cn(
+                  'absolute -top-0.5 -right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[10px] leading-none font-medium',
+                  isHeroInView ? 'bg-white text-black' : 'bg-primary text-primary-foreground'
+                )}
+              >
+                {cartCount}
+              </span>
+            </a>
+          )}
           <Button
             className={cn(
               'hidden rounded-full text-base has-[>svg]:px-6 lg:inline-flex',

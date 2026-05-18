@@ -27,7 +27,7 @@ const ContactUs = ({ contactInfo }: { contactInfo: ContactInfo }) => {
 
         <div className='grid items-start gap-6 lg:grid-cols-2 lg:items-stretch lg:gap-12'>
           <img
-            src='/contact/kedves-mimoza.jpg'
+            src='/contact/kedves-mimoza.png'
             alt='Kapcsolatfelvétel a Mimóza Design csapatával'
             className='aspect-square w-full max-w-md justify-self-center object-cover lg:justify-self-end'
             loading='lazy'

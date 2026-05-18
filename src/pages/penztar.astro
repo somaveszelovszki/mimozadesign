@@ -1,0 +1,22 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import CheckoutPage from '@/components/blocks/webshop/checkout-page'
+
+const pageTitle = 'Pénztár | Mimóza Design'
+const pageDescription = 'Rendelés véglegesítése a Mimóza Design webshopban.'
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <section class='mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-18'>
+    <a
+      href='/kosar'
+      class='text-primary hover:text-primary/80 inline-flex items-center gap-2 text-sm font-medium underline-offset-4 hover:underline'
+    >
+      Vissza a kosárhoz
+    </a>
+    <h1 class='mt-3 font-serif text-3xl font-semibold sm:text-4xl'>Pénztár</h1>
+    <div class='mt-8'>
+      <CheckoutPage client:load />
+    </div>
+  </section>
+</Layout>

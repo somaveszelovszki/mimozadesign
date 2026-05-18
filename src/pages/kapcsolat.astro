@@ -14,7 +14,7 @@ const pageDescription =
         Töltsd ki az űrlapot, és oszd meg velünk, miben segíthetünk.
       </p>
 
-      <form class='mt-6 space-y-5' method='post' enctype='multipart/form-data'>
+      <form id='contact-form' class='mt-6 space-y-5' method='post' action='/api/contact' enctype='multipart/form-data'>
         <div class='space-y-2'>
           <label for='name' class='text-sm font-medium'>Név</label>
           <input
@@ -96,11 +96,54 @@ const pageDescription =
 
         <button
           type='submit'
-          class='bg-primary text-primary-foreground hover:bg-primary/90 inline-flex rounded-full px-6 py-3 text-sm font-medium transition-colors'
+          class='bg-primary text-primary-foreground hover:bg-primary/90 inline-flex rounded-full px-6 py-3 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60'
         >
           <span class='translate-y-px'>Üzenet küldése</span>
         </button>
+
+        <p id='contact-status' class='hidden text-sm' role='status' aria-live='polite'></p>
       </form>
     </section>
   </section>
 </Layout>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null
+  const status = document.getElementById('contact-status') as HTMLParagraphElement | null
+  const submitBtn = form?.querySelector('button[type="submit"]') as HTMLButtonElement | null
+
+  const setStatus = (message: string, kind: 'success' | 'error') => {
+    if (!status) return
+    status.textContent = message
+    status.classList.remove('hidden', 'text-emerald-600', 'text-destructive')
+    status.classList.add(kind === 'success' ? 'text-emerald-600' : 'text-destructive')
+  }
+
+  form?.addEventListener('submit', async event => {
+    event.preventDefault()
+    if (!form || !submitBtn) return
+
+    submitBtn.disabled = true
+    status?.classList.add('hidden')
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' }
+      })
+      const data = await response.json().catch(() => ({}))
+
+      if (response.ok) {
+        setStatus('Köszönjük! Az üzeneted megérkezett, hamarosan válaszolunk.', 'success')
+        form.reset()
+      } else {
+        setStatus(data.error ?? 'Nem sikerült elküldeni az üzenetet.', 'error')
+      }
+    } catch {
+      setStatus('Hálózati hiba történt. Próbáld újra később.', 'error')
+    } finally {
+      submitBtn.disabled = false
+    }
+  })
+</script>

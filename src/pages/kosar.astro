@@ -1,0 +1,16 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import CartPage from '@/components/blocks/webshop/cart-page'
+
+const pageTitle = 'Kosár | Mimóza Design'
+const pageDescription = 'Kosarad tartalma a Mimóza Design webshopban.'
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <section class='mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-18'>
+    <h1 class='font-serif text-3xl font-semibold sm:text-4xl'>Kosár</h1>
+    <div class='mt-8'>
+      <CartPage client:load />
+    </div>
+  </section>
+</Layout>

@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import sitemap from '@astrojs/sitemap'
 import mdx from '@astrojs/mdx'
 import react from '@astrojs/react'
+import node from '@astrojs/node'
 
 export default defineConfig({
   site: 'http://localhost:4321/',
@@ -61,6 +62,7 @@ export default defineConfig({
     })
   ],
   output: 'static',
+  adapter: node({ mode: 'standalone' }),
   compressHTML: true,
   build: {
     inlineStylesheets: 'auto'

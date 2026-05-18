@@ -12,5 +12,10 @@ export const navigationData: NavigationSection[] = [
   {
     title: 'Workshop',
     href: '/workshop'
+  },
+  {
+    title: 'Webshop',
+    href: '/webshop',
+    dividerBefore: true
   }
 ]

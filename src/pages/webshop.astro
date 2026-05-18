@@ -1,0 +1,42 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import { getProductCards, formatPrice } from '@/assets/data/webshop'
+
+const pageTitle = 'Webshop | Mimóza Design'
+const pageDescription = 'Egyedi, kézzel készített szárazvirág kompozíciók és hajdíszek a Mimóza Design-tól.'
+const pageKeywords = 'webshop, szárazvirág, virágbúra, hajkoszorú, Mimóza Design'
+
+const cards = getProductCards()
+---
+
+<Layout title={pageTitle} description={pageDescription} keywords={pageKeywords}>
+  <section class='mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-18'>
+    <div class='mb-8 space-y-3 sm:mb-12'>
+      <h1 class='font-serif text-3xl font-semibold sm:text-4xl lg:text-5xl'>Webshop</h1>
+      <p class='text-muted-foreground max-w-3xl text-lg'>
+        Egyedi, kézzel készített szárazvirág kompozíciók és hajdíszek.
+      </p>
+    </div>
+
+    <div class='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4'>
+      {
+        cards.map(card => (
+          <article class='border-border hover:border-primary bg-card overflow-hidden rounded-xl border transition-colors duration-300'>
+            <a href={`/webshop/${card.slug}?size=${card.sizeId}`} class='group flex h-full flex-col'>
+              <img
+                src={card.profileImage}
+                alt={card.title}
+                class='aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-105'
+                loading='lazy'
+              />
+              <div class='flex flex-1 flex-col justify-between gap-2 p-5'>
+                <h3 class='font-serif text-lg font-medium'>{card.title}</h3>
+                <p class='text-foreground text-base font-medium'>{formatPrice(card.price)}</p>
+              </div>
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</Layout>

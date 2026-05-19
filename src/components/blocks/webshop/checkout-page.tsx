@@ -1,9 +1,10 @@
 'use client'
 
-import { useEffect, useState, type FormEvent } from 'react'
+import { type FormEvent, useEffect, useState } from 'react'
 
-import { Button } from '@/components/ui/button'
+import { lookupCityByPostalCode } from '@/assets/data/hungarian-postal-codes'
 import { formatPrice } from '@/assets/data/webshop'
+import { Button } from '@/components/ui/button'
 import { clearCart, resolveCart, useCart } from '@/lib/cart'
 
 const baseInputClass = 'w-full rounded-md border px-3 py-2 text-base outline-none bg-background focus-visible:ring-2'
@@ -13,16 +14,37 @@ const invalidInputClass = 'border-destructive focus-visible:ring-destructive'
 const inputClassFor = (hasError: boolean) => `${baseInputClass} ${hasError ? invalidInputClass : validInputClass}`
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const POSTAL_PATTERN = /^\d{4}$/
 
-type FieldKey = 'billingName' | 'billingAddress' | 'shippingAddress' | 'email'
+type AddressKey = 'billing' | 'shipping'
+
+type Address = {
+  postalCode: string
+  city: string
+  street: string
+}
+
+const EMPTY_ADDRESS: Address = { postalCode: '', city: '', street: '' }
+
+const formatAddress = (a: Address) => `${a.postalCode} ${a.city}, ${a.street}`.trim()
+
+type FieldKey =
+  | 'billingName'
+  | 'billingPostalCode'
+  | 'billingCity'
+  | 'billingStreet'
+  | 'shippingPostalCode'
+  | 'shippingCity'
+  | 'shippingStreet'
+  | 'email'
 
 const CheckoutPage = () => {
   const cart = useCart()
   const [mounted, setMounted] = useState(false)
   const [billingName, setBillingName] = useState('')
-  const [billingAddress, setBillingAddress] = useState('')
+  const [billing, setBilling] = useState<Address>(EMPTY_ADDRESS)
   const [sameAsShipping, setSameAsShipping] = useState(true)
-  const [shippingAddress, setShippingAddress] = useState('')
+  const [shipping, setShipping] = useState<Address>(EMPTY_ADDRESS)
   const [email, setEmail] = useState('')
   const [note, setNote] = useState('')
   const [errors, setErrors] = useState<Partial<Record<FieldKey, string>>>({})
@@ -69,25 +91,50 @@ const CheckoutPage = () => {
     )
   }
 
+  const validatePostalCode = (value: string): string | null => {
+    if (!value.trim()) return 'Kérlek add meg az irányítószámot.'
+    if (!POSTAL_PATTERN.test(value.trim())) return 'Kérlek adj meg egy érvényes 4-jegyű irányítószámot.'
+
+    return null
+  }
+
   const validateField = (field: FieldKey): string | null => {
     switch (field) {
       case 'billingName':
         return billingName.trim() ? null : 'Kérlek add meg a számlázási nevet.'
-      case 'billingAddress':
-        return billingAddress.trim() ? null : 'Kérlek add meg a számlázási címet.'
-      case 'shippingAddress':
-        if (sameAsShipping) return null
-        return shippingAddress.trim() ? null : 'Kérlek add meg a szállítási címet.'
+      case 'billingPostalCode':
+        return validatePostalCode(billing.postalCode)
+      case 'billingCity':
+        return billing.city.trim() ? null : 'Kérlek add meg a települést.'
+      case 'billingStreet':
+        return billing.street.trim() ? null : 'Kérlek add meg az utcát és házszámot.'
+      case 'shippingPostalCode':
+        return sameAsShipping ? null : validatePostalCode(shipping.postalCode)
+      case 'shippingCity':
+        return sameAsShipping || shipping.city.trim() ? null : 'Kérlek add meg a települést.'
+      case 'shippingStreet':
+        return sameAsShipping || shipping.street.trim() ? null : 'Kérlek add meg az utcát és házszámot.'
       case 'email':
         if (!email.trim()) return 'Kérlek add meg az email-címet.'
+
         return EMAIL_PATTERN.test(email.trim()) ? null : 'Kérlek adj meg egy érvényes email-címet.'
     }
   }
 
+  const fieldKeys: FieldKey[] = [
+    'billingName',
+    'billingPostalCode',
+    'billingCity',
+    'billingStreet',
+    'shippingPostalCode',
+    'shippingCity',
+    'shippingStreet',
+    'email'
+  ]
+
   const validateAll = (): Partial<Record<FieldKey, string>> => {
-    const fields: FieldKey[] = ['billingName', 'billingAddress', 'shippingAddress', 'email']
     const next: Partial<Record<FieldKey, string>> = {}
-    for (const field of fields) {
+    for (const field of fieldKeys) {
       const message = validateField(field)
       if (message) next[field] = message
     }
@@ -103,21 +150,40 @@ const CheckoutPage = () => {
     setErrors(prev => (prev[field] ? { ...prev, [field]: undefined } : prev))
   }
 
+  const updateAddress = (key: AddressKey, patch: Partial<Address>) => {
+    const setter = key === 'billing' ? setBilling : setShipping
+    setter(prev => ({ ...prev, ...patch }))
+  }
+
+  const handlePostalCodeChange = (key: AddressKey, value: string) => {
+    const digitsOnly = value.replace(/\D/g, '').slice(0, 4)
+    const current = key === 'billing' ? billing : shipping
+    const matchedCity = digitsOnly.length === 4 ? lookupCityByPostalCode(digitsOnly) : null
+    const nextCity = matchedCity ?? current.city
+    updateAddress(key, { postalCode: digitsOnly, city: nextCity })
+    clearError(`${key}PostalCode` as FieldKey)
+    if (matchedCity) clearError(`${key}City` as FieldKey)
+  }
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (submitting) return
     const nextErrors = validateAll()
     setErrors(nextErrors)
     if (Object.values(nextErrors).some(Boolean)) {
-      const firstErrorId = Object.keys(nextErrors)[0]
-      if (firstErrorId) {
-        const map: Record<FieldKey, string> = {
+      const firstErrorKey = fieldKeys.find(k => nextErrors[k])
+      if (firstErrorKey) {
+        const idMap: Record<FieldKey, string> = {
           billingName: 'billing-name',
-          billingAddress: 'billing-address',
-          shippingAddress: 'shipping-address',
+          billingPostalCode: 'billing-postal-code',
+          billingCity: 'billing-city',
+          billingStreet: 'billing-street',
+          shippingPostalCode: 'shipping-postal-code',
+          shippingCity: 'shipping-city',
+          shippingStreet: 'shipping-street',
           email: 'email'
         }
-        document.getElementById(map[firstErrorId as FieldKey])?.focus()
+        document.getElementById(idMap[firstErrorKey])?.focus()
       }
       return
     }
@@ -129,9 +195,9 @@ const CheckoutPage = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           billingName,
-          billingAddress,
+          billingAddress: formatAddress(billing),
           shippingSameAsBilling: sameAsShipping,
-          shippingAddress: sameAsShipping ? '' : shippingAddress,
+          shippingAddress: sameAsShipping ? '' : formatAddress(shipping),
           email,
           note,
           items: cart.map(item => ({
@@ -141,9 +207,8 @@ const CheckoutPage = () => {
           }))
         })
       })
-      const data = (await response.json().catch(() => ({}))) as { error?: string }
       if (!response.ok) {
-        setErrorMessage(data.error ?? 'Nem sikerült elküldeni a rendelést. Próbáld újra később.')
+        setErrorMessage('Nem sikerült elküldeni a rendelést. Próbáld újra később.')
         return
       }
       clearCart()
@@ -157,6 +222,87 @@ const CheckoutPage = () => {
 
   const fieldError = (field: FieldKey) => errors[field]
 
+  const renderAddressFields = (key: AddressKey) => {
+    const address = key === 'billing' ? billing : shipping
+    const idPrefix = key === 'billing' ? 'billing' : 'shipping'
+    const postalKey = (key + 'PostalCode') as FieldKey
+    const cityKey = (key + 'City') as FieldKey
+    const streetKey = (key + 'Street') as FieldKey
+    return (
+      <div className='grid gap-4 sm:grid-cols-[8rem_1fr]'>
+        <div className='space-y-2'>
+          <label htmlFor={`${idPrefix}-postal-code`} className='text-foreground text-sm font-medium'>
+            Irányítószám
+          </label>
+          <input
+            id={`${idPrefix}-postal-code`}
+            inputMode='numeric'
+            autoComplete='postal-code'
+            maxLength={4}
+            value={address.postalCode}
+            onChange={e => handlePostalCodeChange(key, e.target.value)}
+            onBlur={() => handleBlur(postalKey)}
+            aria-invalid={Boolean(fieldError(postalKey))}
+            aria-describedby={fieldError(postalKey) ? `${idPrefix}-postal-code-error` : undefined}
+            className={inputClassFor(Boolean(fieldError(postalKey)))}
+          />
+          {fieldError(postalKey) && (
+            <p id={`${idPrefix}-postal-code-error`} className='text-destructive text-sm'>
+              {fieldError(postalKey)}
+            </p>
+          )}
+        </div>
+        <div className='space-y-2'>
+          <label htmlFor={`${idPrefix}-city`} className='text-foreground text-sm font-medium'>
+            Település
+          </label>
+          <input
+            id={`${idPrefix}-city`}
+            autoComplete='address-level2'
+            value={address.city}
+            onChange={e => {
+              updateAddress(key, { city: e.target.value })
+              clearError(cityKey)
+            }}
+            onBlur={() => handleBlur(cityKey)}
+            aria-invalid={Boolean(fieldError(cityKey))}
+            aria-describedby={fieldError(cityKey) ? `${idPrefix}-city-error` : undefined}
+            className={inputClassFor(Boolean(fieldError(cityKey)))}
+          />
+          {fieldError(cityKey) && (
+            <p id={`${idPrefix}-city-error`} className='text-destructive text-sm'>
+              {fieldError(cityKey)}
+            </p>
+          )}
+        </div>
+        <div className='space-y-2 sm:col-span-2'>
+          <label htmlFor={`${idPrefix}-street`} className='text-foreground text-sm font-medium'>
+            Utca, házszám, emelet/ajtó
+          </label>
+          <input
+            id={`${idPrefix}-street`}
+            autoComplete='street-address'
+            placeholder='pl. Petőfi Sándor utca 12. 2. em. 5.'
+            value={address.street}
+            onChange={e => {
+              updateAddress(key, { street: e.target.value })
+              clearError(streetKey)
+            }}
+            onBlur={() => handleBlur(streetKey)}
+            aria-invalid={Boolean(fieldError(streetKey))}
+            aria-describedby={fieldError(streetKey) ? `${idPrefix}-street-error` : undefined}
+            className={inputClassFor(Boolean(fieldError(streetKey)))}
+          />
+          {fieldError(streetKey) && (
+            <p id={`${idPrefix}-street-error`} className='text-destructive text-sm'>
+              {fieldError(streetKey)}
+            </p>
+          )}
+        </div>
+      </div>
+    )
+  }
+
   return (
     <form className='grid gap-8 lg:grid-cols-[1fr_24rem]' onSubmit={handleSubmit} noValidate>
       <div className='space-y-6'>
@@ -166,6 +312,7 @@ const CheckoutPage = () => {
           </label>
           <input
             id='billing-name'
+            autoComplete='name'
             value={billingName}
             onChange={e => {
               setBillingName(e.target.value)
@@ -183,69 +330,36 @@ const CheckoutPage = () => {
           )}
         </div>
 
-        <div className='space-y-2'>
-          <label htmlFor='billing-address' className='text-foreground text-sm font-medium'>
-            Számlázási cím
-          </label>
-          <input
-            id='billing-address'
-            value={billingAddress}
-            onChange={e => {
-              setBillingAddress(e.target.value)
-              clearError('billingAddress')
-            }}
-            onBlur={() => handleBlur('billingAddress')}
-            aria-invalid={Boolean(fieldError('billingAddress'))}
-            aria-describedby={fieldError('billingAddress') ? 'billing-address-error' : undefined}
-            className={inputClassFor(Boolean(fieldError('billingAddress')))}
-          />
-          {fieldError('billingAddress') && (
-            <p id='billing-address-error' className='text-destructive text-sm'>
-              {fieldError('billingAddress')}
-            </p>
-          )}
-        </div>
+        <fieldset className='space-y-3'>
+          <legend className='text-foreground text-sm font-medium'>Számlázási cím</legend>
+          {renderAddressFields('billing')}
+        </fieldset>
 
-        <div className='space-y-2'>
+        <fieldset className='space-y-3'>
           <div className='flex items-center justify-between gap-3'>
-            <label htmlFor='shipping-address' className='text-foreground text-sm font-medium'>
-              Szállítási cím
-            </label>
+            <legend className='text-foreground text-sm font-medium'>Szállítási cím</legend>
             <label className='text-muted-foreground inline-flex items-center gap-2 text-sm'>
               <input
                 type='checkbox'
                 checked={sameAsShipping}
                 onChange={e => {
                   setSameAsShipping(e.target.checked)
-                  if (e.target.checked) clearError('shippingAddress')
+                  if (e.target.checked) {
+                    setErrors(prev => ({
+                      ...prev,
+                      shippingPostalCode: undefined,
+                      shippingCity: undefined,
+                      shippingStreet: undefined
+                    }))
+                  }
                 }}
                 className='size-4'
               />
               Megegyezik a számlázási címmel
             </label>
           </div>
-          {!sameAsShipping && (
-            <>
-              <input
-                id='shipping-address'
-                value={shippingAddress}
-                onChange={e => {
-                  setShippingAddress(e.target.value)
-                  clearError('shippingAddress')
-                }}
-                onBlur={() => handleBlur('shippingAddress')}
-                aria-invalid={Boolean(fieldError('shippingAddress'))}
-                aria-describedby={fieldError('shippingAddress') ? 'shipping-address-error' : undefined}
-                className={inputClassFor(Boolean(fieldError('shippingAddress')))}
-              />
-              {fieldError('shippingAddress') && (
-                <p id='shipping-address-error' className='text-destructive text-sm'>
-                  {fieldError('shippingAddress')}
-                </p>
-              )}
-            </>
-          )}
-        </div>
+          {!sameAsShipping && renderAddressFields('shipping')}
+        </fieldset>
 
         <div className='space-y-2'>
           <label htmlFor='email' className='text-foreground text-sm font-medium'>

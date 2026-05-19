@@ -74,30 +74,33 @@ export const POST: APIRoute = async ({ request }) => {
   const items = parseItems(payload.items)
 
   if (!billingName || !billingAddress || !email) {
-    return Response.json({ error: 'A számlázási név, cím és email-cím megadása kötelező.' }, { status: 400 })
+    return Response.json({ error: 'Billing name, billing address, and email are required.' }, { status: 400 })
   }
 
   if (!shippingSameAsBilling && !shippingAddress) {
-    return Response.json({ error: 'Kérlek add meg a szállítási címet.' }, { status: 400 })
+    return Response.json(
+      { error: 'Shipping address is required when it differs from the billing address.' },
+      { status: 400 }
+    )
   }
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return Response.json({ error: 'Érvénytelen email cím.' }, { status: 400 })
+    return Response.json({ error: 'Invalid email address.' }, { status: 400 })
   }
 
   if (!items || items.length === 0) {
-    return Response.json({ error: 'A kosár üres.' }, { status: 400 })
+    return Response.json({ error: 'Cart is empty.' }, { status: 400 })
   }
 
   const resolved: ResolvedLine[] = []
   for (const item of items) {
     const product = findProduct(item.productSlug)
     if (!product) {
-      return Response.json({ error: `Ismeretlen termék: ${item.productSlug}` }, { status: 400 })
+      return Response.json({ error: `Unknown product: ${item.productSlug}` }, { status: 400 })
     }
     const size = findSize(product, item.sizeId)
     if (size.id !== item.sizeId) {
-      return Response.json({ error: `Ismeretlen méret: ${item.sizeId}` }, { status: 400 })
+      return Response.json({ error: `Unknown size: ${item.sizeId}` }, { status: 400 })
     }
     resolved.push({ product, size, quantity: item.quantity, lineTotal: size.price * item.quantity })
   }
@@ -163,7 +166,7 @@ export const POST: APIRoute = async ({ request }) => {
 
   if (error) {
     console.error('Resend order error:', error)
-    return Response.json({ error: 'Nem sikerült elküldeni a rendelést. Próbáld újra később.' }, { status: 502 })
+    return Response.json({ error: 'Failed to send order email.' }, { status: 502 })
   }
 
   const confirmationItemsHtml = resolved

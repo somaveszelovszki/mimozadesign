@@ -6,8 +6,15 @@ import { Button } from '@/components/ui/button'
 import { formatPrice } from '@/assets/data/webshop'
 import { clearCart, resolveCart, useCart } from '@/lib/cart'
 
-const inputClass =
-  'border-border bg-background focus-visible:ring-ring w-full rounded-md border px-3 py-2 text-base outline-none focus-visible:ring-2'
+const baseInputClass = 'w-full rounded-md border px-3 py-2 text-base outline-none bg-background focus-visible:ring-2'
+const validInputClass = 'border-border focus-visible:ring-ring'
+const invalidInputClass = 'border-destructive focus-visible:ring-destructive'
+
+const inputClassFor = (hasError: boolean) => `${baseInputClass} ${hasError ? invalidInputClass : validInputClass}`
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+type FieldKey = 'billingName' | 'billingAddress' | 'shippingAddress' | 'email'
 
 const CheckoutPage = () => {
   const cart = useCart()
@@ -18,6 +25,7 @@ const CheckoutPage = () => {
   const [shippingAddress, setShippingAddress] = useState('')
   const [email, setEmail] = useState('')
   const [note, setNote] = useState('')
+  const [errors, setErrors] = useState<Partial<Record<FieldKey, string>>>({})
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
@@ -61,9 +69,58 @@ const CheckoutPage = () => {
     )
   }
 
+  const validateField = (field: FieldKey): string | null => {
+    switch (field) {
+      case 'billingName':
+        return billingName.trim() ? null : 'Kérlek add meg a számlázási nevet.'
+      case 'billingAddress':
+        return billingAddress.trim() ? null : 'Kérlek add meg a számlázási címet.'
+      case 'shippingAddress':
+        if (sameAsShipping) return null
+        return shippingAddress.trim() ? null : 'Kérlek add meg a szállítási címet.'
+      case 'email':
+        if (!email.trim()) return 'Kérlek add meg az email-címet.'
+        return EMAIL_PATTERN.test(email.trim()) ? null : 'Kérlek adj meg egy érvényes email-címet.'
+    }
+  }
+
+  const validateAll = (): Partial<Record<FieldKey, string>> => {
+    const fields: FieldKey[] = ['billingName', 'billingAddress', 'shippingAddress', 'email']
+    const next: Partial<Record<FieldKey, string>> = {}
+    for (const field of fields) {
+      const message = validateField(field)
+      if (message) next[field] = message
+    }
+    return next
+  }
+
+  const handleBlur = (field: FieldKey) => {
+    const message = validateField(field)
+    setErrors(prev => ({ ...prev, [field]: message ?? undefined }))
+  }
+
+  const clearError = (field: FieldKey) => {
+    setErrors(prev => (prev[field] ? { ...prev, [field]: undefined } : prev))
+  }
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (submitting) return
+    const nextErrors = validateAll()
+    setErrors(nextErrors)
+    if (Object.values(nextErrors).some(Boolean)) {
+      const firstErrorId = Object.keys(nextErrors)[0]
+      if (firstErrorId) {
+        const map: Record<FieldKey, string> = {
+          billingName: 'billing-name',
+          billingAddress: 'billing-address',
+          shippingAddress: 'shipping-address',
+          email: 'email'
+        }
+        document.getElementById(map[firstErrorId as FieldKey])?.focus()
+      }
+      return
+    }
     setSubmitting(true)
     setErrorMessage(null)
     try {
@@ -98,8 +155,10 @@ const CheckoutPage = () => {
     }
   }
 
+  const fieldError = (field: FieldKey) => errors[field]
+
   return (
-    <form className='grid gap-8 lg:grid-cols-[1fr_24rem]' onSubmit={handleSubmit}>
+    <form className='grid gap-8 lg:grid-cols-[1fr_24rem]' onSubmit={handleSubmit} noValidate>
       <div className='space-y-6'>
         <div className='space-y-2'>
           <label htmlFor='billing-name' className='text-foreground text-sm font-medium'>
@@ -107,11 +166,21 @@ const CheckoutPage = () => {
           </label>
           <input
             id='billing-name'
-            required
             value={billingName}
-            onChange={e => setBillingName(e.target.value)}
-            className={inputClass}
+            onChange={e => {
+              setBillingName(e.target.value)
+              clearError('billingName')
+            }}
+            onBlur={() => handleBlur('billingName')}
+            aria-invalid={Boolean(fieldError('billingName'))}
+            aria-describedby={fieldError('billingName') ? 'billing-name-error' : undefined}
+            className={inputClassFor(Boolean(fieldError('billingName')))}
           />
+          {fieldError('billingName') && (
+            <p id='billing-name-error' className='text-destructive text-sm'>
+              {fieldError('billingName')}
+            </p>
+          )}
         </div>
 
         <div className='space-y-2'>
@@ -120,11 +189,21 @@ const CheckoutPage = () => {
           </label>
           <input
             id='billing-address'
-            required
             value={billingAddress}
-            onChange={e => setBillingAddress(e.target.value)}
-            className={inputClass}
+            onChange={e => {
+              setBillingAddress(e.target.value)
+              clearError('billingAddress')
+            }}
+            onBlur={() => handleBlur('billingAddress')}
+            aria-invalid={Boolean(fieldError('billingAddress'))}
+            aria-describedby={fieldError('billingAddress') ? 'billing-address-error' : undefined}
+            className={inputClassFor(Boolean(fieldError('billingAddress')))}
           />
+          {fieldError('billingAddress') && (
+            <p id='billing-address-error' className='text-destructive text-sm'>
+              {fieldError('billingAddress')}
+            </p>
+          )}
         </div>
 
         <div className='space-y-2'>
@@ -136,20 +215,35 @@ const CheckoutPage = () => {
               <input
                 type='checkbox'
                 checked={sameAsShipping}
-                onChange={e => setSameAsShipping(e.target.checked)}
+                onChange={e => {
+                  setSameAsShipping(e.target.checked)
+                  if (e.target.checked) clearError('shippingAddress')
+                }}
                 className='size-4'
               />
               Megegyezik a számlázási címmel
             </label>
           </div>
           {!sameAsShipping && (
-            <input
-              id='shipping-address'
-              required={!sameAsShipping}
-              value={shippingAddress}
-              onChange={e => setShippingAddress(e.target.value)}
-              className={inputClass}
-            />
+            <>
+              <input
+                id='shipping-address'
+                value={shippingAddress}
+                onChange={e => {
+                  setShippingAddress(e.target.value)
+                  clearError('shippingAddress')
+                }}
+                onBlur={() => handleBlur('shippingAddress')}
+                aria-invalid={Boolean(fieldError('shippingAddress'))}
+                aria-describedby={fieldError('shippingAddress') ? 'shipping-address-error' : undefined}
+                className={inputClassFor(Boolean(fieldError('shippingAddress')))}
+              />
+              {fieldError('shippingAddress') && (
+                <p id='shipping-address-error' className='text-destructive text-sm'>
+                  {fieldError('shippingAddress')}
+                </p>
+              )}
+            </>
           )}
         </div>
 
@@ -160,18 +254,36 @@ const CheckoutPage = () => {
           <input
             id='email'
             type='email'
-            required
             value={email}
-            onChange={e => setEmail(e.target.value)}
-            className={inputClass}
+            onChange={e => {
+              setEmail(e.target.value)
+              clearError('email')
+            }}
+            onBlur={() => handleBlur('email')}
+            autoComplete='email'
+            inputMode='email'
+            aria-invalid={Boolean(fieldError('email'))}
+            aria-describedby={fieldError('email') ? 'email-error' : undefined}
+            className={inputClassFor(Boolean(fieldError('email')))}
           />
+          {fieldError('email') && (
+            <p id='email-error' className='text-destructive text-sm'>
+              {fieldError('email')}
+            </p>
+          )}
         </div>
 
         <div className='space-y-2'>
           <label htmlFor='note' className='text-foreground text-sm font-medium'>
             Megjegyzés
           </label>
-          <textarea id='note' rows={4} value={note} onChange={e => setNote(e.target.value)} className={inputClass} />
+          <textarea
+            id='note'
+            rows={4}
+            value={note}
+            onChange={e => setNote(e.target.value)}
+            className={inputClassFor(false)}
+          />
         </div>
 
         <div className='border-border bg-muted/40 text-muted-foreground space-y-2 rounded-xl border p-4 text-sm'>

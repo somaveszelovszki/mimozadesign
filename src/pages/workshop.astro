@@ -82,13 +82,18 @@ const workshopsCalendarEvents = workshopOccurrences.map(({ workshop, date, isPas
           pastWorkshops.map(workshop => (
             <article class='border-border hover:border-primary bg-card overflow-hidden rounded-xl border transition-colors duration-300'>
               <a href={`/workshop/${workshop.slug}`} class='group flex flex-col sm:flex-row'>
-                <img
-                  src={workshop.coverImage}
-                  alt={`${workshop.title} borítókép`}
-                  class='aspect-square h-52 w-full object-cover transition-transform duration-300 group-hover:scale-105 sm:h-auto sm:w-1/2 sm:shrink-0'
-                  loading='lazy'
-                />
-                <div class='space-y-3 p-5'>
+                <div class='bg-muted relative aspect-square h-52 w-full overflow-hidden sm:h-auto sm:w-1/2 sm:shrink-0'>
+                  <img
+                    src={workshop.coverImage}
+                    alt={`${workshop.title} borítókép`}
+                    class='h-full w-full object-cover opacity-50 transition-transform duration-300 group-hover:scale-105'
+                    loading='lazy'
+                  />
+                  <span class='bg-muted text-muted-foreground absolute top-3 left-3 rounded-full px-3 py-1 text-xs font-medium'>
+                    Korábbi workshop
+                  </span>
+                </div>
+                <div class='space-y-3 p-5 opacity-50'>
                   <h3 class='font-serif text-xl font-medium'>{workshop.title}</h3>
                   <p class='text-muted-foreground text-sm'>{workshop.summary}</p>
                   <span class='text-primary inline-block text-sm font-medium group-hover:underline'>Részletek</span>

@@ -17,6 +17,7 @@ const ProductPurchase = ({ product, initialSizeId }: ProductPurchaseProps) => {
   )
   const [quantity, setQuantity] = useState(1)
   const [feedback, setFeedback] = useState<string | null>(null)
+  const [showCartLink, setShowCartLink] = useState(false)
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -33,6 +34,7 @@ const ProductPurchase = ({ product, initialSizeId }: ProductPurchaseProps) => {
     if (quantity < 1) return
     addToCart(product.slug, size.id, quantity)
     setFeedback(`${quantity} db hozzáadva a kosárhoz.`)
+    setShowCartLink(true)
     window.setTimeout(() => setFeedback(null), 3000)
   }
 
@@ -78,9 +80,16 @@ const ProductPurchase = ({ product, initialSizeId }: ProductPurchaseProps) => {
         />
       </div>
 
-      <Button type='button' onClick={handleAdd} className='rounded-full px-6'>
-        Kosárba
-      </Button>
+      <div className='flex flex-wrap items-center gap-3'>
+        <Button type='button' onClick={handleAdd} className='rounded-full px-6'>
+          Kosárba
+        </Button>
+        {showCartLink && (
+          <Button asChild variant='outline' className='rounded-full px-6'>
+            <a href='/kosar'>Tovább a kosárhoz</a>
+          </Button>
+        )}
+      </div>
 
       {feedback && <p className='text-primary text-sm font-medium'>{feedback}</p>}
     </div>

@@ -18,11 +18,11 @@ export const products: Product[] = [
   {
     slug: 'viragbura',
     title: 'Virágbúra',
-    profileImage: '/workshops/anyak-napi-viragbura-workshop/anyak-napi-viragbura-workshop-profile.jpg',
+    profileImage: '/workshops/viragbura-workshop/viragbura-workshop-profile.jpg',
     images: [
-      '/workshops/anyak-napi-viragbura-workshop/anyak-napi-viragbura-workshop-profile.jpg',
-      '/workshops/anyak-napi-viragbura-workshop/anyak-napi-viragbura-workshop-1.jpg',
-      '/workshops/anyak-napi-viragbura-workshop/anyak-napi-viragbura-workshop-2.jpg'
+      '/workshops/viragbura-workshop/viragbura-workshop-profile.jpg',
+      '/workshops/viragbura-workshop/viragbura-workshop-1.jpg',
+      '/workshops/viragbura-workshop/viragbura-workshop-2.jpg'
     ],
     description: [
       'Elegáns, kézzel készített virágbúra szárazvirág kompozícióval, amely nemcsak dekoráció, hanem egy kedves emlék is.',

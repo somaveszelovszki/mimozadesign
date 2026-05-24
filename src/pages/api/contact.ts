@@ -1,10 +1,12 @@
 import type { APIRoute } from 'astro'
 import { Resend } from 'resend'
+
 import { COMPANY_INFO } from '@/consts'
 
 export const prerender = false
 
 const MAX_ATTACHMENT_BYTES = 10 * 1024 * 1024
+const MAX_ATTACHMENTS = 5
 
 const escapeHtml = (value: string): string =>
   value
@@ -23,6 +25,7 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   let formData: FormData
+
   try {
     formData = await request.formData()
   } catch {
@@ -33,7 +36,7 @@ export const POST: APIRoute = async ({ request }) => {
   const email = String(formData.get('email') ?? '').trim()
   const phone = String(formData.get('phone') ?? '').trim()
   const message = String(formData.get('message') ?? '').trim()
-  const attachment = formData.get('attachment')
+  const uploadedFiles = formData.getAll('attachment').filter((f): f is File => f instanceof File && f.size > 0)
 
   if (!name || !email || !message) {
     return Response.json({ error: 'A név, email és üzenet mező kitöltése kötelező.' }, { status: 400 })
@@ -43,20 +46,27 @@ export const POST: APIRoute = async ({ request }) => {
     return Response.json({ error: 'Érvénytelen email cím.' }, { status: 400 })
   }
 
+  if (uploadedFiles.length > MAX_ATTACHMENTS) {
+    return Response.json({ error: `Legfeljebb ${MAX_ATTACHMENTS} fájlt csatolhatsz.` }, { status: 400 })
+  }
+
   const attachments: { filename: string; content: string }[] = []
-  if (attachment instanceof File && attachment.size > 0) {
-    if (attachment.size > MAX_ATTACHMENT_BYTES) {
-      return Response.json({ error: 'A csatolmány túl nagy (max. 10 MB).' }, { status: 400 })
+
+  for (const file of uploadedFiles) {
+    if (file.size > MAX_ATTACHMENT_BYTES) {
+      return Response.json({ error: `A(z) "${file.name}" csatolmány túl nagy (max. 10 MB).` }, { status: 400 })
     }
-    const buffer = Buffer.from(await attachment.arrayBuffer())
+
+    const buffer = Buffer.from(await file.arrayBuffer())
+
     attachments.push({
-      filename: attachment.name || 'attachment',
+      filename: file.name || 'attachment',
       content: buffer.toString('base64')
     })
   }
 
   const html = `
-    <h2>Új ajánlatkérés érkezett</h2>
+    <h2>Új üzenet érkezett</h2>
     <p><strong>Név:</strong> ${escapeHtml(name)}</p>
     <p><strong>Email:</strong> ${escapeHtml(email)}</p>
     ${phone ? `<p><strong>Telefon:</strong> ${escapeHtml(phone)}</p>` : ''}
@@ -65,17 +75,19 @@ export const POST: APIRoute = async ({ request }) => {
   `
 
   const resend = new Resend(apiKey)
+
   const { error } = await resend.emails.send({
     from: fromAddress,
     to: COMPANY_INFO.contactPoint.email,
     replyTo: email,
-    subject: `Új ajánlatkérés — ${name}`,
+    subject: `Új üzenet — ${name}`,
     html,
     attachments: attachments.length ? attachments : undefined
   })
 
   if (error) {
     console.error('Resend error:', error)
+
     return Response.json({ error: 'Nem sikerült elküldeni az üzenetet. Próbáld újra később.' }, { status: 502 })
   }
 
@@ -101,7 +113,7 @@ export const POST: APIRoute = async ({ request }) => {
     from: fromAddress,
     to: email,
     replyTo: COMPANY_INFO.contactPoint.email,
-    subject: 'Megkaptuk az üzeneted — Mimóza Design',
+    subject: 'Megkaptuk az üzeneted',
     html: confirmationHtml
   })
 

@@ -199,6 +199,7 @@ export const workshops: Workshop[] = workshopData
     const coverImage = images.find(img => img.includes('-profile.')) ?? ''
     const extremes = getWorkshopDateExtremes(workshop.dates)
     const past = extremes !== null && extremes.latest < todayTimestamp
+
     const futureDates = workshop.dates.filter(d => {
       const parsed = parseWorkshopDate(d.date)
 

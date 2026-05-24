@@ -1,7 +1,8 @@
 import type { APIRoute } from 'astro'
 import { Resend } from 'resend'
-import { COMPANY_INFO } from '@/consts'
+
 import { findProduct, findSize, formatPrice, type Product, type ProductSize } from '@/assets/data/webshop'
+import { COMPANY_INFO } from '@/consts'
 
 export const prerender = false
 
@@ -29,6 +30,7 @@ type ResolvedLine = {
 const parseItems = (raw: unknown): IncomingItem[] | null => {
   if (!Array.isArray(raw)) return null
   const items: IncomingItem[] = []
+
   for (const entry of raw) {
     if (
       typeof entry !== 'object' ||
@@ -41,12 +43,14 @@ const parseItems = (raw: unknown): IncomingItem[] | null => {
     ) {
       return null
     }
+
     items.push({
       productSlug: (entry as IncomingItem).productSlug,
       sizeId: (entry as IncomingItem).sizeId,
       quantity: Math.floor((entry as IncomingItem).quantity)
     })
   }
+
   return items
 }
 
@@ -59,6 +63,7 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   let payload: Record<string, unknown>
+
   try {
     payload = (await request.json()) as Record<string, unknown>
   } catch {
@@ -93,15 +98,20 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   const resolved: ResolvedLine[] = []
+
   for (const item of items) {
     const product = findProduct(item.productSlug)
+
     if (!product) {
       return Response.json({ error: `Unknown product: ${item.productSlug}` }, { status: 400 })
     }
+
     const size = findSize(product, item.sizeId)
+
     if (size.id !== item.sizeId) {
       return Response.json({ error: `Unknown size: ${item.sizeId}` }, { status: 400 })
     }
+
     resolved.push({ product, size, quantity: item.quantity, lineTotal: size.price * item.quantity })
   }
 
@@ -112,6 +122,7 @@ export const POST: APIRoute = async ({ request }) => {
   const itemRowsHtml = resolved
     .map(line => {
       const sizeSuffix = line.product.sizes.length > 1 ? ` (${escapeHtml(line.size.sizeLabel)})` : ''
+
       return `
         <tr>
           <td style="padding: 6px 12px 6px 0;">${line.quantity} ×</td>
@@ -156,6 +167,7 @@ export const POST: APIRoute = async ({ request }) => {
   `
 
   const resend = new Resend(apiKey)
+
   const { error } = await resend.emails.send({
     from: fromAddress,
     to: COMPANY_INFO.contactPoint.email,
@@ -166,12 +178,14 @@ export const POST: APIRoute = async ({ request }) => {
 
   if (error) {
     console.error('Resend order error:', error)
+
     return Response.json({ error: 'Failed to send order email.' }, { status: 502 })
   }
 
   const confirmationItemsHtml = resolved
     .map(line => {
       const sizeSuffix = line.product.sizes.length > 1 ? ` (${escapeHtml(line.size.sizeLabel)})` : ''
+
       return `<li>${line.quantity} × ${escapeHtml(line.product.title)}${sizeSuffix} — ${escapeHtml(formatPrice(line.lineTotal))}</li>`
     })
     .join('')
@@ -199,7 +213,7 @@ export const POST: APIRoute = async ({ request }) => {
     from: fromAddress,
     to: email,
     replyTo: COMPANY_INFO.contactPoint.email,
-    subject: 'Megkaptuk a rendelésed — Mimóza Design',
+    subject: 'Megkaptuk a rendelésed',
     html: confirmationHtml
   })
 

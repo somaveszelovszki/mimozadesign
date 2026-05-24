@@ -65,14 +65,13 @@ const pageDescription =
         </div>
 
         <div class='space-y-2'>
-          <label for='attachment' class='text-sm font-medium'>Fájl feltöltése</label>
+          <span class='text-sm font-medium'>Fájlok feltöltése</span>
           <div class='border-input bg-background rounded-lg border border-dashed p-2'>
-            <input id='attachment' name='attachment' type='file' class='peer sr-only' />
+            <input id='attachment' name='attachment' type='file' multiple class='peer sr-only' />
             <label
               for='attachment'
-              class='hover:bg-muted/50 peer-focus-visible:ring-ring flex h-28 w-full cursor-pointer items-center justify-center rounded-md transition-colors peer-focus-visible:ring-2 peer-focus-visible:outline-none'
+              class='hover:bg-muted/50 peer-focus-visible:ring-ring flex h-28 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-md text-center transition-colors peer-focus-visible:ring-2 peer-focus-visible:outline-none'
             >
-              <span class='sr-only'>Fájl kiválasztása</span>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 viewBox='0 0 24 24'
@@ -90,8 +89,16 @@ const pageDescription =
                 <path d='M12 12v9'></path>
                 <path d='M20.4 18.4A5 5 0 0018 9h-1.3A8 8 0 103 16.3'></path>
               </svg>
+              <span id='attachment-label' class='text-muted-foreground text-sm'>Fájlok kiválasztása (max. 5)</span>
             </label>
           </div>
+          <button
+            id='attachment-clear'
+            type='button'
+            class='text-muted-foreground hover:text-foreground hidden text-xs underline underline-offset-2'
+          >
+            Csatolmány eltávolítása
+          </button>
         </div>
 
         <button
@@ -111,6 +118,43 @@ const pageDescription =
   const form = document.getElementById('contact-form') as HTMLFormElement | null
   const status = document.getElementById('contact-status') as HTMLParagraphElement | null
   const submitBtn = form?.querySelector('button[type="submit"]') as HTMLButtonElement | null
+  const attachmentInput = document.getElementById('attachment') as HTMLInputElement | null
+  const attachmentLabel = document.getElementById('attachment-label') as HTMLSpanElement | null
+  const attachmentClear = document.getElementById('attachment-clear') as HTMLButtonElement | null
+
+  const defaultAttachmentLabel = attachmentLabel?.textContent ?? 'Fájlok kiválasztása (max. 5)'
+  const MAX_ATTACHMENTS = 5
+
+  const updateAttachmentLabel = () => {
+    if (!attachmentInput || !attachmentLabel || !attachmentClear) return
+    const files = attachmentInput.files
+
+    if (files && files.length > 0) {
+      const names = Array.from(files).map(f => f.name)
+      attachmentLabel.textContent = names.length === 1 ? names[0] : `${names.length} fájl: ${names.join(', ')}`
+      attachmentLabel.classList.remove('text-muted-foreground')
+      attachmentLabel.classList.add('text-foreground', 'font-medium')
+      attachmentClear.classList.remove('hidden')
+    } else {
+      attachmentLabel.textContent = defaultAttachmentLabel
+      attachmentLabel.classList.add('text-muted-foreground')
+      attachmentLabel.classList.remove('text-foreground', 'font-medium')
+      attachmentClear.classList.add('hidden')
+    }
+  }
+
+  attachmentInput?.addEventListener('change', () => {
+    if (attachmentInput && attachmentInput.files && attachmentInput.files.length > MAX_ATTACHMENTS) {
+      setStatus(`Legfeljebb ${MAX_ATTACHMENTS} fájlt csatolhatsz.`, 'error')
+      attachmentInput.value = ''
+    }
+    updateAttachmentLabel()
+  })
+  attachmentClear?.addEventListener('click', () => {
+    if (!attachmentInput) return
+    attachmentInput.value = ''
+    updateAttachmentLabel()
+  })
 
   const setStatus = (message: string, kind: 'success' | 'error') => {
     if (!status) return
@@ -137,6 +181,7 @@ const pageDescription =
       if (response.ok) {
         setStatus('Köszönjük! Az üzeneted megérkezett, hamarosan válaszolunk.', 'success')
         form.reset()
+        updateAttachmentLabel()
       } else {
         setStatus(data.error ?? 'Nem sikerült elküldeni az üzenetet.', 'error')
       }

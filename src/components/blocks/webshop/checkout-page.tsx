@@ -134,15 +134,19 @@ const CheckoutPage = () => {
 
   const validateAll = (): Partial<Record<FieldKey, string>> => {
     const next: Partial<Record<FieldKey, string>> = {}
+
     for (const field of fieldKeys) {
       const message = validateField(field)
+
       if (message) next[field] = message
     }
+
     return next
   }
 
   const handleBlur = (field: FieldKey) => {
     const message = validateField(field)
+
     setErrors(prev => ({ ...prev, [field]: message ?? undefined }))
   }
 
@@ -152,6 +156,7 @@ const CheckoutPage = () => {
 
   const updateAddress = (key: AddressKey, patch: Partial<Address>) => {
     const setter = key === 'billing' ? setBilling : setShipping
+
     setter(prev => ({ ...prev, ...patch }))
   }
 
@@ -160,6 +165,7 @@ const CheckoutPage = () => {
     const current = key === 'billing' ? billing : shipping
     const matchedCity = digitsOnly.length === 4 ? lookupCityByPostalCode(digitsOnly) : null
     const nextCity = matchedCity ?? current.city
+
     updateAddress(key, { postalCode: digitsOnly, city: nextCity })
     clearError(`${key}PostalCode` as FieldKey)
     if (matchedCity) clearError(`${key}City` as FieldKey)
@@ -169,9 +175,12 @@ const CheckoutPage = () => {
     event.preventDefault()
     if (submitting) return
     const nextErrors = validateAll()
+
     setErrors(nextErrors)
+
     if (Object.values(nextErrors).some(Boolean)) {
       const firstErrorKey = fieldKeys.find(k => nextErrors[k])
+
       if (firstErrorKey) {
         const idMap: Record<FieldKey, string> = {
           billingName: 'billing-name',
@@ -183,12 +192,16 @@ const CheckoutPage = () => {
           shippingStreet: 'shipping-street',
           email: 'email'
         }
+
         document.getElementById(idMap[firstErrorKey])?.focus()
       }
+
       return
     }
+
     setSubmitting(true)
     setErrorMessage(null)
+
     try {
       const response = await fetch('/api/order', {
         method: 'POST',
@@ -207,10 +220,13 @@ const CheckoutPage = () => {
           }))
         })
       })
+
       if (!response.ok) {
         setErrorMessage('Nem sikerült elküldeni a rendelést. Próbáld újra később.')
+
         return
       }
+
       clearCart()
       setSubmitted(true)
     } catch {
@@ -228,6 +244,7 @@ const CheckoutPage = () => {
     const postalKey = (key + 'PostalCode') as FieldKey
     const cityKey = (key + 'City') as FieldKey
     const streetKey = (key + 'Street') as FieldKey
+
     return (
       <div className='grid gap-4 sm:grid-cols-[8rem_1fr]'>
         <div className='space-y-2'>
@@ -344,6 +361,7 @@ const CheckoutPage = () => {
                 checked={sameAsShipping}
                 onChange={e => {
                   setSameAsShipping(e.target.checked)
+
                   if (e.target.checked) {
                     setErrors(prev => ({
                       ...prev,

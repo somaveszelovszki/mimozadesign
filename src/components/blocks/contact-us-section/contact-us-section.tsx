@@ -39,6 +39,7 @@ const ContactUs = ({ contactInfo }: { contactInfo: ContactInfo }) => {
               {contactInfo.map((info, index) => {
                 const Wrapper = info.link ? 'a' : 'div'
                 const wrapperProps = info.link ? { href: info.link } : {}
+
                 return (
                   <Wrapper {...wrapperProps} key={index} className='block'>
                     <Card className='bg-background hover:border-primary aspect-square overflow-hidden shadow-none transition-colors duration-300'>

@@ -15,6 +15,7 @@ const ProductPurchase = ({ product, initialSizeId }: ProductPurchaseProps) => {
   const [sizeId, setSizeId] = useState(
     product.sizes.some(s => s.id === initialSizeId) ? initialSizeId : product.sizes[0].id
   )
+
   const [quantity, setQuantity] = useState(1)
   const [feedback, setFeedback] = useState<string | null>(null)
   const [showCartLink, setShowCartLink] = useState(false)
@@ -22,6 +23,7 @@ const ProductPurchase = ({ product, initialSizeId }: ProductPurchaseProps) => {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const querySize = params.get('size')
+
     if (querySize && product.sizes.some(s => s.id === querySize)) {
       setSizeId(querySize)
     }

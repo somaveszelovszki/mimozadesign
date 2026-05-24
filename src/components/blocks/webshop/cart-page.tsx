@@ -20,12 +20,16 @@ const CartPage = () => {
 
   useEffect(() => {
     if (!pendingRemoval) return
+
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setPendingRemoval(null)
     }
+
     window.addEventListener('keydown', handleKey)
     const previousOverflow = document.body.style.overflow
+
     document.body.style.overflow = 'hidden'
+
     return () => {
       window.removeEventListener('keydown', handleKey)
       document.body.style.overflow = previousOverflow

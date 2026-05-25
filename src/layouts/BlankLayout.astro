@@ -1,8 +1,6 @@
 ---
 import '@/styles/global.css'
 
-import { ClientRouter } from 'astro:transitions'
-
 import HeadSeo from '@/layouts/HeadSeo.astro'
 
 interface Props {
@@ -26,15 +24,6 @@ const seoProps = Astro.props as Props
 <html lang='en'>
   <head>
     <HeadSeo {...seoProps} />
-    <ClientRouter />
-    <style>
-      /* Disable all view transitions while keeping client-side navigation */
-      ::view-transition-group(*),
-      ::view-transition-old(*),
-      ::view-transition-new(*) {
-        animation-duration: 0ms !important;
-      }
-    </style>
   </head>
   <body class='flex min-h-full w-full flex-auto flex-col overflow-x-hidden'>
     <main><slot /></main>

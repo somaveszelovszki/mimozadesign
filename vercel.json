@@ -3,6 +3,7 @@
   "git": {
     "deploymentEnabled": true
   },
+  "regions": ["fra1"],
   "headers": [
     {
       "source": "/(.*)",

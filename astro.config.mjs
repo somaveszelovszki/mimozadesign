@@ -63,6 +63,9 @@ export default defineConfig({
   ],
   output: 'static',
   adapter: vercel(),
+  security: {
+    checkOrigin: false
+  },
   compressHTML: true,
   build: {
     inlineStylesheets: 'auto'

@@ -4,10 +4,10 @@ import tailwindcss from '@tailwindcss/vite'
 import sitemap from '@astrojs/sitemap'
 import mdx from '@astrojs/mdx'
 import react from '@astrojs/react'
-import node from '@astrojs/node'
+import vercel from '@astrojs/vercel'
 
 export default defineConfig({
-  site: 'http://localhost:4321/',
+  site: 'https://mimozadesign.hu',
   integrations: [
     react(),
     mdx(),
@@ -16,7 +16,7 @@ export default defineConfig({
       customPages: [],
       serialize(item) {
         // Homepage - highest priority
-        if (item.url === 'http://localhost:4321/') {
+        if (item.url === 'https://mimozadesign.hu/') {
           // @ts-expect-error - Valid sitemap changefreq value
           item.changefreq = 'daily'
           item.priority = 1.0
@@ -61,8 +61,8 @@ export default defineConfig({
       }
     })
   ],
-  output: 'static',
-  adapter: node({ mode: 'standalone' }),
+  output: 'server',
+  adapter: vercel(),
   compressHTML: true,
   build: {
     inlineStylesheets: 'auto'

@@ -114,7 +114,7 @@ const workshopData: Omit<Workshop, 'coverImage' | 'images' | 'past' | 'futureDat
       '<strong>Kedvezmény:</strong> 20% páros kedvezmény',
       'A résztvevők létszáma korlátozott, legfeljebb 10 fő.'
     ],
-    facebookEventUrl: 'https://fb.me/e/6X5Vu1uwJ'
+    facebookEventUrl: 'https://fb.me/e/60gaKDQ7d'
   },
   {
     slug: 'hajkoszoru-keszito-workshop',

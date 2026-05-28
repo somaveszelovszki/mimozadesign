@@ -101,12 +101,6 @@ const workshopData: Omit<Workshop, 'coverImage' | 'images' | 'past' | 'futureDat
         time: '9:00-12:00',
         location: 'The Secret Garden - Keszthely | 8360 Keszthely, Sopron utca 10.',
         registrationUrl: 'https://forms.gle/1WAQwwsBd4B1uCDZ9'
-      },
-      {
-        date: '2026. június 6. (szombat)',
-        time: '14:00-17:00',
-        location: 'The Secret Garden - Keszthely | 8360 Keszthely, Sopron utca 10.',
-        registrationUrl: 'https://forms.gle/1WAQwwsBd4B1uCDZ9'
       }
     ],
     details: [

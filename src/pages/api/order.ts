@@ -3,6 +3,7 @@ import { Resend } from 'resend'
 
 import { findProduct, findSize, formatPrice, type Product, type ProductSize } from '@/assets/data/webshop'
 import { COMPANY_INFO } from '@/consts'
+import { screenSubmission } from '@/lib/anti-spam'
 
 export const prerender = false
 
@@ -54,7 +55,7 @@ const parseItems = (raw: unknown): IncomingItem[] | null => {
   return items
 }
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, clientAddress }) => {
   const apiKey = import.meta.env.RESEND_API_KEY
   const fromAddress = import.meta.env.CONTACT_FROM_EMAIL
 
@@ -68,6 +69,20 @@ export const POST: APIRoute = async ({ request }) => {
     payload = (await request.json()) as Record<string, unknown>
   } catch {
     return Response.json({ error: 'Invalid submission.' }, { status: 400 })
+  }
+
+  // Anti-spam screening — runs before any email is sent.
+  const verdict = await screenSubmission({
+    honeypot: String(payload.website ?? '').trim(),
+    elapsed: Number(payload.elapsed ?? 0),
+    turnstileToken: String(payload.turnstileToken ?? ''),
+    ip: clientAddress
+  })
+
+  if (!verdict.allow) {
+    return verdict.fakeSuccess
+      ? Response.json({ ok: true })
+      : Response.json({ error: verdict.message }, { status: 400 })
   }
 
   const billingName = String(payload.billingName ?? '').trim()

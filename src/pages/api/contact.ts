@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro'
 import { Resend } from 'resend'
 
 import { COMPANY_INFO } from '@/consts'
+import { screenSubmission } from '@/lib/anti-spam'
 
 export const prerender = false
 
@@ -16,7 +17,7 @@ const escapeHtml = (value: string): string =>
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;')
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, clientAddress }) => {
   const apiKey = import.meta.env.RESEND_API_KEY
   const fromAddress = import.meta.env.CONTACT_FROM_EMAIL
 
@@ -30,6 +31,20 @@ export const POST: APIRoute = async ({ request }) => {
     formData = await request.formData()
   } catch {
     return Response.json({ error: 'Invalid form submission.' }, { status: 400 })
+  }
+
+  // Anti-spam screening — runs before any email is sent.
+  const verdict = await screenSubmission({
+    honeypot: String(formData.get('website') ?? '').trim(),
+    elapsed: Number(formData.get('elapsed') ?? 0),
+    turnstileToken: String(formData.get('cf-turnstile-response') ?? ''),
+    ip: clientAddress
+  })
+
+  if (!verdict.allow) {
+    return verdict.fakeSuccess
+      ? Response.json({ ok: true })
+      : Response.json({ error: verdict.message }, { status: 400 })
   }
 
   const name = String(formData.get('name') ?? '').trim()

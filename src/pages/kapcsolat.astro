@@ -4,6 +4,8 @@ import Layout from '@/layouts/Layout.astro'
 const pageTitle = 'Kapcsolat | Mimóza Design'
 const pageDescription =
   'Lépj kapcsolatba velünk emailen vagy social felületeken, és küldd el üzenetedet az ajánlatkérő űrlapon.'
+
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
@@ -15,6 +17,14 @@ const pageDescription =
       </p>
 
       <form id='contact-form' class='mt-6 space-y-5' method='post' action='/api/contact' enctype='multipart/form-data'>
+        {/* Honeypot — hidden from real users; bots fill it and get rejected. */}
+        <div aria-hidden='true' style='position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden'>
+          <label for='website'>Weboldal</label>
+          <input id='website' name='website' type='text' tabindex='-1' autocomplete='off' />
+        </div>
+        {/* Time-trap — set client-side to the time spent filling the form. */}
+        <input id='elapsed' name='elapsed' type='hidden' value='0' />
+
         <div class='space-y-2'>
           <label for='name' class='text-sm font-medium'>Név</label>
           <input
@@ -101,6 +111,12 @@ const pageDescription =
           </button>
         </div>
 
+        {
+          turnstileSiteKey && (
+            <div class='cf-turnstile' data-sitekey={turnstileSiteKey} data-theme='light' data-language='hu' />
+          )
+        }
+
         <button
           type='submit'
           class='bg-primary text-primary-foreground hover:bg-primary/90 inline-flex rounded-full px-6 py-3 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60'
@@ -112,6 +128,8 @@ const pageDescription =
       </form>
     </section>
   </section>
+
+  {turnstileSiteKey && <script src='https://challenges.cloudflare.com/turnstile/v0/api.js' async defer is:inline />}
 </Layout>
 
 <script>
@@ -121,7 +139,9 @@ const pageDescription =
   const attachmentInput = document.getElementById('attachment') as HTMLInputElement | null
   const attachmentLabel = document.getElementById('attachment-label') as HTMLSpanElement | null
   const attachmentClear = document.getElementById('attachment-clear') as HTMLButtonElement | null
+  const elapsedInput = document.getElementById('elapsed') as HTMLInputElement | null
 
+  const pageLoadedAt = Date.now()
   const defaultAttachmentLabel = attachmentLabel?.textContent ?? 'Fájlok kiválasztása (max. 5)'
   const MAX_ATTACHMENTS = 5
 
@@ -169,6 +189,10 @@ const pageDescription =
 
     submitBtn.disabled = true
     status?.classList.add('hidden')
+
+    if (elapsedInput) {
+      elapsedInput.value = String(Date.now() - pageLoadedAt)
+    }
 
     try {
       const response = await fetch(form.action, {

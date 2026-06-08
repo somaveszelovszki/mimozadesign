@@ -1,11 +1,36 @@
 'use client'
 
-import { type FormEvent, useEffect, useState } from 'react'
+import { type FormEvent, useEffect, useRef, useState } from 'react'
 
 import { lookupCityByPostalCode } from '@/assets/data/hungarian-postal-codes'
 import { formatPrice } from '@/assets/data/webshop'
 import { Button } from '@/components/ui/button'
 import { clearCart, resolveCart, useCart } from '@/lib/cart'
+
+const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined
+const TURNSTILE_SCRIPT_SRC = 'https://challenges.cloudflare.com/turnstile/v0/api.js'
+
+type TurnstileApi = {
+  render: (
+    el: HTMLElement,
+    options: {
+      sitekey: string
+      theme?: string
+      language?: string
+      callback?: (token: string) => void
+      'expired-callback'?: () => void
+      'error-callback'?: () => void
+    }
+  ) => string
+  reset: (widgetId: string) => void
+  remove: (widgetId: string) => void
+}
+
+declare global {
+  interface Window {
+    turnstile?: TurnstileApi
+  }
+}
 
 const baseInputClass = 'w-full rounded-md border px-3 py-2 text-base outline-none bg-background focus-visible:ring-2'
 const validInputClass = 'border-border focus-visible:ring-ring'
@@ -52,9 +77,70 @@ const CheckoutPage = () => {
   const [submitting, setSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
+  // Anti-spam: honeypot field hidden from real users, and a load timestamp for the time-trap.
+  const [honeypot, setHoneypot] = useState('')
+  const loadedAtRef = useRef(Date.now())
+  const turnstileRef = useRef<HTMLDivElement | null>(null)
+  const widgetIdRef = useRef<string | null>(null)
+  const turnstileTokenRef = useRef('')
+
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  useEffect(() => {
+    if (!TURNSTILE_SITE_KEY) {
+      return
+    }
+
+    const render = () => {
+      if (!turnstileRef.current || widgetIdRef.current !== null || !window.turnstile) {
+        return
+      }
+
+      widgetIdRef.current = window.turnstile.render(turnstileRef.current, {
+        sitekey: TURNSTILE_SITE_KEY,
+        theme: 'light',
+        language: 'hu',
+        callback: token => {
+          turnstileTokenRef.current = token
+        },
+        'expired-callback': () => {
+          turnstileTokenRef.current = ''
+        },
+        'error-callback': () => {
+          turnstileTokenRef.current = ''
+        }
+      })
+    }
+
+    if (window.turnstile) {
+      render()
+
+      return
+    }
+
+    let script = document.querySelector<HTMLScriptElement>(`script[src="${TURNSTILE_SCRIPT_SRC}"]`)
+
+    if (!script) {
+      script = document.createElement('script')
+      script.src = TURNSTILE_SCRIPT_SRC
+      script.async = true
+      script.defer = true
+      document.head.appendChild(script)
+    }
+
+    script.addEventListener('load', render)
+
+    return () => {
+      script?.removeEventListener('load', render)
+
+      if (widgetIdRef.current !== null && window.turnstile) {
+        window.turnstile.remove(widgetIdRef.current)
+        widgetIdRef.current = null
+      }
+    }
+  }, [mounted])
 
   if (!mounted) {
     return <div className='text-muted-foreground'>Pénztár betöltése...</div>
@@ -199,6 +285,12 @@ const CheckoutPage = () => {
       return
     }
 
+    if (TURNSTILE_SITE_KEY && !turnstileTokenRef.current) {
+      setErrorMessage('Kérlek várj, amíg a robotellenőrzés befejeződik, majd próbáld újra.')
+
+      return
+    }
+
     setSubmitting(true)
     setErrorMessage(null)
 
@@ -213,6 +305,9 @@ const CheckoutPage = () => {
           shippingAddress: sameAsShipping ? '' : formatAddress(shipping),
           email,
           note,
+          website: honeypot,
+          elapsed: Date.now() - loadedAtRef.current,
+          turnstileToken: turnstileTokenRef.current,
           items: cart.map(item => ({
             productSlug: item.productSlug,
             sizeId: item.sizeId,
@@ -223,6 +318,10 @@ const CheckoutPage = () => {
 
       if (!response.ok) {
         setErrorMessage('Nem sikerült elküldeni a rendelést. Próbáld újra később.')
+
+        // Tokens are single-use — reset so the customer can retry.
+        if (widgetIdRef.current !== null) window.turnstile?.reset(widgetIdRef.current)
+        turnstileTokenRef.current = ''
 
         return
       }
@@ -322,6 +421,20 @@ const CheckoutPage = () => {
 
   return (
     <form className='grid gap-8 lg:grid-cols-[1fr_24rem]' onSubmit={handleSubmit} noValidate>
+      {/* Honeypot — hidden from real users; bots fill it and get rejected. */}
+      <div aria-hidden='true' style={{ position: 'absolute', left: '-9999px', top: '-9999px' }}>
+        <label htmlFor='website'>Weboldal</label>
+        <input
+          id='website'
+          name='website'
+          type='text'
+          tabIndex={-1}
+          autoComplete='off'
+          value={honeypot}
+          onChange={e => setHoneypot(e.target.value)}
+        />
+      </div>
+
       <div className='space-y-6'>
         <div className='space-y-2'>
           <label htmlFor='billing-name' className='text-foreground text-sm font-medium'>
@@ -424,6 +537,8 @@ const CheckoutPage = () => {
             email-címre. A rendelésed a díjbekérő kiegyenlítése után válik véglegessé.
           </p>
         </div>
+
+        {TURNSTILE_SITE_KEY && <div ref={turnstileRef} />}
 
         {errorMessage && (
           <p className='text-destructive text-sm font-medium' role='alert'>

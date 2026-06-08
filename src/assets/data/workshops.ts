@@ -95,7 +95,24 @@ const workshopData: Omit<Workshop, 'coverImage' | 'images' | 'past' | 'futureDat
         time: '13:00-16:00',
         location: 'LeonArt Stúdió | 2890 Tata, Egység u. 7.',
         registrationUrl: 'https://forms.gle/49muU5wFgRKPaZMa6'
-      },
+      }
+    ],
+    details: [
+      '<strong>Részvételi díj:</strong> 12 000 Ft / fő (minden szükséges eszközt és kelléket tartalmaz)',
+      '<strong>Kedvezmény:</strong> 20% páros kedvezmény',
+      'A résztvevők létszáma korlátozott, legfeljebb 10 fő.'
+    ],
+    facebookEventUrl: 'https://fb.me/e/60gaKDQ7d'
+  },
+  {
+    slug: 'koszoru-keszito-workshop',
+    title: 'Koszorúkészítő workshop',
+    summary: 'Köss egyedi koszorút saját kezűleg, amely bármely ajtó vagy fal dísze, és kedves ajándék is lehet.',
+    description: [
+      'Köss saját kezűleg egyedi koszorút, amely az otthonod hangulatos dísze, vagy egy szeretteidnek szánt, személyes ajándék lesz. Gyere el egyedül egy kis kikapcsolódásra, vagy hozd magaddal a barátnődet, anyukádat egy közös alkotós délelőttre.🌿',
+      'Minden alapanyagot, eszközt és segítséget megkapsz tőlem, hogy gond nélkül elkészülhessen a saját koszorúd. Finom teával, ropogtatnivalóval és kellemes zenével teszem felejthetetlenné az együtt töltött időt.'
+    ],
+    dates: [
       {
         date: '2026. június 6. (szombat)',
         time: '9:00-12:00',
@@ -107,12 +124,11 @@ const workshopData: Omit<Workshop, 'coverImage' | 'images' | 'past' | 'futureDat
       '<strong>Részvételi díj:</strong> 12 000 Ft / fő (minden szükséges eszközt és kelléket tartalmaz)',
       '<strong>Kedvezmény:</strong> 20% páros kedvezmény',
       'A résztvevők létszáma korlátozott, legfeljebb 10 fő.'
-    ],
-    facebookEventUrl: 'https://fb.me/e/60gaKDQ7d'
+    ]
   },
   {
     slug: 'hajkoszoru-keszito-workshop',
-    title: 'Hajkoszorú készítő workshop',
+    title: 'Hajkoszorú-készítő workshop',
     summary:
       'Esküvő, fesztivál, kismama fotózás - készítsd el saját, egyedi hajdíszedet, ami megkoronázza a megjelenésedet.',
     description: [

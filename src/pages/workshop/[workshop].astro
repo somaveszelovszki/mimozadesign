@@ -112,7 +112,7 @@ const pageImage = workshop.coverImage
       }
 
       {
-        workshop.facebookEventUrl && (
+        workshop.facebookEventUrl && workshop.futureDates.length > 0 && (
           <a
             href={workshop.facebookEventUrl}
             target='_blank'

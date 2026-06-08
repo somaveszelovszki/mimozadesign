@@ -13,6 +13,8 @@ const pageKeywords =
 
 const futureWorkshops = workshops.filter(w => !w.past)
 
+const hasUpcomingWorkshops = futureWorkshops.some(w => w.futureDates.length > 0)
+
 const workshopsCalendarEvents = workshopOccurrences.map(({ workshop, date, isPast }) => ({
   title: workshop.title,
   date: date.date,
@@ -28,7 +30,17 @@ const workshopsCalendarEvents = workshopOccurrences.map(({ workshop, date, isPas
     <div class='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
       <div class='mb-8 space-y-3'>
         <h2 class='font-serif text-2xl font-semibold sm:text-3xl'>Következő workshopok</h2>
-        <p class='text-muted-foreground max-w-3xl text-lg'>Válaszd ki a neked tetsző eseményt és jelentkezz!</p>
+        {
+          hasUpcomingWorkshops ? (
+            <p class='text-muted-foreground max-w-3xl text-lg'>Válaszd ki a neked tetsző eseményt és jelentkezz!</p>
+          ) : (
+            <p class='text-muted-foreground max-w-3xl text-lg'>
+              Jelenleg nincs meghirdetett időpont.
+              <br />
+              Hamarosan érkeznek az új alkalmak — kövess minket, hogy elsőként értesülj róluk!
+            </p>
+          )
+        }
       </div>
 
       <div class='grid grid-cols-1 gap-6 sm:grid-cols-2'>

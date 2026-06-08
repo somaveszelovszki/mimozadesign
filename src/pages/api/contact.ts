@@ -1,8 +1,7 @@
 import type { APIRoute } from 'astro'
-import { Resend } from 'resend'
 
 import { COMPANY_INFO } from '@/consts'
-import { screenSubmission } from '@/lib/anti-spam'
+import { guardEmailRequest } from '@/lib/mailer'
 
 export const prerender = false
 
@@ -17,36 +16,21 @@ const escapeHtml = (value: string): string =>
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;')
 
-export const POST: APIRoute = async ({ request, clientAddress }) => {
-  const apiKey = import.meta.env.RESEND_API_KEY
-  const fromAddress = import.meta.env.CONTACT_FROM_EMAIL
+export const POST: APIRoute = async context => {
+  // Parses the body, runs anti-spam screening, and hands back a guarded mailer.
+  const guard = await guardEmailRequest(context)
 
-  if (!apiKey || !fromAddress) {
-    return Response.json({ error: 'Email service is not configured.' }, { status: 500 })
+  if (!guard.ok) {
+    return guard.response
   }
 
-  let formData: FormData
+  const { body, sendEmail } = guard
 
-  try {
-    formData = await request.formData()
-  } catch {
+  if (body.type !== 'form') {
     return Response.json({ error: 'Invalid form submission.' }, { status: 400 })
   }
 
-  // Anti-spam screening — runs before any email is sent.
-  const verdict = await screenSubmission({
-    honeypot: String(formData.get('website') ?? '').trim(),
-    elapsed: Number(formData.get('elapsed') ?? 0),
-    turnstileToken: String(formData.get('cf-turnstile-response') ?? ''),
-    ip: clientAddress
-  })
-
-  if (!verdict.allow) {
-    return verdict.fakeSuccess
-      ? Response.json({ ok: true })
-      : Response.json({ error: verdict.message }, { status: 400 })
-  }
-
+  const formData = body.data
   const name = String(formData.get('name') ?? '').trim()
   const email = String(formData.get('email') ?? '').trim()
   const phone = String(formData.get('phone') ?? '').trim()
@@ -89,10 +73,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     <p style="white-space: pre-wrap">${escapeHtml(message)}</p>
   `
 
-  const resend = new Resend(apiKey)
-
-  const { error } = await resend.emails.send({
-    from: fromAddress,
+  const { error } = await sendEmail({
     to: COMPANY_INFO.contactPoint.email,
     replyTo: email,
     subject: `Új üzenet — ${name}`,
@@ -124,8 +105,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     </div>
   `
 
-  const { error: confirmationError } = await resend.emails.send({
-    from: fromAddress,
+  const { error: confirmationError } = await sendEmail({
     to: email,
     replyTo: COMPANY_INFO.contactPoint.email,
     subject: 'Megkaptuk az üzeneted',

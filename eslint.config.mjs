@@ -95,6 +95,21 @@ export default defineConfig([
         { blankLine: 'always', prev: '*', next: ['function', 'multiline-const', 'multiline-block-like'] },
         { blankLine: 'always', prev: ['function', 'multiline-const', 'multiline-block-like'], next: '*' },
         { blankLine: 'always', prev: '*', next: 'return' }
+      ],
+
+      // Force all email sending through the guarded mailer (src/lib/mailer.ts), which always
+      // runs anti-spam screening. Importing Resend anywhere else would bypass that protection.
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: 'resend',
+              message:
+                'Import { guardEmailRequest } from "@/lib/mailer" instead of using Resend directly — it guarantees anti-spam screening.'
+            }
+          ]
+        }
       ]
     }
   },
@@ -161,6 +176,14 @@ export default defineConfig([
     rules: {
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-var-requires': 'off'
+    }
+  },
+
+  // The mailer is the single place permitted to import Resend directly.
+  {
+    files: ['src/lib/mailer.ts'],
+    rules: {
+      'no-restricted-imports': 'off'
     }
   }
 ])

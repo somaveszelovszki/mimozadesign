@@ -1,9 +1,8 @@
 import type { APIRoute } from 'astro'
-import { Resend } from 'resend'
 
 import { findProduct, findSize, formatPrice, type Product, type ProductSize } from '@/assets/data/webshop'
 import { COMPANY_INFO } from '@/consts'
-import { screenSubmission } from '@/lib/anti-spam'
+import { guardEmailRequest } from '@/lib/mailer'
 
 export const prerender = false
 
@@ -55,36 +54,21 @@ const parseItems = (raw: unknown): IncomingItem[] | null => {
   return items
 }
 
-export const POST: APIRoute = async ({ request, clientAddress }) => {
-  const apiKey = import.meta.env.RESEND_API_KEY
-  const fromAddress = import.meta.env.CONTACT_FROM_EMAIL
+export const POST: APIRoute = async context => {
+  // Parses the body, runs anti-spam screening, and hands back a guarded mailer.
+  const guard = await guardEmailRequest(context)
 
-  if (!apiKey || !fromAddress) {
-    return Response.json({ error: 'Email service is not configured.' }, { status: 500 })
+  if (!guard.ok) {
+    return guard.response
   }
 
-  let payload: Record<string, unknown>
+  const { body, sendEmail } = guard
 
-  try {
-    payload = (await request.json()) as Record<string, unknown>
-  } catch {
+  if (body.type !== 'json') {
     return Response.json({ error: 'Invalid submission.' }, { status: 400 })
   }
 
-  // Anti-spam screening — runs before any email is sent.
-  const verdict = await screenSubmission({
-    honeypot: String(payload.website ?? '').trim(),
-    elapsed: Number(payload.elapsed ?? 0),
-    turnstileToken: String(payload.turnstileToken ?? ''),
-    ip: clientAddress
-  })
-
-  if (!verdict.allow) {
-    return verdict.fakeSuccess
-      ? Response.json({ ok: true })
-      : Response.json({ error: verdict.message }, { status: 400 })
-  }
-
+  const payload = body.data
   const billingName = String(payload.billingName ?? '').trim()
   const billingAddress = String(payload.billingAddress ?? '').trim()
   const shippingSameAsBilling = Boolean(payload.shippingSameAsBilling)
@@ -181,10 +165,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     <p style="margin-top: 24px; color: #666;">Következő lépés: díjbekérő küldése a vevő email-címére.</p>
   `
 
-  const resend = new Resend(apiKey)
-
-  const { error } = await resend.emails.send({
-    from: fromAddress,
+  const { error } = await sendEmail({
     to: COMPANY_INFO.contactPoint.email,
     replyTo: email,
     subject: `Új webshop rendelés — ${billingName} — ${formatPrice(total)}`,
@@ -224,8 +205,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     <p>Szeretettel,<br/>${escapeHtml(COMPANY_INFO.name)}</p>
   `
 
-  const { error: confirmationError } = await resend.emails.send({
-    from: fromAddress,
+  const { error: confirmationError } = await sendEmail({
     to: email,
     replyTo: COMPANY_INFO.contactPoint.email,
     subject: 'Megkaptuk a rendelésed',

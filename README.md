@@ -57,6 +57,7 @@
 - [Available Commands 🧞](#-available-commands)
 - [Code Formatting 🎨](#-code-formatting)
 - [Configuration ⚙️](#-configuration)
+- [Sending Email 📧](#-sending-email)
 - [Deployment 🌐](#-deployment)
 - [Documentation 📚](#documentation-)
 - [Community 🤝](#community-)
@@ -269,6 +270,68 @@ Tips:
 
 - Keep `siteUrl` consistent with your deployed domain to ensure correct canonical and Open Graph URLs.
 - Place social preview images in `public/images` and reference them with absolute paths (e.g. `/images/social-preview.png`).
+
+## 📧 Sending Email
+
+Email is sent through [Resend](https://resend.com). **Every endpoint that sends email must go through the guarded mailer in `src/lib/mailer.ts`** — there is no other supported way to reach Resend. This guarantees that built-in anti-spam protection (honeypot, time-trap, and Cloudflare Turnstile) runs on every submission _before_ a single email is sent.
+
+### Environment variables
+
+Copy `.env.example` to `.env` and fill in:
+
+| Variable                    | Required | Purpose                                                                                         |
+| :-------------------------- | :------- | :---------------------------------------------------------------------------------------------- |
+| `RESEND_API_KEY`            | Yes      | Resend API key — [create one here](https://resend.com/api-keys).                                |
+| `CONTACT_FROM_EMAIL`        | Yes      | Sender address for outgoing mail. Must be on a domain verified in Resend.                       |
+| `PUBLIC_TURNSTILE_SITE_KEY` | No       | Cloudflare Turnstile **site** key (public, rendered in the page). Enables the Turnstile widget. |
+| `TURNSTILE_SECRET_KEY`      | No       | Cloudflare Turnstile **secret** key (server-side). Enables server-side verification.            |
+
+> Turnstile is optional: if the keys are unset, the honeypot and time-trap still apply. Set both keys (and add them in your Vercel project) to activate the CAPTCHA. Create a free widget in the [Cloudflare Turnstile dashboard](https://dash.cloudflare.com/?to=/:account/turnstile).
+
+### Adding a new email endpoint
+
+Call `guardEmailRequest(context)` at the top of the handler. It parses the request body once, runs anti-spam screening, and — only on success — returns a `sendEmail` function (the `from` address is filled in automatically):
+
+```ts
+// src/pages/api/your-endpoint.ts
+import type { APIRoute } from 'astro'
+
+import { guardEmailRequest } from '@/lib/mailer'
+
+export const prerender = false
+
+export const POST: APIRoute = async context => {
+  const guard = await guardEmailRequest(context)
+
+  // Screening failed (bot) or the service isn't configured — return its response as-is.
+  if (!guard.ok) return guard.response
+
+  const { body, sendEmail } = guard
+
+  // `body` is the already-parsed request — `{ type: 'json', data }` or `{ type: 'form', data }`.
+  // ...validate body.data here...
+
+  const { error } = await sendEmail({
+    to: 'hello@example.com',
+    subject: 'Hello',
+    html: '<p>…</p>'
+  })
+
+  if (error) return Response.json({ error: 'Failed to send.' }, { status: 502 })
+
+  return Response.json({ ok: true })
+}
+```
+
+On the **client**, include the anti-spam fields in the submission so screening passes:
+
+- a hidden honeypot input named `website` (kept empty by real users);
+- an `elapsed` field set to the milliseconds spent on the form (the time-trap rejects anything under ~3s);
+- the Turnstile token, when Turnstile is enabled (`cf-turnstile-response` for FormData, or `turnstileToken` for JSON).
+
+See `src/pages/kapcsolat.astro` (FormData) and `src/components/blocks/webshop/checkout-page.tsx` (JSON) for working examples.
+
+> **Do not import `resend` directly** anywhere outside `src/lib/mailer.ts` — ESLint will fail the build (`no-restricted-imports`), because bypassing the mailer would skip anti-spam screening.
 
 ## 🌐 Deployment
 

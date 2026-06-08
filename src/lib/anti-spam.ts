@@ -44,6 +44,23 @@ type Submission = {
   ip?: string
 }
 
+export type AntiSpamSource = FormData | Record<string, unknown>
+
+const readField = (source: AntiSpamSource, key: string): string => {
+  const raw = source instanceof FormData ? source.get(key) : source[key]
+
+  return typeof raw === 'string' || typeof raw === 'number' ? String(raw) : ''
+}
+
+// Pulls the anti-spam fields out of a parsed request body, whatever shape it arrived in.
+// FormData forms label the Turnstile token `cf-turnstile-response` (implicit widget); JSON
+// forms send it as `turnstileToken` (explicit widget) — accept either so callers needn't care.
+export const extractAntiSpamFields = (source: AntiSpamSource): Omit<Submission, 'ip'> => ({
+  honeypot: readField(source, 'website').trim(),
+  elapsed: Number(readField(source, 'elapsed') || 0),
+  turnstileToken: readField(source, 'cf-turnstile-response') || readField(source, 'turnstileToken')
+})
+
 export const screenSubmission = async ({ honeypot, elapsed, turnstileToken, ip }: Submission): Promise<SpamVerdict> => {
   // 1. Honeypot: a field hidden from real users. If it's filled, it's a bot.
   if (honeypot) {

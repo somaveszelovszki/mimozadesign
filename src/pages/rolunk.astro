@@ -22,11 +22,11 @@ const pageKeywords =
             én is tervezni, alkotni fogok.
           </p>
         </div>
-        <figure class='relative mx-auto w-full max-w-[24rem] lg:ml-auto lg:max-w-[28rem]'>
+        <figure class='relative mx-auto w-full max-w-[18rem] lg:ml-auto lg:max-w-[21rem]'>
           <img
             src='/about-us/liza-profile.jpg'
             alt='Liza, a Mimóza alapítója'
-            class='about-section-image'
+            class='about-section-image about-section-image--portrait'
             loading='lazy'
           />
         </figure>
@@ -86,5 +86,11 @@ const pageKeywords =
     border-radius: 0.75rem;
     border: 1px solid rgb(231 229 228);
     object-fit: cover;
+  }
+
+  .about-section-image--portrait {
+    aspect-ratio: auto;
+    height: auto;
+    object-fit: contain;
   }
 </style>

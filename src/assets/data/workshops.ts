@@ -99,7 +99,6 @@ const workshopData: Omit<Workshop, 'coverImage' | 'images' | 'past' | 'futureDat
     ],
     details: [
       '<strong>Részvételi díj:</strong> 12 000 Ft / fő (minden szükséges eszközt és kelléket tartalmaz)',
-      '<strong>Kedvezmény:</strong> 20% páros kedvezmény',
       'A résztvevők létszáma korlátozott, legfeljebb 10 fő.'
     ],
     facebookEventUrl: 'https://fb.me/e/60gaKDQ7d'
@@ -121,8 +120,7 @@ const workshopData: Omit<Workshop, 'coverImage' | 'images' | 'past' | 'futureDat
       }
     ],
     details: [
-      '<strong>Részvételi díj:</strong> 18 000 Ft / fő (minden szükséges eszközt és kelléket tartalmaz)',
-      '<strong>Kedvezmény:</strong> 20% páros kedvezmény',
+      '<strong>Részvételi díj:</strong> 17 000 Ft / fő (minden szükséges eszközt és kelléket tartalmaz)',
       'A résztvevők létszáma korlátozott, legfeljebb 10 fő.'
     ]
   },

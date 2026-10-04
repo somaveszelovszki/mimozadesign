@@ -21,6 +21,9 @@ const sizeParam = Astro.url.searchParams.get('size') ?? product.sizes[0].id
 const pageTitle = `${product.title} | Webshop | Mimóza Design`
 const pageDescription = product.description[0] ?? product.title
 const pageImage = product.profileImage
+
+// Primary image first, followed by the rest without duplicating it
+const galleryImages = [product.profileImage, ...product.images.filter(image => image !== product.profileImage)]
 ---
 
 <Layout title={pageTitle} description={pageDescription} image={pageImage}>
@@ -34,26 +37,38 @@ const pageImage = product.profileImage
 
     <div class='mt-4 grid gap-8 lg:grid-cols-2 lg:gap-12'>
       <div class='space-y-4'>
-        <div class='overflow-hidden rounded-2xl'>
-          <img src={product.profileImage} alt={product.title} class='w-full object-cover' />
-        </div>
-        <div id='product-gallery' class='grid grid-cols-3 gap-3' data-images={JSON.stringify(product.images)}>
+        <button
+          type='button'
+          data-gallery-index={0}
+          aria-label='Galéria megnyitása'
+          class='focus-visible:ring-ring hover:border-primary group block w-full cursor-pointer overflow-hidden rounded-2xl border border-transparent transition-colors duration-300 outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
+        >
+          <img
+            src={product.profileImage}
+            alt={product.title}
+            class='w-full object-cover transition-transform duration-300 group-hover:scale-105'
+          />
+        </button>
+        <div id='product-gallery' class='grid grid-cols-3 gap-3' data-images={JSON.stringify(galleryImages)}>
           {
-            product.images.map((image, index) => (
-              <button
-                type='button'
-                data-gallery-index={index}
-                aria-label={`${index + 1}. kép megnyitása`}
-                class='focus-visible:ring-ring hover:border-primary group block w-full cursor-pointer overflow-hidden rounded-lg border border-transparent transition-colors duration-300 outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
-              >
-                <img
-                  src={image}
-                  alt={`${product.title} galéria kép ${index + 1}`}
-                  class='aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-105'
-                  loading='lazy'
-                />
-              </button>
-            ))
+            galleryImages.slice(1).map((image, i) => {
+              const index = i + 1
+              return (
+                <button
+                  type='button'
+                  data-gallery-index={index}
+                  aria-label={`${index + 1}. kép megnyitása`}
+                  class='focus-visible:ring-ring hover:border-primary group block w-full cursor-pointer overflow-hidden rounded-lg border border-transparent transition-colors duration-300 outline-none focus-visible:ring-2 focus-visible:ring-offset-2'
+                >
+                  <img
+                    src={image}
+                    alt={`${product.title} galéria kép ${index + 1}`}
+                    class='aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-105'
+                    loading='lazy'
+                  />
+                </button>
+              )
+            })
           }
         </div>
       </div>
